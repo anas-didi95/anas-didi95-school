@@ -14,7 +14,7 @@
       "installGradle": "false"
     },
     "ghcr.io/devcontainers/features/node:1": {}
-  }
+  },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
@@ -23,7 +23,18 @@
   // "postCreateCommand": "java -version",
 
   // Configure tool-specific properties.
-  // "customizations": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "donjayamanne.githistory",
+        "redhat.vscode-xml",
+        "redhat.vscode-yaml",
+        "vscjava.vscode-gradle",
+        "richardwillis.vscode-spotless-gradle",
+        "voidrot.liquibase"
+      ]
+    }
+  }
 
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
   // "remoteUser": "root"
