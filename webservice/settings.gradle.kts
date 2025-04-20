@@ -1,4 +1,1 @@
-
-
-rootProject.name="school"
-
+rootProject.name = "anas-didi95-school"
