@@ -1,15 +1,9 @@
-version: "3"
-
 services:
   app:
     image: mcr.microsoft.com/devcontainers/java:1-21-bullseye
     command: sleep infinity
     logging:
       driver: local
-    #env_file:
-    #  - .env
     volumes:
       - "./:/home/vscode/workspace/:z"
-      - ".cache/.vscode-server/:/home/vscode/.vscode-server/:z"
       - ".cache/.gradle/:/home/vscode/.gradle/:z"
-      - ".cache/.npm/:/home/vscode/.npm/:z"
