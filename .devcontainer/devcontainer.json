@@ -2,9 +2,10 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/java
 {
   "name": "Java",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "dockerComposeFile": "../docker-compose.yml",
   "service": "app",
-  "workspaceFolder": "/home/vscode/workspace/",
+  "workspaceFolder": "/home/vscode/workspace",
   "shutdownAction": "stopCompose",
 
   "features": {
@@ -29,9 +30,10 @@
         "donjayamanne.githistory",
         "redhat.vscode-xml",
         "redhat.vscode-yaml",
-        "vscjava.vscode-gradle",
         "richardwillis.vscode-spotless-gradle",
-        "voidrot.liquibase"
+        "humao.rest-client",
+        "chris-rimmer.liquibase-snippets",
+        "GraphQL.vscode-graphql-syntax"
       ]
     }
   }
