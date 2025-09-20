@@ -7,4 +7,4 @@ import lombok.Builder;
 
 @Serdeable
 @Builder
-public record HelloWorldReqDTO(String name) implements CommonReqDTO {}
+public record HelloWorldReqDTO(String name, String password) implements CommonReqDTO {}

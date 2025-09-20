@@ -1,3 +1,7 @@
 micronaut:
   application:
     name: school
+
+logger:
+  levels:
+    com.anasdidi.school: "TRACE"

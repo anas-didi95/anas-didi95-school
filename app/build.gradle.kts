@@ -18,9 +18,11 @@ dependencies {
   annotationProcessor("io.micronaut:micronaut-http-validation")
   annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
   implementation("io.micronaut.serde:micronaut-serde-jackson")
+  implementation("org.slf4j:jul-to-slf4j")
+  implementation("org.slf4j:jcl-over-slf4j")
+  implementation("ch.qos.logback:logback-classic")
   compileOnly("io.micronaut:micronaut-http-client")
   compileOnly("org.projectlombok:lombok")
-  runtimeOnly("ch.qos.logback:logback-classic")
   runtimeOnly("org.yaml:snakeyaml")
   testImplementation("io.micronaut:micronaut-http-client")
 }
