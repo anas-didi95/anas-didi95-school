@@ -9,7 +9,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
 @Controller(CommonConstants.V1_URL + UserConstants.BASE_URL)
-public class UserControllerV1 extends UserController {
+class UserControllerV1 extends UserController {
 
   @Override
   @Get
