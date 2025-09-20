@@ -1,0 +1,11 @@
+---
+services:
+  app-publish:
+    build:
+      dockerfile: "Dockerfile.publish"
+      tags:
+        - "school-app:test"
+    logging:
+      driver: "local"
+    ports:
+      - "8081:8080"
