@@ -1,7 +1,7 @@
-micronaut:
-  application:
-    name: school
-
+---
 logger:
   levels:
     com.anasdidi.school: "TRACE"
+micronaut:
+  application:
+    name: "school"

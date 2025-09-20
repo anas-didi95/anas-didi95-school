@@ -1,9 +1,10 @@
+---
 services:
   app:
-    image: mcr.microsoft.com/devcontainers/java:1-21-bullseye
-    command: sleep infinity
+    command: "sleep infinity"
+    image: "mcr.microsoft.com/devcontainers/java:1-21-bullseye"
     logging:
-      driver: local
+      driver: "local"
     volumes:
       - "./:/home/vscode/workspace/:z"
       - ".cache/.gradle/:/home/vscode/.gradle/:z"
