@@ -14,10 +14,12 @@ group = "com.anasdidi.school"
 repositories { mavenCentral() }
 
 dependencies {
+  annotationProcessor("org.projectlombok:lombok")
   annotationProcessor("io.micronaut:micronaut-http-validation")
   annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
   implementation("io.micronaut.serde:micronaut-serde-jackson")
   compileOnly("io.micronaut:micronaut-http-client")
+  compileOnly("org.projectlombok:lombok")
   runtimeOnly("ch.qos.logback:logback-classic")
   runtimeOnly("org.yaml:snakeyaml")
   testImplementation("io.micronaut:micronaut-http-client")
