@@ -7,9 +7,12 @@ import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.annotation.Controller;
 import java.security.Principal;
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -19,6 +22,9 @@ import org.slf4j.MDC;
 @Slf4j
 class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
 
+  private static final SecureRandom RANDOM = new SecureRandom();
+  private static final Base64.Encoder ENCODER = Base64.getUrlEncoder().withoutPadding();
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyMMdd");
   private final TraceContext traceContext;
 
   @Override
@@ -53,8 +59,11 @@ class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
 
     traceContext.setClassMethod(classMethod);
     if (Objects.isNull(traceContext.getTraceId())) {
-      traceContext.setTraceId(UUID.randomUUID());
-      MDC.put("traceId", traceContext.getTraceId().toString());
+      byte[] buffer = new byte[20];
+      RANDOM.nextBytes(buffer);
+      traceContext.setTraceId(
+          FORMATTER.format(LocalDateTime.now()) + ENCODER.encodeToString(buffer));
+      MDC.put("traceId", traceContext.getTraceId());
     }
 
     long timeStart = System.currentTimeMillis();
