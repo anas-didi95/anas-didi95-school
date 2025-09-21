@@ -11,6 +11,9 @@ import com.anasdidi.school.user.dto.GetUserReqDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
 import com.anasdidi.school.user.dto.SearchUserReqDTO;
 import com.anasdidi.school.user.dto.SearchUserResDTO;
+import com.anasdidi.school.user.dto.UpdateUserReqDTO;
+import com.anasdidi.school.user.dto.UpdateUserResDTO;
+import com.anasdidi.school.user.dto.model.UserDTO;
 import com.anasdidi.school.user.service.UserServiceRegistry;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -51,5 +54,14 @@ class UserControllerV1 extends UserController {
     GetUserReqDTO body = GetUserReqDTO.builder().id(userId).build();
     return HttpResponse.ok(
         (GetUserResDTO) registry.get(UserConstants.ServiceEnum.USER_GET_USER).process(body));
+  }
+
+  @Override
+  @Post("/{userId}")
+  protected HttpResponse<UpdateUserResDTO> updateUser(HttpRequest<UserDTO> request, UUID userId) {
+    UpdateUserReqDTO body =
+        UpdateUserReqDTO.builder().id(userId).update(request.getBody(UserDTO.class).get()).build();
+    return HttpResponse.ok(
+        (UpdateUserResDTO) registry.get(UserConstants.ServiceEnum.USER_UPDATE_USER).process(body));
   }
 }

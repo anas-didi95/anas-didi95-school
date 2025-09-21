@@ -25,6 +25,18 @@ Content-Type: application/json
 ###
 
 # Get User
-GET {{BASE_URL}}/api/v1/user/44c49fff-edc4-42a4-90d5-449d83d02b6f
+GET {{BASE_URL}}/api/v1/user/c5125478-8923-4c0a-a78f-1a448c62eac8
 Accept: application/json
 Content-Type: application/json
+
+###
+
+# Update User
+POST {{BASE_URL}}/api/v1/user/c5125478-8923-4c0a-a78f-1a448c62eac8
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Test Update",
+  "version": 0
+}

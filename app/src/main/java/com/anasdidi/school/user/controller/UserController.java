@@ -7,6 +7,8 @@ import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
 import com.anasdidi.school.user.dto.SearchUserResDTO;
+import com.anasdidi.school.user.dto.UpdateUserResDTO;
+import com.anasdidi.school.user.dto.model.UserDTO;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import java.util.UUID;
@@ -21,4 +23,8 @@ public abstract class UserController extends CommonController {
 
   @TraceLog
   protected abstract HttpResponse<GetUserResDTO> getUser(HttpRequest<Void> request, UUID userId);
+
+  @TraceLog
+  protected abstract HttpResponse<UpdateUserResDTO> updateUser(
+      HttpRequest<UserDTO> request, UUID userId);
 }
