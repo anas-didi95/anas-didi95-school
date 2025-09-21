@@ -15,10 +15,13 @@ repositories { mavenCentral() }
 
 dependencies {
   annotationProcessor("org.projectlombok:lombok")
+  annotationProcessor("io.micronaut.data:micronaut-data-processor")
   annotationProcessor("io.micronaut:micronaut-http-validation")
   annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
   annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
+  implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
   implementation("io.micronaut.serde:micronaut-serde-jackson")
+  implementation("io.micronaut.sql:micronaut-jdbc-hikari")
   implementation("io.micronaut.validation:micronaut-validation")
   implementation("jakarta.validation:jakarta.validation-api")
   implementation("org.slf4j:jul-to-slf4j")
@@ -26,6 +29,7 @@ dependencies {
   implementation("ch.qos.logback:logback-classic")
   compileOnly("io.micronaut:micronaut-http-client")
   compileOnly("org.projectlombok:lombok")
+  runtimeOnly("com.h2database:h2")
   runtimeOnly("org.yaml:snakeyaml")
   testImplementation("io.micronaut:micronaut-http-client")
 }

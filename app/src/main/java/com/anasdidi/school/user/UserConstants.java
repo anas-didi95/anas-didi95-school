@@ -33,4 +33,5 @@ public class UserConstants {
   }
 
   public static final String BASE_URL = "/user";
+  public static final String CONNECTION_NAME = "CN_USER";
 }

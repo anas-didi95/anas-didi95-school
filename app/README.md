@@ -31,3 +31,8 @@
 - [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)
 
 
+## Feature jdbc-hikari documentation
+
+- [Micronaut Hikari JDBC Connection Pool documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc)
+
+
