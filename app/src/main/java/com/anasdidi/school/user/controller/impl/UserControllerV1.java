@@ -7,6 +7,8 @@ import com.anasdidi.school.user.UserMapper;
 import com.anasdidi.school.user.controller.UserController;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
+import com.anasdidi.school.user.dto.GetUserReqDTO;
+import com.anasdidi.school.user.dto.GetUserResDTO;
 import com.anasdidi.school.user.dto.SearchUserReqDTO;
 import com.anasdidi.school.user.dto.SearchUserResDTO;
 import com.anasdidi.school.user.service.UserServiceRegistry;
@@ -14,7 +16,9 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 
 @Controller(CommonConstants.V1_URL + UserConstants.BASE_URL)
@@ -38,5 +42,14 @@ class UserControllerV1 extends UserController {
     SearchUserReqDTO body = userMapper.toSearchUserReqDTO(parseParameters(request));
     return HttpResponse.ok(
         (SearchUserResDTO) registry.get(UserConstants.ServiceEnum.USER_SEARCH_USER).process(body));
+  }
+
+  @Override
+  @Get("/{userId}")
+  protected HttpResponse<GetUserResDTO> getUser(
+      HttpRequest<Void> request, @PathVariable UUID userId) {
+    GetUserReqDTO body = GetUserReqDTO.builder().id(userId).build();
+    return HttpResponse.ok(
+        (GetUserResDTO) registry.get(UserConstants.ServiceEnum.USER_GET_USER).process(body));
   }
 }

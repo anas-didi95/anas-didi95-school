@@ -9,6 +9,7 @@ public class CommonConstants {
   public enum Error {
     E01_VALIDATION_ERR,
     E02_RECORD_ALREADY_EXIST_ERR,
+    E03_RECORD_NOT_FOUND_ERR,
     E99_UNEXPECTED_ERR;
 
     public final String code() {

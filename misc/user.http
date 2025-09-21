@@ -21,3 +21,10 @@ Content-Type: application/json
 GET {{BASE_URL}}/api/v1/user?pageNo=1&name=
 Accept: application/json
 Content-Type: application/json
+
+###
+
+# Get User
+GET {{BASE_URL}}/api/v1/user/44c49fff-edc4-42a4-90d5-449d83d02b6f
+Accept: application/json
+Content-Type: application/json
