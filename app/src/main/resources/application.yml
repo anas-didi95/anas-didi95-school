@@ -27,3 +27,6 @@ logger:
 micronaut:
   application:
     name: "school"
+  server:
+    context-path: "/school"
+    host: "0.0.0.0"
