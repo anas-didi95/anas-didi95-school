@@ -10,7 +10,14 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "username": "anas",
+  "username": "test",
   "password": "p@ssw0rd",
-  "name": "Anas Juwaidi Bin Mohd Jeffry"
+  "name": "test"
 }
+
+###
+
+# Search User
+GET {{BASE_URL}}/api/v1/user?pageNo=1&name=
+Accept: application/json
+Content-Type: application/json

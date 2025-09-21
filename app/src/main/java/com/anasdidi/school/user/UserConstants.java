@@ -5,6 +5,8 @@ import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
+import com.anasdidi.school.user.dto.SearchUserReqDTO;
+import com.anasdidi.school.user.dto.SearchUserResDTO;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -13,10 +15,12 @@ public class UserConstants {
   @UtilityClass
   public static class Action {
     public static final String USER_ADD_USER = "USER_ADD_USER";
+    public static final String USER_SEARCH_USER = "USER_SEARCH_USER";
   }
 
   public enum ServiceEnum {
-    USER_ADD_USER(Action.USER_ADD_USER, AddUserReqDTO.class, AddUserResDTO.class);
+    USER_ADD_USER(Action.USER_ADD_USER, AddUserReqDTO.class, AddUserResDTO.class),
+    USER_SEARCH_USER(Action.USER_SEARCH_USER, SearchUserReqDTO.class, SearchUserResDTO.class);
 
     public final String action;
     public final Class<? extends CommonReqDTO> reqClass;
