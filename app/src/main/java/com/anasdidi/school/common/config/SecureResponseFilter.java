@@ -29,9 +29,8 @@ class SecureResponseFilter {
     response.getHeaders().add("X-Download-Options", "noopen");
     response.getHeaders().add("Referrer-Policy", "strict-origin-when-cross-origin");
     response.getHeaders().add("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
-    response
-        .getHeaders()
-        .add("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'");
+    // response.getHeaders().add("Content-Security-Policy", "default-src 'none'; frame-ancestors
+    // 'none'"); // Disable to enable swagger-ui
     response.getHeaders().add("Cross-Origin-Resource-Policy", "same-origin");
     response.getHeaders().add("Cross-Origin-Opener-Policy", "same-origin");
     response.getHeaders().add("Cross-Origin-Embedder-Policy", "require-corp");

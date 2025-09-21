@@ -27,6 +27,14 @@ logger:
 micronaut:
   application:
     name: "school"
+  router:
+    static-resources:
+      swagger:
+        mapping: "/swagger/**"
+        paths: "classpath:META-INF/swagger"
+      swagger-ui:
+        mapping: "/swagger-ui/**"
+        paths: "classpath:META-INF/swagger/views/swagger-ui"
   server:
     context-path: "/school"
     host: "0.0.0.0"
