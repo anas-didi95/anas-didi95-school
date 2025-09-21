@@ -12,7 +12,6 @@ import com.anasdidi.school.user.dto.SearchUserResDTO;
 import com.anasdidi.school.user.service.UserServiceRegistry;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
@@ -27,7 +26,8 @@ class UserControllerV1 extends UserController {
 
   @Override
   @Post
-  protected HttpResponse<AddUserResDTO> addUser(@Body AddUserReqDTO body) {
+  protected HttpResponse<AddUserResDTO> addUser(HttpRequest<AddUserReqDTO> request) {
+    AddUserReqDTO body = request.getBody().get();
     return HttpResponse.created(
         (AddUserResDTO) registry.get(UserConstants.ServiceEnum.USER_ADD_USER).process(body));
   }
@@ -35,8 +35,7 @@ class UserControllerV1 extends UserController {
   @Override
   @Get
   protected HttpResponse<SearchUserResDTO> searchUser(HttpRequest<Void> request) {
-    SearchUserReqDTO body =
-        userMapper.toSearchUserReqDTO(request.getParameters().asMap(String.class, String.class));
+    SearchUserReqDTO body = userMapper.toSearchUserReqDTO(parseParameters(request));
     return HttpResponse.ok(
         (SearchUserResDTO) registry.get(UserConstants.ServiceEnum.USER_SEARCH_USER).process(body));
   }
