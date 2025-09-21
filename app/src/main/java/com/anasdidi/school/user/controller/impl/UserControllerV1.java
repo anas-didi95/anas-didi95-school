@@ -6,13 +6,10 @@ import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.controller.UserController;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
-import com.anasdidi.school.user.dto.HelloWorldReqDTO;
-import com.anasdidi.school.user.dto.HelloWorldResDTO;
 import com.anasdidi.school.user.service.UserServiceRegistry;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import lombok.AllArgsConstructor;
 
@@ -21,13 +18,6 @@ import lombok.AllArgsConstructor;
 class UserControllerV1 extends UserController {
 
   private final UserServiceRegistry registry;
-
-  @Override
-  @Get
-  protected HttpResponse<HelloWorldResDTO> helloWorld(@Body HelloWorldReqDTO body) {
-    return HttpResponse.ok(
-        (HelloWorldResDTO) registry.get(UserConstants.ServiceEnum.USER_HELLO_WORLD).process(body));
-  }
 
   @Override
   @Post
