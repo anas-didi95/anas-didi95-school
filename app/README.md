@@ -26,3 +26,8 @@
 - [https://projectlombok.org/features/all](https://projectlombok.org/features/all)
 
 
+## Feature validation documentation
+
+- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)
+
+
