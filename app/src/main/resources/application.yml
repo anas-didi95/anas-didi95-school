@@ -1,20 +1,29 @@
 ---
 datasources:
   CN_USER:
-    password: ""
-    url: "jdbc:h2:mem:DB_SCHOOL_USER;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+    password: "sa"
+    url: "jdbc:h2:./.h2/DB_SCHOOL_USER;AUTO_SERVER=TRUE"
     username: "sa"
 
 jpa:
   default:
+    compile-time-hibernate-proxies: true
     properties:
       hibernate:
-        hbm2ddl:
-          auto: "update"
+        hbm2ddl.auto: "validate"
+        physical_naming_strategy: "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl"
+
+liquibase:
+  datasources:
+    CN_USER:
+      change-log: "classpath:db/db.changelog-user.xml"
+      contexts: "dev"
+      enabled: true
 
 logger:
   levels:
     com.anasdidi.school: "TRACE"
+
 micronaut:
   application:
     name: "school"

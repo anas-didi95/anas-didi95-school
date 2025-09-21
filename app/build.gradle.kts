@@ -20,6 +20,7 @@ dependencies {
   annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
   annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
   implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+  implementation("io.micronaut.liquibase:micronaut-liquibase")
   implementation("io.micronaut.serde:micronaut-serde-jackson")
   implementation("io.micronaut.sql:micronaut-jdbc-hikari")
   implementation("io.micronaut.validation:micronaut-validation")
