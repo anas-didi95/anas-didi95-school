@@ -1,6 +1,6 @@
 ---
 datasources:
-  CN_USER:
+  CN-USER:
     password: "sa"
     url: "jdbc:h2:./.h2/DB_SCHOOL_USER;AUTO_SERVER=TRUE"
     username: "sa"
@@ -15,7 +15,7 @@ jpa:
 
 liquibase:
   datasources:
-    CN_USER:
+    CN-USER:
       change-log: "classpath:db/db.changelog-user.xml"
       contexts: "dev"
       enabled: true

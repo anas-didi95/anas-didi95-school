@@ -3,6 +3,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Anas Juwaidi",
-  "password": "abc123"
+  "username": "anas",
+  "password": "p@ssw0rd",
+  "name": "Anas Juwaidi Bin Mohd Jeffry"
 }

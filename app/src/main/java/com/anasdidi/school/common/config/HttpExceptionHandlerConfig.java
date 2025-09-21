@@ -39,6 +39,16 @@ class HttpExceptionHandlerConfig {
   }
 
   @Singleton
+  @Requires(classes = {BaseError.class})
+  ExceptionHandler<BaseError, HttpResponse<?>> BaseError() {
+    return (request, error) -> {
+      HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+      String message = getMessage(error, httpStatus);
+      return prepareResponse(error.getClass().getSimpleName(), error, message, request, httpStatus);
+    };
+  }
+
+  @Singleton
   @Requires(classes = {Exception.class, ExceptionHandler.class})
   ExceptionHandler<Exception, HttpResponse<?>> E99UnexpectedError() {
     return (request, exception) -> {

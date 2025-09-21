@@ -5,6 +5,7 @@ import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.ResponseFilter;
 import io.micronaut.http.annotation.ServerFilter;
 import jakarta.annotation.Nullable;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 
 @ServerFilter(ServerFilter.MATCH_ALL_PATTERN)
@@ -43,6 +44,7 @@ class SecureResponseFilter {
     // X-Requested-With");
 
     // === Custom ===
-    response.getHeaders().add("X-Trace-Id", traceContext.getTraceId());
+    Optional.ofNullable(traceContext.getTraceId())
+        .ifPresent(v -> response.getHeaders().add("X-Trace-Id", v));
   }
 }
