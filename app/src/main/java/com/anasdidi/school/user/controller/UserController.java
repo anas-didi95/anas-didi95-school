@@ -5,6 +5,7 @@ import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
+import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
 import com.anasdidi.school.user.dto.SearchUserResDTO;
 import com.anasdidi.school.user.dto.UpdateUserResDTO;
@@ -27,4 +28,8 @@ public abstract class UserController extends CommonController {
   @TraceLog
   protected abstract HttpResponse<UpdateUserResDTO> updateUser(
       HttpRequest<UserDTO> request, UUID userId);
+
+  @TraceLog
+  protected abstract HttpResponse<DeleteUserResDTO> deleteUser(
+      HttpRequest<Void> request, UUID userId);
 }

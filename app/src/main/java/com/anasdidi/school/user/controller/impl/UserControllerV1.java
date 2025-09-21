@@ -7,6 +7,8 @@ import com.anasdidi.school.user.UserMapper;
 import com.anasdidi.school.user.controller.UserController;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
+import com.anasdidi.school.user.dto.DeleteUserReqDTO;
+import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.dto.GetUserReqDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
 import com.anasdidi.school.user.dto.SearchUserReqDTO;
@@ -18,8 +20,8 @@ import com.anasdidi.school.user.service.UserServiceRegistry;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -49,8 +51,7 @@ class UserControllerV1 extends UserController {
 
   @Override
   @Get("/{userId}")
-  protected HttpResponse<GetUserResDTO> getUser(
-      HttpRequest<Void> request, @PathVariable UUID userId) {
+  protected HttpResponse<GetUserResDTO> getUser(HttpRequest<Void> request, UUID userId) {
     GetUserReqDTO body = GetUserReqDTO.builder().id(userId).build();
     return HttpResponse.ok(
         (GetUserResDTO) registry.get(UserConstants.ServiceEnum.USER_GET_USER).process(body));
@@ -63,5 +64,13 @@ class UserControllerV1 extends UserController {
         UpdateUserReqDTO.builder().id(userId).update(request.getBody(UserDTO.class).get()).build();
     return HttpResponse.ok(
         (UpdateUserResDTO) registry.get(UserConstants.ServiceEnum.USER_UPDATE_USER).process(body));
+  }
+
+  @Override
+  @Delete("/{userId}")
+  protected HttpResponse<DeleteUserResDTO> deleteUser(HttpRequest<Void> request, UUID userId) {
+    DeleteUserReqDTO body = DeleteUserReqDTO.builder().id(userId).build();
+    return HttpResponse.ok(
+        (DeleteUserResDTO) registry.get(UserConstants.ServiceEnum.USER_DELETE_USER).process(body));
   }
 }

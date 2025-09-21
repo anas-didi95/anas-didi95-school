@@ -37,6 +37,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Test Update",
-  "version": 0
+  "name": "Test Update 2509211815",
+  "version": 3
 }
+
+###
+
+# Delete User
+DELETE {{BASE_URL}}/api/v1/user/c5125478-8923-4c0a-a78f-1a448c62eac8
+Accept: application/json
+Content-Type: application/json

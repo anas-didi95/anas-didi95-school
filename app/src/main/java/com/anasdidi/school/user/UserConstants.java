@@ -5,6 +5,8 @@ import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
+import com.anasdidi.school.user.dto.DeleteUserReqDTO;
+import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.dto.GetUserReqDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
 import com.anasdidi.school.user.dto.SearchUserReqDTO;
@@ -22,13 +24,15 @@ public class UserConstants {
     public static final String USER_SEARCH_USER = "USER_SEARCH_USER";
     public static final String USER_GET_USER = "USER_GET_USER";
     public static final String USER_UPDATE_USER = "USER_UPDATE_USER";
+    public static final String USER_DELETE_USER = "USER_DELETE_USER";
   }
 
   public enum ServiceEnum {
     USER_ADD_USER(Action.USER_ADD_USER, AddUserReqDTO.class, AddUserResDTO.class),
     USER_SEARCH_USER(Action.USER_SEARCH_USER, SearchUserReqDTO.class, SearchUserResDTO.class),
     USER_GET_USER(Action.USER_GET_USER, GetUserReqDTO.class, GetUserResDTO.class),
-    USER_UPDATE_USER(Action.USER_UPDATE_USER, UpdateUserReqDTO.class, UpdateUserResDTO.class);
+    USER_UPDATE_USER(Action.USER_UPDATE_USER, UpdateUserReqDTO.class, UpdateUserResDTO.class),
+    USER_DELETE_USER(Action.USER_DELETE_USER, DeleteUserReqDTO.class, DeleteUserResDTO.class);
 
     public final String action;
     public final Class<? extends CommonReqDTO> reqClass;
