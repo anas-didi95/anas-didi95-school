@@ -13,6 +13,7 @@ import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
 @Named(UserConstants.Action.USER_ADD_USER)
@@ -22,10 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 class AddUserService extends UserService<AddUserReqDTO, AddUserResDTO> {
 
   private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Override
   protected AddUserResDTO execute(AddUserReqDTO in) {
-    log.trace("[handle] START...");
+    log.trace("[execute] START...");
 
     userRepository
         .findByUsername(in.username())
@@ -42,12 +44,11 @@ class AddUserService extends UserService<AddUserReqDTO, AddUserResDTO> {
     user.setCreateBy(createBy);
     user.setUpdateBy(createBy);
     user.setUsername(in.username());
-    // user.setPassword(passwordEncoder.encode(inDTO.password()));
-    user.setPassword(in.password());
+    user.setPassword(passwordEncoder.encode(in.password()));
     user.setName(in.name());
     userRepository.save(user);
 
-    log.info("[handle] User created...{}", user.getUsername());
+    log.info("[execute] User created...{}", user.getUsername());
     return AddUserResDTO.builder().id(user.getId()).build();
   }
 }

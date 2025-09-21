@@ -5,6 +5,8 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.i18n.ResourceBundleMessageSource;
 import jakarta.inject.Singleton;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Factory
 public class CommonConfig {
@@ -12,5 +14,10 @@ public class CommonConfig {
   @Singleton
   MessageSource messageSource() {
     return new ResourceBundleMessageSource("i18n.messages");
+  }
+
+  @Singleton
+  PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 }

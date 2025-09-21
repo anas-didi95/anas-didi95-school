@@ -28,6 +28,7 @@ dependencies {
   implementation("org.slf4j:jul-to-slf4j")
   implementation("org.slf4j:jcl-over-slf4j")
   implementation("ch.qos.logback:logback-classic")
+  implementation("org.springframework.security:spring-security-crypto:6.3.4")
   compileOnly("io.micronaut:micronaut-http-client")
   compileOnly("org.projectlombok:lombok")
   runtimeOnly("com.h2database:h2")
