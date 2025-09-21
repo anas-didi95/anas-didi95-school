@@ -5,9 +5,13 @@ import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.ResponseFilter;
 import io.micronaut.http.annotation.ServerFilter;
 import jakarta.annotation.Nullable;
+import lombok.AllArgsConstructor;
 
 @ServerFilter(ServerFilter.MATCH_ALL_PATTERN)
+@AllArgsConstructor
 class SecureResponseFilter {
+
+  private final TraceContext traceContext;
 
   @ResponseFilter
   void responseFilter(MutableHttpResponse<?> response, @Nullable Throwable failure) {
@@ -37,5 +41,8 @@ class SecureResponseFilter {
     // response.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     // response.getHeaders().add("Access-Control-Allow-Headers", "Authorization, Content-Type,
     // X-Requested-With");
+
+    // === Custom ===
+    response.getHeaders().add("X-Trace-Id", traceContext.getTraceId());
   }
 }
