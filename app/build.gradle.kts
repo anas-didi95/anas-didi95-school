@@ -14,11 +14,26 @@ group = "com.anasdidi.school"
 repositories { mavenCentral() }
 
 dependencies {
+  annotationProcessor("org.projectlombok:lombok")
+  annotationProcessor("io.micronaut.data:micronaut-data-processor")
   annotationProcessor("io.micronaut:micronaut-http-validation")
+  annotationProcessor("io.micronaut.openapi:micronaut-openapi")
   annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+  annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
+  implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+  implementation("io.micronaut.liquibase:micronaut-liquibase")
   implementation("io.micronaut.serde:micronaut-serde-jackson")
+  implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+  implementation("io.micronaut.validation:micronaut-validation")
+  implementation("jakarta.validation:jakarta.validation-api")
+  implementation("org.slf4j:jul-to-slf4j")
+  implementation("org.slf4j:jcl-over-slf4j")
+  implementation("ch.qos.logback:logback-classic")
+  implementation("org.springframework.security:spring-security-crypto:6.3.4")
   compileOnly("io.micronaut:micronaut-http-client")
-  runtimeOnly("ch.qos.logback:logback-classic")
+  compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
+  compileOnly("org.projectlombok:lombok")
+  runtimeOnly("com.h2database:h2")
   runtimeOnly("org.yaml:snakeyaml")
   testImplementation("io.micronaut:micronaut-http-client")
 }

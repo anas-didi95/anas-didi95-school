@@ -1,3 +1,40 @@
+---
+datasources:
+  CN-USER:
+    password: "sa"
+    url: "jdbc:h2:./.h2/DB_SCHOOL_USER;AUTO_SERVER=TRUE"
+    username: "sa"
+
+jpa:
+  default:
+    compile-time-hibernate-proxies: true
+    properties:
+      hibernate:
+        hbm2ddl.auto: "validate"
+        physical_naming_strategy: "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl"
+
+liquibase:
+  datasources:
+    CN-USER:
+      change-log: "classpath:db/db.changelog-user.xml"
+      contexts: "dev"
+      enabled: true
+
+logger:
+  levels:
+    com.anasdidi.school: "TRACE"
+
 micronaut:
   application:
-    name: school
+    name: "school"
+  router:
+    static-resources:
+      swagger:
+        mapping: "/swagger/**"
+        paths: "classpath:META-INF/swagger"
+      swagger-ui:
+        mapping: "/swagger-ui/**"
+        paths: "classpath:META-INF/swagger/views/swagger-ui"
+  server:
+    context-path: "/school"
+    host: "0.0.0.0"

@@ -1,0 +1,49 @@
+
+# DEV
+@BASE_URL=http://localhost:8080/school
+
+###
+
+# Add User
+POST {{BASE_URL}}/api/v1/user
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "p@ssw0rd",
+  "name": "test"
+}
+
+###
+
+# Search User
+GET {{BASE_URL}}/api/v1/user?pageNo=1&name=
+Accept: application/json
+Content-Type: application/json
+
+###
+
+# Get User
+GET {{BASE_URL}}/api/v1/user/c5125478-8923-4c0a-a78f-1a448c62eac8
+Accept: application/json
+Content-Type: application/json
+
+###
+
+# Update User
+POST {{BASE_URL}}/api/v1/user/c5125478-8923-4c0a-a78f-1a448c62eac8
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Test Update 2509211815",
+  "version": 3
+}
+
+###
+
+# Delete User
+DELETE {{BASE_URL}}/api/v1/user/c5125478-8923-4c0a-a78f-1a448c62eac8
+Accept: application/json
+Content-Type: application/json

@@ -1,12 +1,16 @@
 <configuration>
-  <property name="PATTERN"
+  <property name="pattern"
     value="%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - [%X{traceId}]:%msg%n" />
 
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator" />
+
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <!-- encoders are assigned the type
-          ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
-    <encoder>
-      <pattern>${PATTERN}</pattern>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="com.anasdidi.school.common.config.MaskingPatternLayout">
+        <pattern>${pattern}</pattern>
+        <maskPattern>password=([^,]+)[\s,]</maskPattern>
+        <maskPattern>confirmPassword=([^,]+)[\s,]</maskPattern>
+      </layout>
     </encoder>
   </appender>
 
