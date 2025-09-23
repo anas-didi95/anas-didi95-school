@@ -1,6 +1,8 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.common;
 
+import com.anasdidi.school.common.dto.CommonReqDTO;
+import com.anasdidi.school.common.dto.CommonResDTO;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -15,6 +17,14 @@ public class CommonConstants {
     public final String code() {
       return this.name().split("_")[0];
     }
+  }
+
+  public interface CommonEvent {
+    String getAddress();
+
+    Class<? extends CommonReqDTO> getReqClass();
+
+    Class<? extends CommonResDTO> getResClass();
   }
 
   public static final String V1_URL = "/api/v1";

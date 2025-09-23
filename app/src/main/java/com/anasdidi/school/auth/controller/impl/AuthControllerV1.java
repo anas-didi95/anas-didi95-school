@@ -2,7 +2,7 @@
 package com.anasdidi.school.auth.controller.impl;
 
 import com.anasdidi.school.auth.AuthConstants;
-import com.anasdidi.school.auth.AuthConstants.ServiceEnum;
+import com.anasdidi.school.auth.AuthConstants.EventEnum;
 import com.anasdidi.school.auth.controller.AuthController;
 import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
 import com.anasdidi.school.auth.dto.HelloWorldResDTO;
@@ -26,6 +26,6 @@ class AuthControllerV1 extends AuthController {
   protected HttpResponse<HelloWorldResDTO> helloWorld(
       HttpRequest<?> request, @Body HelloWorldReqDTO body) {
     return HttpResponse.ok(
-        (HelloWorldResDTO) registry.get(ServiceEnum.AUTH_HELLO_WORLD).process(body));
+        (HelloWorldResDTO) registry.get(EventEnum.AUTH_HELLO_WORLD).process(body));
   }
 }

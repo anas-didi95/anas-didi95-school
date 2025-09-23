@@ -3,30 +3,33 @@ package com.anasdidi.school.auth;
 
 import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
 import com.anasdidi.school.auth.dto.HelloWorldResDTO;
+import com.anasdidi.school.common.CommonConstants.CommonEvent;
 import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class AuthConstants {
 
   @UtilityClass
-  public static class Action {
+  public static class Event {
     public static final String AUTH_HELLO_WORLD = "AUTH_HELLO_WORLD";
   }
 
-  public enum ServiceEnum {
-    AUTH_HELLO_WORLD(Action.AUTH_HELLO_WORLD, HelloWorldReqDTO.class, HelloWorldResDTO.class);
+  @Getter
+  public enum EventEnum implements CommonEvent {
+    AUTH_HELLO_WORLD(Event.AUTH_HELLO_WORLD, HelloWorldReqDTO.class, HelloWorldResDTO.class);
 
-    public final String action;
-    public final Class<? extends CommonReqDTO> reqClass;
-    public final Class<? extends CommonResDTO> resClass;
+    private final String address;
+    private final Class<? extends CommonReqDTO> reqClass;
+    private final Class<? extends CommonResDTO> resClass;
 
-    ServiceEnum(
-        String action,
+    EventEnum(
+        String address,
         Class<? extends CommonReqDTO> reqClass,
         Class<? extends CommonResDTO> resClass) {
-      this.action = action;
+      this.address = address;
       this.reqClass = reqClass;
       this.resClass = resClass;
     }

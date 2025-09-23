@@ -9,7 +9,7 @@ import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 
 @Singleton
-@Named(AuthConstants.Action.AUTH_HELLO_WORLD)
+@Named(AuthConstants.Event.AUTH_HELLO_WORLD)
 class HelloWorldService extends AuthService<HelloWorldReqDTO, HelloWorldResDTO> {
 
   @Override

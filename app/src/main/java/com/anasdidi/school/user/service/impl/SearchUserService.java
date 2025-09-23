@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
-@Named(UserConstants.Action.USER_SEARCH_USER)
+@Named(UserConstants.Event.USER_SEARCH_USER)
 @AllArgsConstructor
 @Slf4j
 class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> {

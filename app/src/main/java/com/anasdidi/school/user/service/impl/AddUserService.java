@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
-@Named(UserConstants.Action.USER_ADD_USER)
+@Named(UserConstants.Event.USER_ADD_USER)
 @Transactional
 @AllArgsConstructor
 @Slf4j

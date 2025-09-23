@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
-@Named(UserConstants.Action.USER_GET_USER)
+@Named(UserConstants.Event.USER_GET_USER)
 @AllArgsConstructor
 @Slf4j
 class GetUserService extends UserService<GetUserReqDTO, GetUserResDTO> {

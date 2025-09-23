@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
-@Named(UserConstants.Action.USER_UPDATE_USER)
+@Named(UserConstants.Event.USER_UPDATE_USER)
 @Transactional
 @AllArgsConstructor
 @Slf4j
