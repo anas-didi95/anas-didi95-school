@@ -7,6 +7,7 @@ import io.micronaut.http.annotation.ServerFilter;
 import jakarta.annotation.Nullable;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import org.slf4j.MDC;
 
 @ServerFilter(ServerFilter.MATCH_ALL_PATTERN)
 @AllArgsConstructor
@@ -16,6 +17,8 @@ class SecureResponseFilter {
 
   @ResponseFilter
   void responseFilter(MutableHttpResponse<?> response, @Nullable Throwable failure) {
+    MDC.clear();
+
     // === Caching & Transport Security ===
     response.getHeaders().add("Cache-Control", "no-store, no-cache, must-revalidate");
     response.getHeaders().add("Pragma", "no-cache");

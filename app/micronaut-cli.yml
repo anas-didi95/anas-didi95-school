@@ -11,6 +11,7 @@ features:
     gradle,
     h2,
     http-client-test,
+    jackson-databind,
     java,
     java-application,
     jdbc-hikari,

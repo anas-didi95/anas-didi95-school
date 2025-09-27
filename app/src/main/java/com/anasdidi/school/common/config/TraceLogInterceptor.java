@@ -11,10 +11,10 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-import java.util.Objects;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 
 @InterceptorBean(TraceLog.class)
@@ -25,7 +25,8 @@ class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
   private static final SecureRandom RANDOM = new SecureRandom();
   private static final Base64.Encoder ENCODER = Base64.getUrlEncoder().withoutPadding();
   private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyMMdd");
-  private final TraceContext traceContext;
+
+  // private final TraceContext traceContext;
 
   @Override
   public @Nullable Object intercept(MethodInvocationContext<Object, Object> context) {
@@ -52,25 +53,28 @@ class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
             : "No parameter";
 
     boolean isController = context.hasAnnotation(Controller.class);
+
     if (isController) {
-      traceContext.setController(classMethod);
-      traceContext.setControllerParam(parameters);
+      // traceContext.setController(classMethod);
+      // traceContext.setControllerParam(parameters);
     }
 
-    traceContext.setClassMethod(classMethod);
-    if (Objects.isNull(traceContext.getTraceId())) {
-      byte[] buffer = new byte[20];
+    // traceContext.setClassMethod(classMethod);
+    // if (Objects.isNull(traceContext.getTraceId())) {
+    if (StringUtils.isBlank(MDC.get("traceId"))) {
+      byte[] buffer = new byte[6];
       RANDOM.nextBytes(buffer);
-      traceContext.setTraceId(
-          FORMATTER.format(LocalDateTime.now()) + ENCODER.encodeToString(buffer));
-      MDC.put("traceId", traceContext.getTraceId());
+      // traceContext.setTraceId(
+      //    FORMATTER.format(LocalDateTime.now()) + ENCODER.encodeToString(buffer));
+      MDC.put("traceId", FORMATTER.format(LocalDateTime.now()) + ENCODER.encodeToString(buffer));
     }
+    MDC.put("classMethod", classMethod);
 
     long timeStart = System.currentTimeMillis();
-    log.info("[{}] REQ: {}", classMethod, parameters);
+    log.info("REQ: {}", parameters);
     Object result = context.proceed();
-    log.info("[{}] RES: {}", classMethod, Optional.ofNullable(result).orElse("No result"));
-    log.info("[{}] END: timeTaken={}ms", classMethod, System.currentTimeMillis() - timeStart);
+    log.info("RES: {}", Optional.ofNullable(result).orElse("No result"));
+    log.info("END: timeTaken={}ms", System.currentTimeMillis() - timeStart);
 
     return result;
   }
