@@ -15,6 +15,7 @@ import io.vertx.core.json.jackson.DatabindCodec;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 
@@ -57,7 +58,7 @@ public class VertxConfig {
     log.info("Vertx event registered...{}", event.getAddress());
   }
 
-  public void publish(CommonEvent event, JsonObject message) {
+  public void publishEvent(CommonEvent event, JsonObject message) {
     vertx
         .eventBus()
         .publish(
@@ -66,6 +67,26 @@ public class VertxConfig {
             new DeliveryOptions()
                 .addHeader(HEADER_MDC, JsonObject.mapFrom(MDC.getCopyOfContextMap()).encode()));
     log.info("Vertx event published...{}", event.getAddress());
+  }
+
+  public CompletableFuture<JsonObject> requestEvent(CommonEvent event, JsonObject message) {
+    var mdc = MDC.getCopyOfContextMap();
+    return vertx
+        .eventBus()
+        .request(
+            event.getAddress(),
+            message,
+            new DeliveryOptions()
+                .addHeader(HEADER_MDC, JsonObject.mapFrom(MDC.getCopyOfContextMap()).encode()))
+        .andThen(
+            reply -> {
+              MDC.setContextMap(mdc);
+              log.info("Vertx event requested...{},{}", event.getAddress(), reply.succeeded());
+              MDC.clear();
+            })
+        .map(reply -> JsonObject.mapFrom(reply.body()))
+        .toCompletionStage()
+        .toCompletableFuture();
   }
 
   @PreDestroy
