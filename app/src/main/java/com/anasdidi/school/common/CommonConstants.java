@@ -28,4 +28,7 @@ public class CommonConstants {
   }
 
   public static final String V1_URL = "/api/v1";
+
+  public static final String MDC_TRACEID = "TraceId";
+  public static final String MDC_CLASSMETHOD = "ClassMethod";
 }

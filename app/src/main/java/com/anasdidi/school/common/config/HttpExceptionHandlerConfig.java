@@ -1,6 +1,7 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.common.config;
 
+import com.anasdidi.school.common.CommonConstants;
 import com.anasdidi.school.common.error.BaseError;
 import com.anasdidi.school.common.error.E01ValidationError;
 import com.anasdidi.school.common.error.E99UnexpectedError;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 
 @Factory
 @AllArgsConstructor
@@ -25,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 class HttpExceptionHandlerConfig {
 
   private final LocalizedMessageSource messageSource;
-  private final TraceContext traceContext;
 
   @Singleton
   @Requires(classes = {ConstraintViolationException.class})
@@ -68,7 +69,7 @@ class HttpExceptionHandlerConfig {
                 error.error.code(),
                 messageSource.getMessageOrDefault(
                     "error." + error.error.name(), httpStatus.getReason(), error.variables));
-    return Optional.ofNullable(traceContext.getTraceId())
+    return Optional.ofNullable(MDC.get(CommonConstants.MDC_TRACEID))
         .map(s -> message + " | Ref[%s]".formatted(s))
         .orElse(message);
   }
@@ -80,16 +81,7 @@ class HttpExceptionHandlerConfig {
       HttpRequest<?> request,
       HttpStatus httpStatus) {
     log.debug("[{}] errorCode={}, message={}", logTag, exception.error.code(), message);
-    log.debug(
-        "[{}] classMethod={}, variables={}",
-        logTag,
-        traceContext.getClassMethod(),
-        exception.variables);
-    log.debug(
-        "[{}] controller={}, controllerParam={}",
-        logTag,
-        traceContext.getController(),
-        traceContext.getControllerParam());
+    log.debug("[{}] variables={}", logTag, exception.variables);
 
     return HttpResponse.status(httpStatus).contentType(MediaType.TEXT_PLAIN).body(message);
   }

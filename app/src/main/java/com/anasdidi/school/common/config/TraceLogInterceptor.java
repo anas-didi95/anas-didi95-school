@@ -1,11 +1,11 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.common.config;
 
+import com.anasdidi.school.common.CommonConstants;
 import io.micronaut.aop.InterceptorBean;
 import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.http.annotation.Controller;
 import java.security.Principal;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -25,8 +25,6 @@ class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
   private static final SecureRandom RANDOM = new SecureRandom();
   private static final Base64.Encoder ENCODER = Base64.getUrlEncoder().withoutPadding();
   private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyMMdd");
-
-  // private final TraceContext traceContext;
 
   @Override
   public @Nullable Object intercept(MethodInvocationContext<Object, Object> context) {
@@ -52,23 +50,14 @@ class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
                     .toList())
             : "No parameter";
 
-    boolean isController = context.hasAnnotation(Controller.class);
-
-    if (isController) {
-      // traceContext.setController(classMethod);
-      // traceContext.setControllerParam(parameters);
-    }
-
-    // traceContext.setClassMethod(classMethod);
-    // if (Objects.isNull(traceContext.getTraceId())) {
-    if (StringUtils.isBlank(MDC.get("traceId"))) {
+    if (StringUtils.isBlank(MDC.get(CommonConstants.MDC_TRACEID))) {
       byte[] buffer = new byte[6];
       RANDOM.nextBytes(buffer);
-      // traceContext.setTraceId(
-      //    FORMATTER.format(LocalDateTime.now()) + ENCODER.encodeToString(buffer));
-      MDC.put("traceId", FORMATTER.format(LocalDateTime.now()) + ENCODER.encodeToString(buffer));
+      MDC.put(
+          CommonConstants.MDC_TRACEID,
+          FORMATTER.format(LocalDateTime.now()) + ENCODER.encodeToString(buffer));
     }
-    MDC.put("classMethod", classMethod);
+    MDC.put(CommonConstants.MDC_CLASSMETHOD, classMethod);
 
     long timeStart = System.currentTimeMillis();
     log.info("REQ: {}", parameters);
