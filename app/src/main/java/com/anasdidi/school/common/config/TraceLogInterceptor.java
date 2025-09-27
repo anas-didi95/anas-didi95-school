@@ -6,6 +6,7 @@ import io.micronaut.aop.InterceptorBean;
 import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.http.annotation.Controller;
 import java.security.Principal;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -62,6 +63,12 @@ class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
     long timeStart = System.currentTimeMillis();
     log.info("REQ: {}", parameters);
     Object result = context.proceed();
+
+    boolean isController = context.hasAnnotation(Controller.class);
+    if (isController) {
+      MDC.put(CommonConstants.MDC_CLASSMETHOD, classMethod);
+    }
+
     log.info("RES: {}", Optional.ofNullable(result).orElse("No result"));
     log.info("END: timeTaken={}ms", System.currentTimeMillis() - timeStart);
 
