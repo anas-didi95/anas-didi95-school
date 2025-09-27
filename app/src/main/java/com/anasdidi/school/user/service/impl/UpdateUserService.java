@@ -30,7 +30,7 @@ class UpdateUserService extends UserService<UpdateUserReqDTO, UpdateUserResDTO> 
 
   @Override
   protected UpdateUserResDTO execute(UpdateUserReqDTO in) {
-    log.trace("[execute] START...");
+    log.trace("START...");
 
     UUID id = in.id();
     int version = in.update().version();
@@ -43,13 +43,15 @@ class UpdateUserService extends UserService<UpdateUserReqDTO, UpdateUserResDTO> 
               return criteriaBuilder.and(list.toArray(Predicate[]::new));
             });
     if (result.isEmpty()) {
-      log.error("[execute] User not found! id={}, version={}", id, version);
+      log.error("User not found! id={}, version={}", id, version);
       throw new E03RecordNotFoundError("User");
     }
 
     UserEntity entity = result.get();
     entity.setName(in.update().name());
     userRepository.save(entity);
+
+    log.debug("User updated...{}", entity.getUsername());
     return UpdateUserResDTO.builder().id(id).build();
   }
 }

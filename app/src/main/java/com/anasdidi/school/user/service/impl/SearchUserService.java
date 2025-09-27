@@ -31,7 +31,7 @@ class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> 
 
   @Override
   protected SearchUserResDTO execute(SearchUserReqDTO in) {
-    log.trace("[execute] START...");
+    log.trace("START...");
 
     int pageNo = in.pageNo();
     int totalRecordsPerPage = Optional.ofNullable(in.totalRecordsPerPage()).orElse(10);
@@ -56,6 +56,7 @@ class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> 
             },
             pageable);
 
+    log.debug("Search completed...");
     return SearchUserResDTO.builder()
         .resultList(search.getContent().stream().map(userMapper::toUserDTO).toList())
         .pagination(

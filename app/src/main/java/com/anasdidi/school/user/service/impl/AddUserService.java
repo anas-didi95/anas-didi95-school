@@ -27,13 +27,13 @@ class AddUserService extends UserService<AddUserReqDTO, AddUserResDTO> {
 
   @Override
   protected AddUserResDTO execute(AddUserReqDTO in) {
-    log.trace("[execute] START...");
+    log.trace("START...");
 
     userRepository
         .findByUsername(in.username())
         .ifPresent(
             o -> {
-              log.error("[execute] Username already exists! {}", o.getUsername());
+              log.error("Username already exists! {}", o.getUsername());
               throw new E02RecordAlreadyExistsError("Username");
             });
 
@@ -48,7 +48,7 @@ class AddUserService extends UserService<AddUserReqDTO, AddUserResDTO> {
     user.setName(in.name());
     userRepository.save(user);
 
-    log.info("[execute] User created...{}", user.getUsername());
+    log.debug("User created...{}", user.getUsername());
     return AddUserResDTO.builder().id(user.getId()).build();
   }
 }

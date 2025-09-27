@@ -27,7 +27,7 @@ class DeleteUserService extends UserService<DeleteUserReqDTO, DeleteUserResDTO> 
 
   @Override
   protected DeleteUserResDTO execute(DeleteUserReqDTO in) {
-    log.trace("[execute] START...");
+    log.trace("START...");
 
     UUID id = in.id();
     Optional<UserEntity> result =
@@ -36,13 +36,15 @@ class DeleteUserService extends UserService<DeleteUserReqDTO, DeleteUserResDTO> 
               return criteriaBuilder.equal(root.get("id"), id);
             });
     if (result.isEmpty()) {
-      log.error("[execute] User not found! {}", id);
+      log.error("User not found! {}", id);
       throw new E03RecordNotFoundError("User");
     }
 
     UserEntity entity = result.get();
     entity.setIsDeleted(true);
     userRepository.save(entity);
+
+    log.debug("User deleted...{}", entity.getUsername());
     return DeleteUserResDTO.builder().id(id).build();
   }
 }

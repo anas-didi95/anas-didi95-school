@@ -6,6 +6,7 @@ import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.UserMapper;
 import com.anasdidi.school.user.dto.GetUserReqDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
+import com.anasdidi.school.user.dto.model.UserDTO;
 import com.anasdidi.school.user.entity.UserEntity;
 import com.anasdidi.school.user.repository.UserRepository;
 import com.anasdidi.school.user.service.UserService;
@@ -26,14 +27,16 @@ class GetUserService extends UserService<GetUserReqDTO, GetUserResDTO> {
 
   @Override
   protected GetUserResDTO execute(GetUserReqDTO in) {
-    log.trace("[execute] START...");
+    log.trace("START...");
 
     Optional<UserEntity> result = userRepository.findById(in.id());
     if (result.isEmpty()) {
-      log.error("[execute] User not found! {}", in.id());
+      log.error("User not found! {}", in.id());
       throw new E03RecordNotFoundError("User");
     }
+    UserDTO user = userMapper.toUserDTO(result.get());
 
-    return GetUserResDTO.builder().result(userMapper.toUserDTO(result.get())).build();
+    log.debug("User found...{}", user.username());
+    return GetUserResDTO.builder().result(user).build();
   }
 }
