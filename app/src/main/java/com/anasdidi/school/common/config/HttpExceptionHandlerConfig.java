@@ -4,6 +4,7 @@ package com.anasdidi.school.common.config;
 import com.anasdidi.school.common.CommonConstants;
 import com.anasdidi.school.common.error.BaseError;
 import com.anasdidi.school.common.error.E01ValidationError;
+import com.anasdidi.school.common.error.E98VertxError;
 import com.anasdidi.school.common.error.E99UnexpectedError;
 import io.micronaut.context.LocalizedMessageSource;
 import io.micronaut.context.annotation.Factory;
@@ -13,6 +14,8 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.server.exceptions.ExceptionHandler;
+import io.vertx.core.eventbus.ReplyException;
+import io.vertx.core.json.JsonObject;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Map;
@@ -53,6 +56,17 @@ class HttpExceptionHandlerConfig {
   @Requires(classes = {Exception.class, ExceptionHandler.class})
   ExceptionHandler<Exception, HttpResponse<?>> E99UnexpectedError() {
     return (request, exception) -> {
+      if (exception instanceof ReplyException e) {
+        var json = new JsonObject(e.getMessage());
+        try {
+          var error = CommonConstants.Error.valueOf(json.getString(BaseError.PARAM_ERROR));
+          var variables = json.getJsonArray(BaseError.PARAM_VARIABLES);
+          return BaseError().handle(request, new E98VertxError(error, variables));
+        } catch (IllegalArgumentException e1) {
+          log.error("Fail to get error code! {}", json.encode());
+        }
+      }
+
       log.error("", exception);
 
       HttpStatus httpStatus = HttpStatus.BAD_REQUEST;

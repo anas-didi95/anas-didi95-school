@@ -12,6 +12,7 @@ public class CommonConstants {
     E01_VALIDATION_ERR,
     E02_RECORD_ALREADY_EXIST_ERR,
     E03_RECORD_NOT_FOUND_ERR,
+    E98_VERTX_ERR,
     E99_UNEXPECTED_ERR;
 
     public final String code() {

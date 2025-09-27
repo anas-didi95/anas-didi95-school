@@ -4,6 +4,7 @@ package com.anasdidi.school.common.config;
 import com.anasdidi.school.common.CommonConstants.CommonEvent;
 import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
+import com.anasdidi.school.common.error.BaseError;
 import com.anasdidi.school.common.service.CommonService;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.core.type.Argument;
@@ -25,6 +26,7 @@ import org.slf4j.MDC;
 public class VertxConfig {
 
   private static final String HEADER_MDC = "__MDC";
+  private static final int ERROR_CODE = 98;
   private final Vertx vertx;
   private final JsonMapper jsonMapper;
 
@@ -50,9 +52,19 @@ public class VertxConfig {
                 CommonReqDTO req = message.body().mapTo(event.getReqClass());
                 CommonResDTO res = service.process(event.getReqClass().cast(req));
                 message.reply(JsonObject.mapFrom(res));
-                MDC.clear();
               } catch (IOException e) {
-                e.printStackTrace();
+                log.error("Fail to parse header!", e);
+                message.fail(ERROR_CODE, e.getMessage());
+              } catch (BaseError e) {
+                log.error("Vertx event {} failed! {}", event.getAddress(), e.getMessage());
+                message.fail(
+                    ERROR_CODE,
+                    new JsonObject()
+                        .put(BaseError.PARAM_ERROR, e.error)
+                        .put(BaseError.PARAM_VARIABLES, e.variables)
+                        .encode());
+              } finally {
+                MDC.clear();
               }
             });
     log.info("Vertx event registered...{}", event.getAddress());
