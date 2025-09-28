@@ -16,7 +16,6 @@ import io.vertx.core.json.jackson.DatabindCodec;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import lombok.Builder;
@@ -104,7 +103,8 @@ public class VertxConfig {
         .toCompletableFuture();
   }
 
-  public void putData(Map<String, String> contextMap, String key, VertxData value) {
+  public void putData(String key, VertxData value) {
+    var mdc = MDC.getCopyOfContextMap();
     var mapName = value.getClass().getSimpleName();
     vertx
         .sharedData()
@@ -112,14 +112,14 @@ public class VertxConfig {
         .compose(map -> map.put(key, JsonObject.mapFrom(value).encode()))
         .onComplete(
             event -> {
-              MDC.setContextMap(contextMap);
+              MDC.setContextMap(mdc);
               log.info("Vertx data put...{},{},{}", mapName, key, event.succeeded());
               MDC.clear();
             });
   }
 
-  public <A extends VertxData> CompletableFuture<Optional<A>> getData(
-      Map<String, String> contextMap, String key, Class<A> clazz) {
+  public <A extends VertxData> CompletableFuture<Optional<A>> getData(String key, Class<A> clazz) {
+    var mdc = MDC.getCopyOfContextMap();
     var mapName = clazz.getSimpleName();
     return vertx
         .sharedData()
@@ -128,7 +128,7 @@ public class VertxConfig {
         .map(v -> Optional.ofNullable(v).map(vv -> new JsonObject((String) vv).mapTo(clazz)))
         .andThen(
             event -> {
-              MDC.setContextMap(contextMap);
+              MDC.setContextMap(mdc);
               log.info("Vertx data get...{},{},{}", mapName, key, event.succeeded());
               MDC.clear();
             })

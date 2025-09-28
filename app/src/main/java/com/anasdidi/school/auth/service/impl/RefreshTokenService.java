@@ -2,6 +2,7 @@
 package com.anasdidi.school.auth.service.impl;
 
 import com.anasdidi.school.auth.AuthConstants;
+import com.anasdidi.school.auth.AuthUtils;
 import com.anasdidi.school.auth.dto.RefreshTokenReqDTO;
 import com.anasdidi.school.auth.dto.RefreshTokenResDTO;
 import com.anasdidi.school.auth.service.AuthService;
@@ -12,10 +13,8 @@ import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
@@ -32,7 +31,7 @@ class RefreshTokenService extends AuthService<RefreshTokenReqDTO, RefreshTokenRe
   protected RefreshTokenResDTO execute(RefreshTokenReqDTO in) {
     log.trace("START...");
 
-    var user = vertx.getData(MDC.getCopyOfContextMap(), in.username(), VertxUser.class).join();
+    var user = vertx.getData(in.username(), VertxUser.class).join();
     if (user.isEmpty()) {
       log.error("Token not found! {}", in.username());
       throw new E87TokenInvalidError();
@@ -41,16 +40,9 @@ class RefreshTokenService extends AuthService<RefreshTokenReqDTO, RefreshTokenRe
       throw new E87TokenInvalidError();
     }
 
-    var refreshToken = in.username() + UUID.randomUUID();
-    vertx.putData(
-        MDC.getCopyOfContextMap(),
-        in.username(),
-        VertxConfig.VertxUser.builder().refreshToken(refreshToken).build());
-
     var token =
-        generator
-            .generate(passwordEncoder.encode(refreshToken), Authentication.build(in.username()))
-            .get();
+        AuthUtils.prepareToken(
+            vertx, generator, passwordEncoder, Authentication.build(in.username()));
 
     log.debug("Token refreshed...{}", in.username());
     return RefreshTokenResDTO.builder().token(token).build();
