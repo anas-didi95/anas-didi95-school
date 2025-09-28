@@ -17,7 +17,7 @@ Content-Type: application/json
 ###
 
 # Search User
-GET {{BASE_URL}}/api/v1/user?pageNo=1&name=
+GET {{BASE_URL}}/api/v1/user?username=anas.didi95
 Accept: application/json
 Content-Type: application/json
 

@@ -27,7 +27,11 @@ public abstract class UserController extends CommonController {
   @TraceLog
   @Operation(summary = "Search user", tags = OPENAPI_TAG)
   protected abstract HttpResponse<SearchUserResDTO> searchUser(
-      HttpRequest<?> request, String name, Integer pageNo, Integer totalRecordsPerPage);
+      HttpRequest<?> request,
+      String username,
+      String name,
+      Integer pageNo,
+      Integer totalRecordsPerPage);
 
   @TraceLog
   @Operation(summary = "Get user", tags = OPENAPI_TAG)

@@ -33,7 +33,7 @@ class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> 
   protected SearchUserResDTO execute(SearchUserReqDTO in) {
     log.trace("START...");
 
-    int pageNo = in.pageNo();
+    int pageNo = Optional.ofNullable(in.pageNo()).orElse(1);
     int totalRecordsPerPage = Optional.ofNullable(in.totalRecordsPerPage()).orElse(10);
     Pageable pageable = Pageable.from(pageNo - 1, totalRecordsPerPage);
 
@@ -41,6 +41,10 @@ class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> 
         userRepository.findAll(
             (root, criteriaBuilder) -> {
               List<Predicate> list = new ArrayList<>();
+
+              Optional.ofNullable(in.username())
+                  .ifPresent(
+                      t -> list.add(criteriaBuilder.equal(root.get("username"), in.username())));
 
               Optional.ofNullable(in.name())
                   .ifPresent(

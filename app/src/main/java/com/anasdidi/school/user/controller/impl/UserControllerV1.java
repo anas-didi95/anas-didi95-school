@@ -45,11 +45,13 @@ class UserControllerV1 extends UserController {
   @Get
   protected HttpResponse<SearchUserResDTO> searchUser(
       HttpRequest<?> request,
+      @Nullable String username,
       @Nullable String name,
-      Integer pageNo,
+      @Nullable Integer pageNo,
       @Nullable Integer totalRecordsPerPage) {
     SearchUserReqDTO body =
         SearchUserReqDTO.builder()
+            .username(username)
             .name(name)
             .pageNo(pageNo)
             .totalRecordsPerPage(totalRecordsPerPage)
