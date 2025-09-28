@@ -6,6 +6,8 @@ import com.anasdidi.school.auth.AuthConstants.EventEnum;
 import com.anasdidi.school.auth.controller.AuthController;
 import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
 import com.anasdidi.school.auth.dto.HelloWorldResDTO;
+import com.anasdidi.school.auth.dto.SignInReqDTO;
+import com.anasdidi.school.auth.dto.SignInResDTO;
 import com.anasdidi.school.auth.service.AuthServiceRegistry;
 import com.anasdidi.school.common.CommonConstants;
 import io.micronaut.http.HttpRequest;
@@ -27,5 +29,11 @@ class AuthControllerV1 extends AuthController {
       HttpRequest<?> request, @Body HelloWorldReqDTO body) {
     return HttpResponse.ok(
         (HelloWorldResDTO) registry.get(EventEnum.AUTH_HELLO_WORLD).process(body));
+  }
+
+  @Override
+  @Post("/sign-in")
+  protected HttpResponse<SignInResDTO> signIn(HttpRequest<?> request, @Body SignInReqDTO body) {
+    return HttpResponse.ok((SignInResDTO) registry.get(EventEnum.AUTH_SIGN_IN).process(body));
   }
 }

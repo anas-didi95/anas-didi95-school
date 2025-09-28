@@ -82,7 +82,9 @@ class HttpExceptionHandlerConfig {
             .formatted(
                 error.error.code(),
                 messageSource.getMessageOrDefault(
-                    "error." + error.error.name(), httpStatus.getReason(), error.variables));
+                    "error." + error.error.name(),
+                    httpStatus.getReason(),
+                    Optional.ofNullable(error.variables).orElse(new String[] {})));
     return Optional.ofNullable(MDC.get(CommonConstants.MDC_TRACEID))
         .map(s -> message + " | Ref[%s]".formatted(s))
         .orElse(message);

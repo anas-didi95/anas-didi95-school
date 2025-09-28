@@ -3,6 +3,8 @@ package com.anasdidi.school.auth.controller;
 
 import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
 import com.anasdidi.school.auth.dto.HelloWorldResDTO;
+import com.anasdidi.school.auth.dto.SignInReqDTO;
+import com.anasdidi.school.auth.dto.SignInResDTO;
 import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
 import io.micronaut.http.HttpRequest;
@@ -17,4 +19,8 @@ public abstract class AuthController extends CommonController {
   @Operation(summary = "Hello World", tags = OPENAPI_TAG)
   protected abstract HttpResponse<HelloWorldResDTO> helloWorld(
       HttpRequest<?> request, HelloWorldReqDTO body);
+
+  @TraceLog
+  @Operation(summary = "Sign In", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<SignInResDTO> signIn(HttpRequest<?> request, SignInReqDTO body);
 }

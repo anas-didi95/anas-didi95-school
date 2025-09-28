@@ -3,6 +3,8 @@ package com.anasdidi.school.auth;
 
 import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
 import com.anasdidi.school.auth.dto.HelloWorldResDTO;
+import com.anasdidi.school.auth.dto.SignInReqDTO;
+import com.anasdidi.school.auth.dto.SignInResDTO;
 import com.anasdidi.school.common.CommonConstants.CommonEvent;
 import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
@@ -15,11 +17,13 @@ public class AuthConstants {
   @UtilityClass
   public static class Event {
     public static final String AUTH_HELLO_WORLD = "AUTH_HELLO_WORLD";
+    public static final String AUTH_SIGN_IN = "AUTH_SIGN_IN";
   }
 
   @Getter
   public enum EventEnum implements CommonEvent {
-    AUTH_HELLO_WORLD(Event.AUTH_HELLO_WORLD, HelloWorldReqDTO.class, HelloWorldResDTO.class);
+    AUTH_HELLO_WORLD(Event.AUTH_HELLO_WORLD, HelloWorldReqDTO.class, HelloWorldResDTO.class),
+    AUTH_SIGN_IN(Event.AUTH_SIGN_IN, SignInReqDTO.class, SignInResDTO.class);
 
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;
