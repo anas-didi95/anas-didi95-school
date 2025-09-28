@@ -1,6 +1,7 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.user.controller;
 
+import com.anasdidi.school.auth.dto.Views;
 import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
@@ -10,6 +11,7 @@ import com.anasdidi.school.user.dto.GetUserResDTO;
 import com.anasdidi.school.user.dto.SearchUserResDTO;
 import com.anasdidi.school.user.dto.UpdateUserResDTO;
 import com.anasdidi.school.user.dto.model.UserDTO;
+import com.fasterxml.jackson.annotation.JsonView;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +27,7 @@ public abstract class UserController extends CommonController {
       HttpRequest<?> request, AddUserReqDTO body);
 
   @TraceLog
+  @JsonView(Views.Public.class)
   @Operation(summary = "Search user", tags = OPENAPI_TAG)
   protected abstract HttpResponse<SearchUserResDTO> searchUser(
       HttpRequest<?> request,
@@ -34,6 +37,7 @@ public abstract class UserController extends CommonController {
       Integer totalRecordsPerPage);
 
   @TraceLog
+  @JsonView(Views.Public.class)
   @Operation(summary = "Get user", tags = OPENAPI_TAG)
   protected abstract HttpResponse<GetUserResDTO> getUser(HttpRequest<?> request, UUID userId);
 
