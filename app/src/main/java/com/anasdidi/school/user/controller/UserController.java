@@ -1,9 +1,9 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.user.controller;
 
-import com.anasdidi.school.auth.dto.Views;
 import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
+import com.anasdidi.school.common.dto.Views;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
 import com.anasdidi.school.user.dto.DeleteUserResDTO;
