@@ -17,8 +17,10 @@ import io.vertx.core.json.JsonObject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import java.util.Objects;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
@@ -56,7 +58,16 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
       throw new E89InvalidUsernamePasswordError();
     }
 
-    var token = generator.generate(Authentication.build(in.username())).get();
+    var refreshToken = in.username() + UUID.randomUUID();
+    vertx.putData(
+        MDC.getCopyOfContextMap(),
+        in.username(),
+        VertxConfig.VertxUser.builder().refreshToken(refreshToken).build());
+
+    var token =
+        generator
+            .generate(passwordEncoder.encode(refreshToken), Authentication.build(in.username()))
+            .get();
 
     log.debug("User signed in...{}", in.username());
     return SignInResDTO.builder().token(token).build();

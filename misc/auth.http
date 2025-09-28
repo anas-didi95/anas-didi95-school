@@ -23,3 +23,15 @@ Content-Type: application/json
   "username": "anas.didi95",
   "password": "p@ssw0rd"
 }
+
+###
+
+# Refresh Token
+POST {{BASE_URL}}/api/v1/auth/refresh-token
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "anas.didi95",
+  "refreshToken": "$2a$10$l1M5dLjjQU7pYOyZEXxgpuqePJZvWUDEOscYPNDZl9N5X3Je08XaS"
+}

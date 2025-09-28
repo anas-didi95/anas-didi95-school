@@ -16,7 +16,10 @@ import io.vertx.core.json.jackson.DatabindCodec;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 
@@ -100,6 +103,44 @@ public class VertxConfig {
         .toCompletionStage()
         .toCompletableFuture();
   }
+
+  public void putData(Map<String, String> contextMap, String key, VertxData value) {
+    var mapName = value.getClass().getSimpleName();
+    vertx
+        .sharedData()
+        .getAsyncMap(mapName)
+        .compose(map -> map.put(key, JsonObject.mapFrom(value).encode()))
+        .onComplete(
+            event -> {
+              MDC.setContextMap(contextMap);
+              log.info("Vertx data put...{},{},{}", mapName, key, event.succeeded());
+              MDC.clear();
+            });
+  }
+
+  public <A extends VertxData> CompletableFuture<Optional<A>> getData(
+      Map<String, String> contextMap, String key, Class<A> clazz) {
+    var mapName = clazz.getSimpleName();
+    return vertx
+        .sharedData()
+        .getAsyncMap(mapName)
+        .compose(map -> map.get(key))
+        .map(v -> Optional.ofNullable(v).map(vv -> new JsonObject((String) vv).mapTo(clazz)))
+        .andThen(
+            event -> {
+              MDC.setContextMap(contextMap);
+              log.info("Vertx data get...{},{},{}", mapName, key, event.succeeded());
+              MDC.clear();
+            })
+        .toCompletionStage()
+        .toCompletableFuture();
+  }
+
+  public interface VertxData {}
+  ;
+
+  @Builder
+  public record VertxUser(String refreshToken) implements VertxData {}
 
   @PreDestroy
   void preDestroy() {

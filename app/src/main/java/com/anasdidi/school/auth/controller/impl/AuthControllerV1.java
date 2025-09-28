@@ -6,6 +6,8 @@ import com.anasdidi.school.auth.AuthConstants.EventEnum;
 import com.anasdidi.school.auth.controller.AuthController;
 import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
 import com.anasdidi.school.auth.dto.HelloWorldResDTO;
+import com.anasdidi.school.auth.dto.RefreshTokenReqDTO;
+import com.anasdidi.school.auth.dto.RefreshTokenResDTO;
 import com.anasdidi.school.auth.dto.SignInReqDTO;
 import com.anasdidi.school.auth.dto.SignInResDTO;
 import com.anasdidi.school.auth.service.AuthServiceRegistry;
@@ -35,5 +37,13 @@ class AuthControllerV1 extends AuthController {
   @Post("/sign-in")
   protected HttpResponse<SignInResDTO> signIn(HttpRequest<?> request, @Body SignInReqDTO body) {
     return HttpResponse.ok((SignInResDTO) registry.get(EventEnum.AUTH_SIGN_IN).process(body));
+  }
+
+  @Override
+  @Post("/refresh-token")
+  protected HttpResponse<RefreshTokenResDTO> refreshToken(
+      HttpRequest<?> request, @Body RefreshTokenReqDTO body) {
+    return HttpResponse.ok(
+        (RefreshTokenResDTO) registry.get(EventEnum.AUTH_REFRESH_TOKEN).process(body));
   }
 }

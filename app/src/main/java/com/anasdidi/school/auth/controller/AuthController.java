@@ -3,6 +3,8 @@ package com.anasdidi.school.auth.controller;
 
 import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
 import com.anasdidi.school.auth.dto.HelloWorldResDTO;
+import com.anasdidi.school.auth.dto.RefreshTokenReqDTO;
+import com.anasdidi.school.auth.dto.RefreshTokenResDTO;
 import com.anasdidi.school.auth.dto.SignInReqDTO;
 import com.anasdidi.school.auth.dto.SignInResDTO;
 import com.anasdidi.school.common.config.TraceLog;
@@ -23,4 +25,9 @@ public abstract class AuthController extends CommonController {
   @TraceLog
   @Operation(summary = "Sign In", tags = OPENAPI_TAG)
   protected abstract HttpResponse<SignInResDTO> signIn(HttpRequest<?> request, SignInReqDTO body);
+
+  @TraceLog
+  @Operation(summary = "Refresh Token", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<RefreshTokenResDTO> refreshToken(
+      HttpRequest<?> request, RefreshTokenReqDTO body);
 }
