@@ -42,6 +42,12 @@ micronaut:
       - pattern: "/api/*/auth/**"
         access:
           - "isAnonymous()"
+      - pattern: "/swagger/**"
+        access:
+          - "isAnonymous()"
+      - pattern: "/swagger-ui/**"
+        access:
+          - "isAnonymous()"
     token:
       generator:
         access-token:
