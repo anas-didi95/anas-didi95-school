@@ -34,6 +34,23 @@ micronaut:
       swagger-ui:
         mapping: "/swagger-ui/**"
         paths: "classpath:META-INF/swagger/views/swagger-ui"
+  security:
+    intercept-url-map:
+      - pattern: "/api/*/user/**"
+        access:
+          - "isAuthenticated()"
+      - pattern: "/api/*/auth/**"
+        access:
+          - "isAnonymous()"
+    token:
+      generator:
+        access-token:
+          expiration: 3600
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: "pleaseChangeThisSecretForANewOne"
   server:
     context-path: "/school"
     host: "0.0.0.0"

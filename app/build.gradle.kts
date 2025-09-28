@@ -18,11 +18,14 @@ dependencies {
   annotationProcessor("io.micronaut.data:micronaut-data-processor")
   annotationProcessor("io.micronaut:micronaut-http-validation")
   annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+  annotationProcessor("io.micronaut.security:micronaut-security-annotations")
   annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
   annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
   implementation("io.micronaut:micronaut-jackson-databind")
   implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
   implementation("io.micronaut.liquibase:micronaut-liquibase")
+  implementation("io.micronaut.security:micronaut-security")
+  implementation("io.micronaut.security:micronaut-security-jwt")
   implementation("io.micronaut.serde:micronaut-serde-jackson")
   implementation("io.micronaut.sql:micronaut-jdbc-hikari")
   implementation("io.micronaut.validation:micronaut-validation")
@@ -39,6 +42,8 @@ dependencies {
   runtimeOnly("com.h2database:h2")
   runtimeOnly("org.yaml:snakeyaml")
   testImplementation("io.micronaut:micronaut-http-client")
+  aotPlugins(platform("io.micronaut.platform:micronaut-platform"))
+  aotPlugins("io.micronaut.security:micronaut-security-aot")
 }
 
 application { mainClass = "com.anasdidi.school.Application" }
@@ -68,6 +73,7 @@ micronaut {
     deduceEnvironment = true
     optimizeNetty = true
     replaceLogbackXml = true
+    configurationProperties.put("micronaut.security.jwks.enabled", "false")
   }
 }
 

@@ -11,6 +11,8 @@ import com.anasdidi.school.common.error.E89InvalidUsernamePasswordError;
 import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.dto.SearchUserReqDTO;
 import com.anasdidi.school.user.dto.SearchUserResDTO;
+import io.micronaut.security.authentication.Authentication;
+import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
 import io.vertx.core.json.JsonObject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
@@ -27,6 +29,7 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
 
   private final VertxConfig vertx;
   private final PasswordEncoder passwordEncoder;
+  private final AccessRefreshTokenGenerator generator;
 
   @Override
   protected SignInResDTO execute(SignInReqDTO in) {
@@ -53,7 +56,9 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
       throw new E89InvalidUsernamePasswordError();
     }
 
+    var token = generator.generate(Authentication.build(in.username())).get();
+
     log.debug("User signed in...{}", in.username());
-    return SignInResDTO.builder().name(user.name()).build();
+    return SignInResDTO.builder().token(token).build();
   }
 }
