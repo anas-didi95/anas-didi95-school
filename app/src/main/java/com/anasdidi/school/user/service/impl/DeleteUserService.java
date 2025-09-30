@@ -13,13 +13,13 @@ import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import java.util.Optional;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Named(UserConstants.Event.USER_DELETE_USER)
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 class DeleteUserService extends UserService<DeleteUserReqDTO, DeleteUserResDTO> {
 

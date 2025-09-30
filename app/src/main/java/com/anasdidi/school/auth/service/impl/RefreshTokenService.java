@@ -13,13 +13,13 @@ import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
 @Named(AuthConstants.Event.AUTH_REFRESH_TOKEN)
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 class RefreshTokenService extends AuthService<RefreshTokenReqDTO, RefreshTokenResDTO> {
 

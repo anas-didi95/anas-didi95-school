@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 
 @InterceptorBean(TraceLog.class)
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
 

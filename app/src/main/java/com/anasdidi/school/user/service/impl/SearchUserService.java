@@ -17,12 +17,12 @@ import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Named(UserConstants.Event.USER_SEARCH_USER)
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> {
 

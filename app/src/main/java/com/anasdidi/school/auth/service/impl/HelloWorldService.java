@@ -13,11 +13,11 @@ import io.vertx.core.json.JsonObject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Singleton
 @Named(AuthConstants.Event.AUTH_HELLO_WORLD)
-@AllArgsConstructor
+@RequiredArgsConstructor
 class HelloWorldService extends AuthService<HelloWorldReqDTO, HelloWorldResDTO> {
 
   private final VertxConfig vertx;

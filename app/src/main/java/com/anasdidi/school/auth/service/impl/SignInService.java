@@ -18,13 +18,13 @@ import io.vertx.core.json.JsonObject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import java.util.Objects;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
 @Named(AuthConstants.Event.AUTH_SIGN_IN)
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
 

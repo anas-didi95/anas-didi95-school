@@ -6,10 +6,10 @@ import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
 import jakarta.inject.Singleton;
 import java.util.Map;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Singleton
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthServiceRegistry {
 
   private final Map<String, AuthService<?, ?>> serviceMap;

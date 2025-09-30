@@ -26,10 +26,10 @@ import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Controller(CommonConstants.V1_URL + UserConstants.BASE_URL)
-@AllArgsConstructor
+@RequiredArgsConstructor
 class UserControllerV1 extends UserController {
 
   private final UserServiceRegistry registry;

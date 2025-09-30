@@ -22,10 +22,10 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.security.authentication.Authentication;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Controller(CommonConstants.V1_URL + AuthConstants.BASE_URL)
-@AllArgsConstructor
+@RequiredArgsConstructor
 class AuthControllerV1 extends AuthController {
 
   private final AuthServiceRegistry registry;

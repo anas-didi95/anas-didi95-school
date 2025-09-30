@@ -16,13 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Named(UserConstants.Event.USER_UPDATE_USER)
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 class UpdateUserService extends UserService<UpdateUserReqDTO, UpdateUserResDTO> {
 

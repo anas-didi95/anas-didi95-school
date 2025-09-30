@@ -10,11 +10,11 @@ import com.anasdidi.school.user.service.UserServiceRegistry;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Factory;
 import jakarta.annotation.PostConstruct;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Factory
 @Context
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserConfig {
 
   private final VertxConfig vertx;

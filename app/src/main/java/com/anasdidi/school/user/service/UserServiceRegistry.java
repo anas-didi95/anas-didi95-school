@@ -6,10 +6,10 @@ import com.anasdidi.school.common.dto.CommonResDTO;
 import com.anasdidi.school.user.UserConstants.EventEnum;
 import jakarta.inject.Singleton;
 import java.util.Map;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Singleton
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceRegistry {
 
   private final Map<String, UserService<?, ?>> serviceMap;

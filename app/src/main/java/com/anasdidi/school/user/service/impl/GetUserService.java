@@ -13,12 +13,12 @@ import com.anasdidi.school.user.service.UserService;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Named(UserConstants.Event.USER_GET_USER)
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 class GetUserService extends UserService<GetUserReqDTO, GetUserResDTO> {
 

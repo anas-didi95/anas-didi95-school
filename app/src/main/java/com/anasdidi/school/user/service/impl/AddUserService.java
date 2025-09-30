@@ -11,14 +11,14 @@ import com.anasdidi.school.user.service.UserService;
 import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
 @Named(UserConstants.Event.USER_ADD_USER)
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 class AddUserService extends UserService<AddUserReqDTO, AddUserResDTO> {
 
