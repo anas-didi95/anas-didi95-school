@@ -10,13 +10,18 @@ import com.anasdidi.school.auth.dto.RefreshTokenReqDTO;
 import com.anasdidi.school.auth.dto.RefreshTokenResDTO;
 import com.anasdidi.school.auth.dto.SignInReqDTO;
 import com.anasdidi.school.auth.dto.SignInResDTO;
+import com.anasdidi.school.auth.dto.SignOutReqDTO;
+import com.anasdidi.school.auth.dto.SignOutResDTO;
 import com.anasdidi.school.auth.service.AuthServiceRegistry;
 import com.anasdidi.school.common.CommonConstants;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.security.authentication.Authentication;
 import lombok.AllArgsConstructor;
 
 @Controller(CommonConstants.V1_URL + AuthConstants.BASE_URL)
@@ -45,5 +50,13 @@ class AuthControllerV1 extends AuthController {
       HttpRequest<?> request, @Body RefreshTokenReqDTO body) {
     return HttpResponse.ok(
         (RefreshTokenResDTO) registry.get(EventEnum.AUTH_REFRESH_TOKEN).process(body));
+  }
+
+  @Override
+  @Get("/sign-out")
+  protected HttpResponse<SignOutResDTO> signOut(
+      HttpRequest<?> request, @Nullable Authentication authentication) {
+    var body = SignOutReqDTO.builder().username(authentication.getName()).build();
+    return HttpResponse.ok((SignOutResDTO) registry.get(EventEnum.AUTH_SIGN_OUT).process(body));
   }
 }

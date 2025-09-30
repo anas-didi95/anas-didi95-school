@@ -39,6 +39,9 @@ micronaut:
       - pattern: "/api/*/user/**"
         access:
           - "isAuthenticated()"
+      - pattern: "/api/*/auth/sign-out"
+        access:
+          - "isAuthenticated()"
       - pattern: "/api/*/auth/**"
         access:
           - "isAnonymous()"

@@ -136,6 +136,25 @@ public class VertxConfig {
         .toCompletableFuture();
   }
 
+  public <A extends VertxData> CompletableFuture<Optional<A>> clearData(
+      String key, Class<A> clazz) {
+    var mdc = MDC.getCopyOfContextMap();
+    var mapName = clazz.getSimpleName();
+    return vertx
+        .sharedData()
+        .getAsyncMap(mapName)
+        .compose(map -> map.remove(key))
+        .map(v -> Optional.ofNullable(v).map(vv -> new JsonObject((String) vv).mapTo(clazz)))
+        .andThen(
+            event -> {
+              MDC.setContextMap(mdc);
+              log.info("Vertx data remove...{},{},{}", mapName, key, event.succeeded());
+              MDC.clear();
+            })
+        .toCompletionStage()
+        .toCompletableFuture();
+  }
+
   public interface VertxData {}
   ;
 
