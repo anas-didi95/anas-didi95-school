@@ -23,7 +23,11 @@ class SignOutService extends AuthService<SignOutReqDTO, SignOutResDTO> {
   protected SignOutResDTO execute(SignOutReqDTO in) {
     log.trace("START...");
 
-    var user = vertx.clearData(in.username(), VertxConfig.VertxUser.class).join();
+    var user =
+        vertx
+            .stopTimer(in.username())
+            .thenCompose(o -> vertx.clearData(in.username(), VertxConfig.VertxUser.class))
+            .join();
     if (user.isEmpty()) {
       log.warn("Vertx user not found! {}", in.username());
     }

@@ -9,6 +9,7 @@ import com.anasdidi.school.common.service.CommonService;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.core.type.Argument;
 import io.micronaut.json.JsonMapper;
+import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.json.JsonObject;
@@ -16,6 +17,7 @@ import io.vertx.core.json.jackson.DatabindCodec;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import lombok.Builder;
@@ -66,7 +68,7 @@ public class VertxConfig {
                         .put(BaseError.PARAM_VARIABLES, e.variables)
                         .encode());
               } finally {
-                MDC.clear();
+                // MDC.clear();
               }
             });
     log.info("Vertx event registered...{}", event.getAddress());
@@ -96,17 +98,18 @@ public class VertxConfig {
             reply -> {
               MDC.setContextMap(mdc);
               log.info("Vertx event requested...{},{}", event.getAddress(), reply.succeeded());
-              MDC.clear();
+              // MDC.clear();
             })
         .map(reply -> JsonObject.mapFrom(reply.body()))
         .toCompletionStage()
         .toCompletableFuture();
   }
 
-  public void putData(String key, VertxData value) {
+  public CompletableFuture<Void> putData(String key, VertxData value) {
     var mdc = MDC.getCopyOfContextMap();
     var mapName = value.getClass().getSimpleName();
-    vertx
+
+    return vertx
         .sharedData()
         .getAsyncMap(mapName)
         .compose(map -> map.put(key, JsonObject.mapFrom(value).encode()))
@@ -114,13 +117,16 @@ public class VertxConfig {
             event -> {
               MDC.setContextMap(mdc);
               log.info("Vertx data put...{},{},{}", mapName, key, event.succeeded());
-              MDC.clear();
-            });
+              // MDC.clear();
+            })
+        .toCompletionStage()
+        .toCompletableFuture();
   }
 
   public <A extends VertxData> CompletableFuture<Optional<A>> getData(String key, Class<A> clazz) {
     var mdc = MDC.getCopyOfContextMap();
     var mapName = clazz.getSimpleName();
+
     return vertx
         .sharedData()
         .getAsyncMap(mapName)
@@ -130,7 +136,7 @@ public class VertxConfig {
             event -> {
               MDC.setContextMap(mdc);
               log.info("Vertx data get...{},{},{}", mapName, key, event.succeeded());
-              MDC.clear();
+              // MDC.clear();
             })
         .toCompletionStage()
         .toCompletableFuture();
@@ -140,6 +146,7 @@ public class VertxConfig {
       String key, Class<A> clazz) {
     var mdc = MDC.getCopyOfContextMap();
     var mapName = clazz.getSimpleName();
+
     return vertx
         .sharedData()
         .getAsyncMap(mapName)
@@ -149,7 +156,62 @@ public class VertxConfig {
             event -> {
               MDC.setContextMap(mdc);
               log.info("Vertx data remove...{},{},{}", mapName, key, event.succeeded());
-              MDC.clear();
+              // MDC.clear();
+            })
+        .toCompletionStage()
+        .toCompletableFuture();
+  }
+
+  public CompletableFuture<Void> startTimer(long seconds, String key, Handler<Long> handler) {
+    var mdc = MDC.getCopyOfContextMap();
+    var mapName = VertxTimer.class.getSimpleName();
+    var id = vertx.setTimer(Duration.ofSeconds(seconds).toMillis(), handler);
+    var data = VertxTimer.builder().id(id).build();
+
+    return vertx
+        .sharedData()
+        .getAsyncMap(mapName)
+        .compose(map -> map.put(key, JsonObject.mapFrom(data).encode()))
+        .onComplete(
+            event -> {
+              MDC.setContextMap(mdc);
+              log.info("Vertx timer start...{},{},{},{}", mapName, key, seconds, event.succeeded());
+              // MDC.clear();
+            })
+        .toCompletionStage()
+        .toCompletableFuture();
+  }
+
+  public CompletableFuture<Optional<VertxTimer>> stopTimer(String key) {
+    var mdc = MDC.getCopyOfContextMap();
+    var mapName = VertxTimer.class.getSimpleName();
+
+    return vertx
+        .sharedData()
+        .getAsyncMap(mapName)
+        .compose(map -> map.remove(key))
+        .map(
+            v ->
+                Optional.ofNullable(v)
+                    .map(vv -> new JsonObject((String) vv).mapTo(VertxTimer.class)))
+        .onComplete(
+            event -> {
+              MDC.setContextMap(mdc);
+              event
+                  .result()
+                  .ifPresentOrElse(
+                      t -> {
+                        var stop = vertx.cancelTimer(t.id());
+                        log.info(
+                            "Vertx timer stop...{},{},{},{}",
+                            mapName,
+                            key,
+                            stop,
+                            event.succeeded());
+                      },
+                      () ->
+                          log.info("Vertx time stop...{},{},{}", mapName, key, event.succeeded()));
+              // MDC.clear();
             })
         .toCompletionStage()
         .toCompletableFuture();
@@ -160,6 +222,9 @@ public class VertxConfig {
 
   @Builder
   public record VertxUser(String refreshToken) implements VertxData {}
+
+  @Builder
+  public record VertxTimer(long id) implements VertxData {}
 
   @PreDestroy
   void preDestroy() {
