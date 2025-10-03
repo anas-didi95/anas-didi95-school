@@ -92,8 +92,7 @@ public class VertxConfig {
         .request(
             event.getAddress(),
             message,
-            new DeliveryOptions()
-                .addHeader(HEADER_MDC, JsonObject.mapFrom(MDC.getCopyOfContextMap()).encode()))
+            new DeliveryOptions().addHeader(HEADER_MDC, JsonObject.mapFrom(mdc).encode()))
         .andThen(
             reply -> {
               MDC.setContextMap(mdc);
