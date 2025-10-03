@@ -1,8 +1,6 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.auth.controller;
 
-import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
-import com.anasdidi.school.auth.dto.HelloWorldResDTO;
 import com.anasdidi.school.auth.dto.RefreshTokenReqDTO;
 import com.anasdidi.school.auth.dto.RefreshTokenResDTO;
 import com.anasdidi.school.auth.dto.SignInReqDTO;
@@ -18,11 +16,6 @@ import io.swagger.v3.oas.annotations.Operation;
 public abstract class AuthController extends CommonController {
 
   private static final String OPENAPI_TAG = "Auth API";
-
-  @TraceLog
-  @Operation(summary = "Hello World", tags = OPENAPI_TAG)
-  protected abstract HttpResponse<HelloWorldResDTO> helloWorld(
-      HttpRequest<?> request, HelloWorldReqDTO body);
 
   @TraceLog
   @Operation(summary = "Sign In", tags = OPENAPI_TAG)

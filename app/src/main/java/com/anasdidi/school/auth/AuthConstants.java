@@ -1,8 +1,6 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.auth;
 
-import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
-import com.anasdidi.school.auth.dto.HelloWorldResDTO;
 import com.anasdidi.school.auth.dto.RefreshTokenReqDTO;
 import com.anasdidi.school.auth.dto.RefreshTokenResDTO;
 import com.anasdidi.school.auth.dto.SignInReqDTO;
@@ -20,7 +18,6 @@ public class AuthConstants {
 
   @UtilityClass
   public static class Event {
-    public static final String AUTH_HELLO_WORLD = "AUTH_HELLO_WORLD";
     public static final String AUTH_SIGN_IN = "AUTH_SIGN_IN";
     public static final String AUTH_REFRESH_TOKEN = "AUTH_REFRESH_TOKEN";
     public static final String AUTH_SIGN_OUT = "AUTH_SIGN_OUT";
@@ -28,7 +25,6 @@ public class AuthConstants {
 
   @Getter
   public enum EventEnum implements CommonEvent {
-    AUTH_HELLO_WORLD(Event.AUTH_HELLO_WORLD, HelloWorldReqDTO.class, HelloWorldResDTO.class),
     AUTH_SIGN_IN(Event.AUTH_SIGN_IN, SignInReqDTO.class, SignInResDTO.class),
     AUTH_REFRESH_TOKEN(
         Event.AUTH_REFRESH_TOKEN, RefreshTokenReqDTO.class, RefreshTokenResDTO.class),

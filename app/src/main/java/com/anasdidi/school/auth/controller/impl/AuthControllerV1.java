@@ -4,8 +4,6 @@ package com.anasdidi.school.auth.controller.impl;
 import com.anasdidi.school.auth.AuthConstants;
 import com.anasdidi.school.auth.AuthConstants.EventEnum;
 import com.anasdidi.school.auth.controller.AuthController;
-import com.anasdidi.school.auth.dto.HelloWorldReqDTO;
-import com.anasdidi.school.auth.dto.HelloWorldResDTO;
 import com.anasdidi.school.auth.dto.RefreshTokenReqDTO;
 import com.anasdidi.school.auth.dto.RefreshTokenResDTO;
 import com.anasdidi.school.auth.dto.SignInReqDTO;
@@ -29,14 +27,6 @@ import lombok.RequiredArgsConstructor;
 class AuthControllerV1 extends AuthController {
 
   private final AuthServiceRegistry registry;
-
-  @Override
-  @Post
-  protected HttpResponse<HelloWorldResDTO> helloWorld(
-      HttpRequest<?> request, @Body HelloWorldReqDTO body) {
-    return HttpResponse.ok(
-        (HelloWorldResDTO) registry.get(EventEnum.AUTH_HELLO_WORLD).process(body));
-  }
 
   @Override
   @Post("/sign-in")
