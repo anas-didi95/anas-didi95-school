@@ -28,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Slf4j
 class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
 
+  private final SignInServiceProps props;
   private final VertxConfig vertx;
   private final PasswordEncoder passwordEncoder;
   private final AccessRefreshTokenGenerator generator;
@@ -59,7 +60,11 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
 
     var token =
         AuthUtils.prepareToken(
-            vertx, generator, passwordEncoder, Authentication.build(in.username()));
+            props.refreshTokenExpiredSecs(),
+            vertx,
+            generator,
+            passwordEncoder,
+            Authentication.build(in.username()));
 
     log.debug("User signed in...{}", in.username());
     return SignInResDTO.builder().token(token).build();

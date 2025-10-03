@@ -1,4 +1,9 @@
 ---
+application:
+  AUTH_REFRESH_TOKEN:
+    refreshTokenExpiredSecs: "${application.AUTH_SIGN_IN.refreshTokenExpiredSecs}"
+  AUTH_SIGN_IN:
+    refreshTokenExpiredSecs: 3600
 datasources:
   CN-USER:
     password: "sa"

@@ -35,4 +35,6 @@ public class CommonConstants {
 
   public static final String MDC_TRACEID = "TraceId";
   public static final String MDC_CLASSMETHOD = "ClassMethod";
+
+  public static final String PROP_PREFIX = "application.";
 }

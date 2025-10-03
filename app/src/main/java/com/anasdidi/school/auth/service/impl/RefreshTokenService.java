@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Slf4j
 class RefreshTokenService extends AuthService<RefreshTokenReqDTO, RefreshTokenResDTO> {
 
+  private final RefreshTokenServiceProps props;
   private final VertxConfig vertx;
   private final PasswordEncoder passwordEncoder;
   private final AccessRefreshTokenGenerator generator;
@@ -42,7 +43,11 @@ class RefreshTokenService extends AuthService<RefreshTokenReqDTO, RefreshTokenRe
 
     var token =
         AuthUtils.prepareToken(
-            vertx, generator, passwordEncoder, Authentication.build(in.username()));
+            props.refreshTokenExpiredSecs(),
+            vertx,
+            generator,
+            passwordEncoder,
+            Authentication.build(in.username()));
 
     log.debug("Token refreshed...{}", in.username());
     return RefreshTokenResDTO.builder().token(token).build();

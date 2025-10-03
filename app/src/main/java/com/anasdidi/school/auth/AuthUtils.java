@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AuthUtils {
 
   public static final AccessRefreshToken prepareToken(
+      Long timerSeconds,
       VertxConfig vertx,
       AccessRefreshTokenGenerator generator,
       PasswordEncoder passwordEncoder,
@@ -31,7 +32,9 @@ public class AuthUtils {
                       vertx.putData(
                           name, VertxConfig.VertxUser.builder().refreshToken(refreshToken).build()),
                       vertx.startTimer(
-                          3600, name, event -> vertx.clearData(name, VertxConfig.VertxUser.class)))
+                          timerSeconds,
+                          name,
+                          event -> vertx.clearData(name, VertxConfig.VertxUser.class)))
                   .exceptionally(
                       e -> {
                         log.error("Fail to store token or start timer! {}", e);
