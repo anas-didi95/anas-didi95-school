@@ -2,9 +2,11 @@
 package com.anasdidi.school.auth;
 
 import com.anasdidi.school.common.config.VertxConfig;
+import com.anasdidi.school.user.dto.model.UserDTO;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
 import io.micronaut.security.token.render.AccessRefreshToken;
+import io.vertx.core.json.JsonObject;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import lombok.experimental.UtilityClass;
@@ -20,9 +22,17 @@ public class AuthUtils {
       VertxConfig vertx,
       AccessRefreshTokenGenerator generator,
       PasswordEncoder passwordEncoder,
-      Authentication authentication) {
-    var name = authentication.getName();
-    var refreshToken = name + UUID.randomUUID();
+      UserDTO user) {
+    var name = user.username();
+    var refreshToken = user.id().toString() + UUID.randomUUID();
+    var authentication =
+        Authentication.build(
+            name,
+            user.roleList(),
+            new JsonObject()
+                .put("userId", user.id())
+                .put("lastSignInDate", System.currentTimeMillis())
+                .getMap());
 
     vertx
         .stopTimer(name)
@@ -30,7 +40,11 @@ public class AuthUtils {
             t -> {
               CompletableFuture.allOf(
                       vertx.putData(
-                          name, VertxConfig.VertxUser.builder().refreshToken(refreshToken).build()),
+                          name,
+                          VertxConfig.VertxUser.builder()
+                              .refreshToken(refreshToken)
+                              .userId(user.id())
+                              .build()),
                       vertx.startTimer(
                           timerSeconds,
                           name,

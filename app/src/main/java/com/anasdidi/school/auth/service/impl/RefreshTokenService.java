@@ -9,8 +9,11 @@ import com.anasdidi.school.auth.service.AuthService;
 import com.anasdidi.school.common.config.VertxConfig;
 import com.anasdidi.school.common.config.VertxConfig.VertxUser;
 import com.anasdidi.school.common.error.E87TokenInvalidError;
-import io.micronaut.security.authentication.Authentication;
+import com.anasdidi.school.user.UserConstants;
+import com.anasdidi.school.user.dto.GetUserReqDTO;
+import com.anasdidi.school.user.dto.GetUserResDTO;
 import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
+import io.vertx.core.json.JsonObject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
@@ -41,13 +44,16 @@ class RefreshTokenService extends AuthService<RefreshTokenReqDTO, RefreshTokenRe
       throw new E87TokenInvalidError();
     }
 
+    var user1 =
+        vertx
+            .requestEvent(
+                UserConstants.EventEnum.USER_GET_USER,
+                JsonObject.mapFrom(GetUserReqDTO.builder().id(user.get().userId()).build()))
+            .thenApply(reply -> reply.mapTo(GetUserResDTO.class))
+            .join();
     var token =
         AuthUtils.prepareToken(
-            props.refreshTokenExpiredSecs(),
-            vertx,
-            generator,
-            passwordEncoder,
-            Authentication.build(in.username()));
+            props.refreshTokenExpiredSecs(), vertx, generator, passwordEncoder, user1.result());
 
     log.debug("Token refreshed...{}", in.username());
     return RefreshTokenResDTO.builder().token(token).build();

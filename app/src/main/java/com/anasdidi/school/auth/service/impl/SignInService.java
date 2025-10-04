@@ -12,7 +12,6 @@ import com.anasdidi.school.common.error.E89InvalidUsernamePasswordError;
 import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.dto.ListUserReqDTO;
 import com.anasdidi.school.user.dto.ListUserResDTO;
-import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
 import io.vertx.core.json.JsonObject;
 import jakarta.inject.Named;
@@ -60,11 +59,7 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
 
     var token =
         AuthUtils.prepareToken(
-            props.refreshTokenExpiredSecs(),
-            vertx,
-            generator,
-            passwordEncoder,
-            Authentication.build(user.username(), user.roleList()));
+            props.refreshTokenExpiredSecs(), vertx, generator, passwordEncoder, user);
 
     log.debug("User signed in...{}", user.username());
     return SignInResDTO.builder().token(token).build();

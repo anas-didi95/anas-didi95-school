@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -222,7 +223,7 @@ public class VertxConfig {
   ;
 
   @Builder
-  public record VertxUser(String refreshToken) implements VertxData {}
+  public record VertxUser(String refreshToken, UUID userId) implements VertxData {}
 
   @Builder
   public record VertxTimer(long id) implements VertxData {}
