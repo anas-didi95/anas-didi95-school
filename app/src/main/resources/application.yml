@@ -5,6 +5,10 @@ application:
   AUTH_SIGN_IN:
     refreshTokenExpiredSecs: 3600
 datasources:
+  CN-RBAC:
+    password: "sa"
+    url: "jdbc:h2:./.h2/DB_SCHOOL_RBAC;AUTO_SERVER=TRUE"
+    username: "sa"
   CN-USER:
     password: "sa"
     url: "jdbc:h2:./.h2/DB_SCHOOL_USER;AUTO_SERVER=TRUE"
@@ -17,10 +21,14 @@ jpa:
     compile-time-hibernate-proxies: true
     properties:
       hibernate:
-        hbm2ddl.auto: "validate"
+        hbm2ddl.auto: "none"
         physical_naming_strategy: "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl"
 liquibase:
   datasources:
+    CN-RBAC:
+      change-log: "classpath:db/db.changelog-rbac.xml"
+      contexts: "dev"
+      enabled: true
     CN-USER:
       change-log: "classpath:db/db.changelog-user.xml"
       contexts: "dev"
