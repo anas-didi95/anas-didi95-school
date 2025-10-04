@@ -11,3 +11,10 @@ Content-Type: application/json
 {
   "name": "anas.didi95"
 }
+
+###
+
+# List Access
+GET {{BASE_URL}}/api/v1/rbac/list-access
+Accept: application/json
+Content-Type: application/json

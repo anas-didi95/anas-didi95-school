@@ -7,11 +7,14 @@ import com.anasdidi.school.rbac.RbacConstants.EventEnum;
 import com.anasdidi.school.rbac.controller.RbacController;
 import com.anasdidi.school.rbac.dto.HelloWorldReqDTO;
 import com.anasdidi.school.rbac.dto.HelloWorldResDTO;
+import com.anasdidi.school.rbac.dto.ListAccessReqDTO;
+import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import com.anasdidi.school.rbac.service.RbacServiceRegistry;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import lombok.RequiredArgsConstructor;
 
@@ -27,5 +30,13 @@ class RbacControllerV1 extends RbacController {
       HttpRequest<?> request, @Body HelloWorldReqDTO body) {
     return HttpResponse.ok(
         (HelloWorldResDTO) registry.get(EventEnum.RBAC_HELLO_WORLD).process(body));
+  }
+
+  @Override
+  @Get("/list-access")
+  protected HttpResponse<ListAccessResDTO> listAccess(HttpRequest<?> request) {
+    var body = ListAccessReqDTO.builder().build();
+    return HttpResponse.ok(
+        (ListAccessResDTO) registry.get(EventEnum.RBAC_LIST_ACCESS).process(body));
   }
 }

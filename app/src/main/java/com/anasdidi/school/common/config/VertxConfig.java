@@ -19,6 +19,7 @@ import jakarta.inject.Singleton;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class VertxConfig {
 
   private static final String HEADER_MDC = "__MDC";
   private static final int ERROR_CODE = 98;
+  public static final String ACCESS_SET_KEY = "__ACC_SET";
   private final Vertx vertx;
   private final JsonMapper jsonMapper;
 
@@ -224,6 +226,9 @@ public class VertxConfig {
 
   @Builder
   public record VertxTimer(long id) implements VertxData {}
+
+  @Builder
+  public record VertxAccess(Set<String> accessSet) implements VertxData {}
 
   @PreDestroy
   void preDestroy() {

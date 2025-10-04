@@ -5,6 +5,7 @@ import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
 import com.anasdidi.school.rbac.dto.HelloWorldReqDTO;
 import com.anasdidi.school.rbac.dto.HelloWorldResDTO;
+import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,4 +18,8 @@ public abstract class RbacController extends CommonController {
   @Operation(summary = "Add user", tags = OPENAPI_TAG)
   protected abstract HttpResponse<HelloWorldResDTO> helloWorld(
       HttpRequest<?> request, HelloWorldReqDTO body);
+
+  @TraceLog
+  @Operation(summary = "List access", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<ListAccessResDTO> listAccess(HttpRequest<?> request);
 }
