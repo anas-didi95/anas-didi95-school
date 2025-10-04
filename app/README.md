@@ -60,3 +60,13 @@
 - [Micronaut Swagger UI documentation](https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html)
 
 - [https://swagger.io/tools/swagger-ui/](https://swagger.io/tools/swagger-ui/)
+
+
+## Feature security-jwt documentation
+
+- [Micronaut Security JWT documentation](https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html)
+
+
+## Feature security documentation
+
+- [Micronaut Security documentation](https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html)

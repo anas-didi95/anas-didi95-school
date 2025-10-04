@@ -1,18 +1,16 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.common.config;
 
+import com.anasdidi.school.common.CommonConstants;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.ResponseFilter;
 import io.micronaut.http.annotation.ServerFilter;
 import jakarta.annotation.Nullable;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
+import org.slf4j.MDC;
 
 @ServerFilter(ServerFilter.MATCH_ALL_PATTERN)
-@AllArgsConstructor
 class SecureResponseFilter {
-
-  private final TraceContext traceContext;
 
   @ResponseFilter
   void responseFilter(MutableHttpResponse<?> response, @Nullable Throwable failure) {
@@ -43,7 +41,9 @@ class SecureResponseFilter {
     // X-Requested-With");
 
     // === Custom ===
-    Optional.ofNullable(traceContext.getTraceId())
+    Optional.ofNullable(MDC.get(CommonConstants.MDC_TRACEID))
         .ifPresent(v -> response.getHeaders().add("X-Trace-Id", v));
+
+    MDC.clear();
   }
 }

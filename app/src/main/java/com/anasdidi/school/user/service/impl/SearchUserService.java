@@ -17,12 +17,12 @@ import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
-@Named(UserConstants.Action.USER_SEARCH_USER)
-@AllArgsConstructor
+@Named(UserConstants.Event.USER_SEARCH_USER)
+@RequiredArgsConstructor
 @Slf4j
 class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> {
 
@@ -31,9 +31,9 @@ class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> 
 
   @Override
   protected SearchUserResDTO execute(SearchUserReqDTO in) {
-    log.trace("[execute] START...");
+    log.trace("START...");
 
-    int pageNo = in.pageNo();
+    int pageNo = Optional.ofNullable(in.pageNo()).orElse(1);
     int totalRecordsPerPage = Optional.ofNullable(in.totalRecordsPerPage()).orElse(10);
     Pageable pageable = Pageable.from(pageNo - 1, totalRecordsPerPage);
 
@@ -41,6 +41,10 @@ class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> 
         userRepository.findAll(
             (root, criteriaBuilder) -> {
               List<Predicate> list = new ArrayList<>();
+
+              Optional.ofNullable(in.username())
+                  .ifPresent(
+                      t -> list.add(criteriaBuilder.equal(root.get("username"), in.username())));
 
               Optional.ofNullable(in.name())
                   .ifPresent(
@@ -56,6 +60,7 @@ class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> 
             },
             pageable);
 
+    log.debug("Search completed...");
     return SearchUserResDTO.builder()
         .resultList(search.getContent().stream().map(userMapper::toUserDTO).toList())
         .pagination(

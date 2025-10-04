@@ -7,6 +7,8 @@ import java.util.Map;
 
 public abstract class BaseError extends RuntimeException {
 
+  public static final String PARAM_ERROR = "error";
+  public static final String PARAM_VARIABLES = "variables";
   public final CommonConstants.Error error;
   public final String[] variables;
 

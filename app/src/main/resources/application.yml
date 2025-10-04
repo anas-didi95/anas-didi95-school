@@ -1,10 +1,17 @@
 ---
+application:
+  AUTH_REFRESH_TOKEN:
+    refreshTokenExpiredSecs: "${application.AUTH_SIGN_IN.refreshTokenExpiredSecs}"
+  AUTH_SIGN_IN:
+    refreshTokenExpiredSecs: 3600
 datasources:
   CN-USER:
     password: "sa"
     url: "jdbc:h2:./.h2/DB_SCHOOL_USER;AUTO_SERVER=TRUE"
     username: "sa"
-
+jackson:
+  json-view:
+    enabled: true
 jpa:
   default:
     compile-time-hibernate-proxies: true
@@ -12,18 +19,15 @@ jpa:
       hibernate:
         hbm2ddl.auto: "validate"
         physical_naming_strategy: "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl"
-
 liquibase:
   datasources:
     CN-USER:
       change-log: "classpath:db/db.changelog-user.xml"
       contexts: "dev"
       enabled: true
-
 logger:
   levels:
     com.anasdidi.school: "TRACE"
-
 micronaut:
   application:
     name: "school"
@@ -35,6 +39,32 @@ micronaut:
       swagger-ui:
         mapping: "/swagger-ui/**"
         paths: "classpath:META-INF/swagger/views/swagger-ui"
+  security:
+    intercept-url-map:
+      - pattern: "/api/*/user/**"
+        access:
+          - "isAuthenticated()"
+      - pattern: "/api/*/auth/sign-out"
+        access:
+          - "isAuthenticated()"
+      - pattern: "/api/*/auth/**"
+        access:
+          - "isAnonymous()"
+      - pattern: "/swagger/**"
+        access:
+          - "isAnonymous()"
+      - pattern: "/swagger-ui/**"
+        access:
+          - "isAnonymous()"
+    token:
+      generator:
+        access-token:
+          expiration: 3600
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: "pleaseChangeThisSecretForANewOne"
   server:
     context-path: "/school"
     host: "0.0.0.0"

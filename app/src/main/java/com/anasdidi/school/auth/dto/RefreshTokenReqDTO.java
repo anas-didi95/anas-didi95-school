@@ -1,13 +1,12 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
-package com.anasdidi.school.user.dto;
+package com.anasdidi.school.auth.dto;
 
 import com.anasdidi.school.common.dto.CommonReqDTO;
 import io.micronaut.serde.annotation.Serdeable;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
 @Serdeable
 @Builder
-public record SearchUserReqDTO(
-    String username, String name, @Min(1) Integer pageNo, Integer totalRecordsPerPage)
+public record RefreshTokenReqDTO(@NotBlank String username, @NotBlank String refreshToken)
     implements CommonReqDTO {}

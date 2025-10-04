@@ -3,6 +3,7 @@ package com.anasdidi.school.user.controller.impl;
 
 import com.anasdidi.school.common.CommonConstants;
 import com.anasdidi.school.user.UserConstants;
+import com.anasdidi.school.user.UserConstants.EventEnum;
 import com.anasdidi.school.user.controller.UserController;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
@@ -25,10 +26,10 @@ import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Controller(CommonConstants.V1_URL + UserConstants.BASE_URL)
-@AllArgsConstructor
+@RequiredArgsConstructor
 class UserControllerV1 extends UserController {
 
   private final UserServiceRegistry registry;
@@ -37,32 +38,33 @@ class UserControllerV1 extends UserController {
   @Post
   protected HttpResponse<AddUserResDTO> addUser(HttpRequest<?> request, @Body AddUserReqDTO body) {
     return HttpResponse.created(
-        (AddUserResDTO) registry.get(UserConstants.ServiceEnum.USER_ADD_USER).process(body));
+        (AddUserResDTO) registry.get(EventEnum.USER_ADD_USER).process(body));
   }
 
   @Override
   @Get
   protected HttpResponse<SearchUserResDTO> searchUser(
       HttpRequest<?> request,
+      @Nullable String username,
       @Nullable String name,
-      Integer pageNo,
+      @Nullable Integer pageNo,
       @Nullable Integer totalRecordsPerPage) {
     SearchUserReqDTO body =
         SearchUserReqDTO.builder()
+            .username(username)
             .name(name)
             .pageNo(pageNo)
             .totalRecordsPerPage(totalRecordsPerPage)
             .build();
     return HttpResponse.ok(
-        (SearchUserResDTO) registry.get(UserConstants.ServiceEnum.USER_SEARCH_USER).process(body));
+        (SearchUserResDTO) registry.get(EventEnum.USER_SEARCH_USER).process(body));
   }
 
   @Override
   @Get("/{userId}")
   protected HttpResponse<GetUserResDTO> getUser(HttpRequest<?> request, UUID userId) {
     GetUserReqDTO body = GetUserReqDTO.builder().id(userId).build();
-    return HttpResponse.ok(
-        (GetUserResDTO) registry.get(UserConstants.ServiceEnum.USER_GET_USER).process(body));
+    return HttpResponse.ok((GetUserResDTO) registry.get(EventEnum.USER_GET_USER).process(body));
   }
 
   @Override
@@ -72,7 +74,7 @@ class UserControllerV1 extends UserController {
     UpdateUserReqDTO body =
         UpdateUserReqDTO.builder().id(userId).update(request.getBody(UserDTO.class).get()).build();
     return HttpResponse.ok(
-        (UpdateUserResDTO) registry.get(UserConstants.ServiceEnum.USER_UPDATE_USER).process(body));
+        (UpdateUserResDTO) registry.get(EventEnum.USER_UPDATE_USER).process(body));
   }
 
   @Override
@@ -80,6 +82,6 @@ class UserControllerV1 extends UserController {
   protected HttpResponse<DeleteUserResDTO> deleteUser(HttpRequest<?> request, UUID userId) {
     DeleteUserReqDTO body = DeleteUserReqDTO.builder().id(userId).build();
     return HttpResponse.ok(
-        (DeleteUserResDTO) registry.get(UserConstants.ServiceEnum.USER_DELETE_USER).process(body));
+        (DeleteUserResDTO) registry.get(EventEnum.USER_DELETE_USER).process(body));
   }
 }
