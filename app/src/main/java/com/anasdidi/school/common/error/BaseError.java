@@ -4,6 +4,7 @@ package com.anasdidi.school.common.error;
 import com.anasdidi.school.common.CommonConstants;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class BaseError extends RuntimeException {
 
@@ -15,7 +16,7 @@ public abstract class BaseError extends RuntimeException {
   BaseError(CommonConstants.Error error, String[] variables) {
     super(error.name());
     this.error = error;
-    this.variables = variables;
+    this.variables = Optional.ofNullable(variables).orElse(new String[] {});
   }
 
   protected static String parseParamMap(Map<String, Object> paramMap) {

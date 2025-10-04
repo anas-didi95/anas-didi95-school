@@ -56,7 +56,7 @@ public class VertxConfig {
                         message.headers().get(HEADER_MDC),
                         Argument.mapOf(String.class, String.class)));
                 CommonReqDTO req = message.body().mapTo(event.getReqClass());
-                CommonResDTO res = service.process(event.getReqClass().cast(req));
+                CommonResDTO res = service.process(event.getReqClass().cast(req), false);
                 message.reply(JsonObject.mapFrom(res));
               } catch (IOException e) {
                 log.error("Fail to parse header!", e);
