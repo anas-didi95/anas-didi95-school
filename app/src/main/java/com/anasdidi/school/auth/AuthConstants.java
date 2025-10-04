@@ -11,6 +11,7 @@ import com.anasdidi.school.common.CommonConstants.CommonEvent;
 import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -24,6 +25,7 @@ public class AuthConstants {
   }
 
   @Getter
+  @RequiredArgsConstructor
   public enum EventEnum implements CommonEvent {
     AUTH_SIGN_IN(Event.AUTH_SIGN_IN, SignInReqDTO.class, SignInResDTO.class),
     AUTH_REFRESH_TOKEN(
@@ -33,15 +35,6 @@ public class AuthConstants {
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;
     private final Class<? extends CommonResDTO> resClass;
-
-    EventEnum(
-        String address,
-        Class<? extends CommonReqDTO> reqClass,
-        Class<? extends CommonResDTO> resClass) {
-      this.address = address;
-      this.reqClass = reqClass;
-      this.resClass = resClass;
-    }
   }
 
   public static final String BASE_URL = "/auth";

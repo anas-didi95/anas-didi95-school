@@ -3,17 +3,6 @@
 
 ###
 
-# Hello World
-POST {{BASE_URL}}/api/v1/auth
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name": "Anas Juwaidi"
-}
-
-###
-
 # Sign In
 POST {{BASE_URL}}/api/v1/auth/sign-in
 Accept: application/json

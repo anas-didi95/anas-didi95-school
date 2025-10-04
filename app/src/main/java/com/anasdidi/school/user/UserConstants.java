@@ -15,6 +15,7 @@ import com.anasdidi.school.user.dto.SearchUserResDTO;
 import com.anasdidi.school.user.dto.UpdateUserReqDTO;
 import com.anasdidi.school.user.dto.UpdateUserResDTO;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -30,6 +31,7 @@ public class UserConstants {
   }
 
   @Getter
+  @RequiredArgsConstructor
   public enum EventEnum implements CommonEvent {
     USER_ADD_USER(Event.USER_ADD_USER, AddUserReqDTO.class, AddUserResDTO.class),
     USER_SEARCH_USER(Event.USER_SEARCH_USER, SearchUserReqDTO.class, SearchUserResDTO.class),
@@ -40,15 +42,6 @@ public class UserConstants {
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;
     private final Class<? extends CommonResDTO> resClass;
-
-    EventEnum(
-        String address,
-        Class<? extends CommonReqDTO> reqClass,
-        Class<? extends CommonResDTO> resClass) {
-      this.address = address;
-      this.reqClass = reqClass;
-      this.resClass = resClass;
-    }
   }
 
   public static final String BASE_URL = "/user";
