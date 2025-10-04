@@ -50,6 +50,9 @@ micronaut:
       - pattern: "/api/*/auth/**"
         access:
           - "isAnonymous()"
+      - pattern: "/api/*/rbac/**"
+        access:
+          - "isAnonymous()"
       - pattern: "/swagger/**"
         access:
           - "isAnonymous()"
