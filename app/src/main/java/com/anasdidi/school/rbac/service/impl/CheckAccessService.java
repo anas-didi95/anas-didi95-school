@@ -32,7 +32,11 @@ class CheckAccessService extends RbacService<CheckAccessReqDTO, CheckAccessResDT
             (root, criteriaBuilder) -> {
               List<Predicate> list = new ArrayList<>();
               list.add(root.get("role").in(in.roleList()));
-              list.add(criteriaBuilder.like(root.get("accessList"), "%" + in.access() + "%"));
+              list.add(
+                  criteriaBuilder.or(
+                      criteriaBuilder.like(
+                          root.get("accessList"), "%" + RbacConstants.FULL_ACCESS + "%"),
+                      criteriaBuilder.like(root.get("accessList"), "%" + in.access() + "%")));
               return criteriaBuilder.and(list.toArray(Predicate[]::new));
             });
     if (result.isEmpty()) {

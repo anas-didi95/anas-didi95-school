@@ -5,6 +5,7 @@ import com.anasdidi.school.common.dto.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.micronaut.serde.annotation.Serdeable;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Serdeable
@@ -20,4 +21,4 @@ public record UserDTO(
     String username,
     @JsonView(Views.Internal.class) String password,
     String name,
-    OffsetDateTime lastSigninDate) {}
+    List<String> roleList) {}

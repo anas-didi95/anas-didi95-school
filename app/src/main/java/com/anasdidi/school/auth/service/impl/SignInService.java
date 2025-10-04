@@ -64,9 +64,9 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
             vertx,
             generator,
             passwordEncoder,
-            Authentication.build(in.username()));
+            Authentication.build(user.username(), user.roleList()));
 
-    log.debug("User signed in...{}", in.username());
+    log.debug("User signed in...{}", user.username());
     return SignInResDTO.builder().token(token).build();
   }
 }

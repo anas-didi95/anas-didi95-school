@@ -20,7 +20,7 @@ Content-Type: application/json
 GET {{BASE_URL}}/api/v1/user?username=anas.didi95
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzY2hvb2wiLCJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc1OTU3MDg0MiwiZXhwIjoxNzU5NTc0NDQyLCJpYXQiOjE3NTk1NzA4NDIsInJvbGVzIjpbXX0.VbrnnoI9e4faCR-bbQTpVhX2aCqLZ3uASr0xTFC5NXg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzY2hvb2wiLCJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc1OTU4NjM4NSwiZXhwIjoxNzU5NTg5OTg1LCJpYXQiOjE3NTk1ODYzODUsInJvbGVzIjpbIlNVUEVSQURNSU4iXX0.gU4Cb8WUWCW7BUYCiBs7zDYwn1cPObqf4Y519cjRNTQ
 
 ###
 

@@ -31,19 +31,30 @@
         <constraints nullable="false" />
       </column>
       <!-- Metadata END   -->
-      <column name="ROLE" type="VARCHAR(20)">
+      <column name="ROL" type="VARCHAR(20)">
         <constraints nullable="false" />
       </column>
-      <column name="ACC_LS" type="VARCHAR(250)">
+      <column name="ACCS_LS" type="VARCHAR(250)">
+        <constraints nullable="false" />
+      </column>
+      <column name="IS_SUPERADMIN" type="BOOLEAN">
         <constraints nullable="false" />
       </column>
     </createTable>
 
-    <addUniqueConstraint tableName="T_RBAC" columnNames="ROLE" />
+    <addUniqueConstraint tableName="T_RBAC" columnNames="ROL" />
 
-    <createIndex indexName="IX_RBAC_ROLE_IS_DEL" tableName="T_RBAC">
-      <column name="ROLE" />
+    <createIndex indexName="IX_RBAC_ROL_IS_DEL" tableName="T_RBAC">
+      <column name="ROL" />
       <column name="IS_DEL" />
     </createIndex>
+
+    <sql>
+      <![CDATA[
+        INSERT INTO T_RBAC (ID, IS_DEL, VER, CREATE_BY, CREATE_DT, UPDATE_BY, UPDATE_DT, ROL, ACCS_LS, IS_SUPERADMIN)
+        VALUES('36e54fdc-6470-4ad0-8546-13d6e3040a47', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'SUPERADMIN', '["FULL_ACCS"]', true);
+      ]]>
+      <comment>Add role[SUPERADMIN]</comment>
+    </sql>
   </changeSet>
 </databaseChangeLog>

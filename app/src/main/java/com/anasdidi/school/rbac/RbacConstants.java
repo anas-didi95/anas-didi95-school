@@ -38,4 +38,6 @@ public class RbacConstants {
 
   public static final String BASE_URL = "/rbac";
   public static final String CONNECTION_NAME = "CN-RBAC";
+
+  public static final String FULL_ACCESS = "FULL_ACCS";
 }

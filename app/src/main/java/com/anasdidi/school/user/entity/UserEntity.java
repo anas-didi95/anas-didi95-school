@@ -1,11 +1,13 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.user.entity;
 
+import com.anasdidi.school.common.converter.ListStringConverter;
 import com.anasdidi.school.common.entity.CommonEntity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -26,6 +28,7 @@ public class UserEntity extends CommonEntity {
   @Column(name = "NM")
   private String name;
 
-  @Column(name = "LAST_SIGNIN_DT")
-  private OffsetDateTime lastSigninDate;
+  @Column(name = "ROLES")
+  @Convert(converter = ListStringConverter.class)
+  private List<String> roleList;
 }
