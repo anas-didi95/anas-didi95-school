@@ -8,7 +8,7 @@ import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
 import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
-import com.anasdidi.school.user.dto.SearchUserResDTO;
+import com.anasdidi.school.user.dto.ListUserResDTO;
 import com.anasdidi.school.user.dto.UpdateUserResDTO;
 import com.anasdidi.school.user.dto.model.UserDTO;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -28,8 +28,8 @@ public abstract class UserController extends CommonController {
 
   @TraceLog
   @JsonView(Views.Public.class)
-  @Operation(summary = "Search user", tags = OPENAPI_TAG)
-  protected abstract HttpResponse<SearchUserResDTO> searchUser(
+  @Operation(summary = "List user", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<ListUserResDTO> listUser(
       HttpRequest<?> request,
       String username,
       String name,

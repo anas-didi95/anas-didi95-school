@@ -3,8 +3,8 @@ package com.anasdidi.school.user.service.impl;
 
 import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.UserMapper;
-import com.anasdidi.school.user.dto.SearchUserReqDTO;
-import com.anasdidi.school.user.dto.SearchUserResDTO;
+import com.anasdidi.school.user.dto.ListUserReqDTO;
+import com.anasdidi.school.user.dto.ListUserResDTO;
 import com.anasdidi.school.user.entity.UserEntity;
 import com.anasdidi.school.user.repository.UserRepository;
 import com.anasdidi.school.user.service.UserService;
@@ -21,16 +21,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
-@Named(UserConstants.Event.USER_SEARCH_USER)
+@Named(UserConstants.Event.USER_LIST_USER)
 @RequiredArgsConstructor
 @Slf4j
-class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> {
+class ListUserService extends UserService<ListUserReqDTO, ListUserResDTO> {
 
   private final UserRepository userRepository;
   private final UserMapper userMapper;
 
   @Override
-  protected SearchUserResDTO execute(SearchUserReqDTO in) {
+  protected ListUserResDTO execute(ListUserReqDTO in) {
     log.trace("START...");
 
     int pageNo = Optional.ofNullable(in.pageNo()).orElse(1);
@@ -60,11 +60,11 @@ class SearchUserService extends UserService<SearchUserReqDTO, SearchUserResDTO> 
             },
             pageable);
 
-    log.debug("Search completed...");
-    return SearchUserResDTO.builder()
+    log.debug("List completed...");
+    return ListUserResDTO.builder()
         .resultList(search.getContent().stream().map(userMapper::toUserDTO).toList())
         .pagination(
-            SearchUserResDTO.Pagination.builder()
+            ListUserResDTO.Pagination.builder()
                 .pageNo(pageNo)
                 .totalRecords(search.getTotalSize())
                 .totalRecordsPerPage(totalRecordsPerPage)

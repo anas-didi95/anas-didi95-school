@@ -11,8 +11,8 @@ import com.anasdidi.school.user.dto.DeleteUserReqDTO;
 import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.dto.GetUserReqDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
-import com.anasdidi.school.user.dto.SearchUserReqDTO;
-import com.anasdidi.school.user.dto.SearchUserResDTO;
+import com.anasdidi.school.user.dto.ListUserReqDTO;
+import com.anasdidi.school.user.dto.ListUserResDTO;
 import com.anasdidi.school.user.dto.UpdateUserReqDTO;
 import com.anasdidi.school.user.dto.UpdateUserResDTO;
 import com.anasdidi.school.user.dto.model.UserDTO;
@@ -43,21 +43,20 @@ class UserControllerV1 extends UserController {
 
   @Override
   @Get
-  protected HttpResponse<SearchUserResDTO> searchUser(
+  protected HttpResponse<ListUserResDTO> listUser(
       HttpRequest<?> request,
       @Nullable String username,
       @Nullable String name,
       @Nullable Integer pageNo,
       @Nullable Integer totalRecordsPerPage) {
-    SearchUserReqDTO body =
-        SearchUserReqDTO.builder()
+    ListUserReqDTO body =
+        ListUserReqDTO.builder()
             .username(username)
             .name(name)
             .pageNo(pageNo)
             .totalRecordsPerPage(totalRecordsPerPage)
             .build();
-    return HttpResponse.ok(
-        (SearchUserResDTO) registry.get(EventEnum.USER_SEARCH_USER).process(body));
+    return HttpResponse.ok((ListUserResDTO) registry.get(EventEnum.USER_LIST_USER).process(body));
   }
 
   @Override

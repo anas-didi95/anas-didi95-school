@@ -8,6 +8,6 @@ import lombok.Builder;
 
 @Serdeable
 @Builder
-public record SearchUserReqDTO(
+public record ListUserReqDTO(
     String username, String name, @Min(1) Integer pageNo, Integer totalRecordsPerPage)
     implements CommonReqDTO {}

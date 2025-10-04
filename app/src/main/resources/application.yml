@@ -1,6 +1,6 @@
 ---
 application:
-  AUTH_REFRESH_TOKEN:
+  AUTH_RFSH_TKN:
     refreshTokenExpiredSecs: "${application.AUTH_SIGN_IN.refreshTokenExpiredSecs}"
   AUTH_SIGN_IN:
     refreshTokenExpiredSecs: 3600

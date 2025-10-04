@@ -10,8 +10,8 @@ import com.anasdidi.school.common.config.VertxConfig;
 import com.anasdidi.school.common.error.E88UserDisabledError;
 import com.anasdidi.school.common.error.E89InvalidUsernamePasswordError;
 import com.anasdidi.school.user.UserConstants;
-import com.anasdidi.school.user.dto.SearchUserReqDTO;
-import com.anasdidi.school.user.dto.SearchUserResDTO;
+import com.anasdidi.school.user.dto.ListUserReqDTO;
+import com.anasdidi.school.user.dto.ListUserResDTO;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
 import io.vertx.core.json.JsonObject;
@@ -40,9 +40,9 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
     var search =
         vertx
             .requestEvent(
-                UserConstants.EventEnum.USER_SEARCH_USER,
-                JsonObject.mapFrom(SearchUserReqDTO.builder().username(in.username()).build()))
-            .thenApply(reply -> reply.mapTo(SearchUserResDTO.class))
+                UserConstants.EventEnum.USER_LIST_USER,
+                JsonObject.mapFrom(ListUserReqDTO.builder().username(in.username()).build()))
+            .thenApply(reply -> reply.mapTo(ListUserResDTO.class))
             .join();
     if (Objects.isNull(search.resultList()) || search.resultList().isEmpty()) {
       log.error("Username not found! {}", in.username());
