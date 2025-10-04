@@ -5,6 +5,10 @@ application:
   AUTH_SIGN_IN:
     refreshTokenExpiredSecs: 3600
 datasources:
+  CN-AUTH:
+    password: "sa"
+    url: "jdbc:h2:./.h2/DB_SCHOOL_AUTH;AUTO_SERVER=TRUE"
+    username: "sa"
   CN-RBAC:
     password: "sa"
     url: "jdbc:h2:./.h2/DB_SCHOOL_RBAC;AUTO_SERVER=TRUE"
@@ -25,6 +29,10 @@ jpa:
         physical_naming_strategy: "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl"
 liquibase:
   datasources:
+    CN-AUTH:
+      change-log: "classpath:db/db.changelog-auth.xml"
+      contexts: "dev"
+      enabled: true
     CN-RBAC:
       change-log: "classpath:db/db.changelog-rbac.xml"
       contexts: "dev"

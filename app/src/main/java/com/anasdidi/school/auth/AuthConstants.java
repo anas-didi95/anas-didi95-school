@@ -38,5 +38,5 @@ public class AuthConstants {
   }
 
   public static final String BASE_URL = "/auth";
-  // public static final String CONNECTION_NAME = "CN-USER";
+  public static final String CONNECTION_NAME = "CN-AUTH";
 }

@@ -5,6 +5,8 @@ import com.anasdidi.school.auth.AuthConstants;
 import com.anasdidi.school.auth.AuthUtils;
 import com.anasdidi.school.auth.dto.SignInReqDTO;
 import com.anasdidi.school.auth.dto.SignInResDTO;
+import com.anasdidi.school.auth.entity.AuthEntity;
+import com.anasdidi.school.auth.repository.AuthRepository;
 import com.anasdidi.school.auth.service.AuthService;
 import com.anasdidi.school.common.config.VertxConfig;
 import com.anasdidi.school.common.error.E88UserDisabledError;
@@ -31,6 +33,7 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
   private final VertxConfig vertx;
   private final PasswordEncoder passwordEncoder;
   private final AccessRefreshTokenGenerator generator;
+  private final AuthRepository authRepository;
 
   @Override
   protected SignInResDTO execute(SignInReqDTO in) {
@@ -60,6 +63,22 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
     var token =
         AuthUtils.prepareToken(
             props.refreshTokenExpiredSecs(), vertx, generator, passwordEncoder, user);
+
+    authRepository
+        .findByUsername(user.username())
+        .ifPresentOrElse(
+            auth -> {
+              auth.setRefreshToken(token.getRefreshToken());
+              authRepository.save(auth);
+            },
+            () -> {
+              AuthEntity e = new AuthEntity();
+              e.setId(user.id());
+              e.setUpdateBy(user.username());
+              e.setUsername(user.username());
+              e.setRefreshToken(token.getRefreshToken());
+              authRepository.save(e);
+            });
 
     log.debug("User signed in...{}", user.username());
     return SignInResDTO.builder().token(token).build();
