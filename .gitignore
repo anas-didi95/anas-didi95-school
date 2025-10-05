@@ -1,2 +1,4 @@
 .cache/
 .h2/
+.env
+.env.staging
