@@ -2,6 +2,7 @@
 application:
   AUTH_RFSH_TKN:
     refreshTokenExpiredSecs: "${application.AUTH_SIGN_IN.refreshTokenExpiredSecs}"
+    refreshTokenLeewaySecs: 30
   AUTH_SIGN_IN:
     refreshTokenExpiredSecs: 3600
 datasources:

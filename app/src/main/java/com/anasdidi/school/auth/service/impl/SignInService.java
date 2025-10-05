@@ -69,7 +69,7 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
         .ifPresentOrElse(
             auth -> {
               auth.setRefreshToken(token.getRefreshToken());
-              authRepository.save(auth);
+              authRepository.update(auth);
             },
             () -> {
               AuthEntity e = new AuthEntity();

@@ -8,5 +8,5 @@ import lombok.Builder;
 
 @Serdeable
 @Builder
-public record RefreshTokenReqDTO(@NotBlank String username, @NotBlank String refreshToken)
+public record RefreshTokenReqDTO(@NotBlank String jwt, @NotBlank String refreshToken)
     implements CommonReqDTO {}

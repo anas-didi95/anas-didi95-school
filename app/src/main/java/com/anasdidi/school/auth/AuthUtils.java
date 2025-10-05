@@ -29,10 +29,7 @@ public class AuthUtils {
         Authentication.build(
             name,
             user.roleList(),
-            new JsonObject()
-                .put("userId", user.id())
-                .put("lastSignInDate", System.currentTimeMillis())
-                .getMap());
+            new JsonObject().put(AuthConstants.JWT_ATTR_USERID, user.id()).getMap());
 
     vertx
         .stopTimer(name)

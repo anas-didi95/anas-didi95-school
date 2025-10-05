@@ -10,6 +10,8 @@
         <pattern>${pattern}</pattern>
         <maskPattern>password=([^,]+)[\s,]</maskPattern>
         <maskPattern>confirmPassword=([^,]+)[\s,]</maskPattern>
+        <maskPattern>jwt=([^,]+)[\s,]</maskPattern>
+        <maskPattern>refreshToken=([^,]+)[\s,]</maskPattern>
       </layout>
     </encoder>
   </appender>
