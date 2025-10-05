@@ -8,7 +8,6 @@ import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
 import io.micronaut.security.token.render.AccessRefreshToken;
 import io.vertx.core.json.JsonObject;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,28 +29,6 @@ public class AuthUtils {
             name,
             user.roleList(),
             new JsonObject().put(AuthConstants.JWT_ATTR_USERID, user.id()).getMap());
-
-    vertx
-        .stopTimer(name)
-        .thenAccept(
-            t -> {
-              CompletableFuture.allOf(
-                      vertx.putData(
-                          name,
-                          VertxConfig.VertxUser.builder()
-                              .refreshToken(refreshToken)
-                              .userId(user.id())
-                              .build()),
-                      vertx.startTimer(
-                          timerSeconds,
-                          name,
-                          event -> vertx.clearData(name, VertxConfig.VertxUser.class)))
-                  .exceptionally(
-                      e -> {
-                        log.error("Fail to store token or start timer! {}", e);
-                        return null;
-                      });
-            });
 
     return generator.generate(passwordEncoder.encode(refreshToken), authentication).get();
   }
