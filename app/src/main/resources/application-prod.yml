@@ -1,0 +1,43 @@
+---
+application:
+  AUTH_RFSH_TKN:
+    refreshTokenExpiredSecs: "${APP_REFRESH_TOKEN_EXPIRY_SEC}"
+    refreshTokenLeewaySecs: "${APP_REFRESH_TOKEN_LEEWAY_SEC}"
+    refreshTokenRevokedSecs: "${APP_REFRESH_TOKEN_REVOKE_SEC}"
+datasources:
+  CN-AUTH:
+    password: "${DB_AUTH_PWD}"
+    url: "${DB_AUTH_URL}"
+    username: "${DB_AUTH_USR}"
+  CN-RBAC:
+    password: "${DB_RBAC_PWD}"
+    url: "${DB_RBAC_URL}"
+    username: "${DB_RBAC_USR}"
+  CN-USER:
+    password: "${DB_USER_PWD}"
+    url: "${DB_USER_URL}"
+    username: "${DB_USER_USR}"
+liquibase:
+  datasources:
+    CN-AUTH:
+      contexts: "prod"
+    CN-RBAC:
+      contexts: "prod"
+    CN-USER:
+      contexts: "prod"
+logger:
+  levels:
+    com.anasdidi.school: "${LOG_LEVEL}"
+micronaut:
+  security:
+    token:
+      generator:
+        access-token:
+          expiration: "${JWT_EXPIRY_SEC}"
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: "${JWT_SECRET}"
+  server:
+    context-path: "${APP_CONTEXT_PATH}"
