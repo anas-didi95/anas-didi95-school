@@ -1,0 +1,17 @@
+---
+networks:
+  anas-didi95-network:
+    external: true
+services:
+  app-school-staging:
+    env_file:
+      - ".env"
+    image: "ghcr.io/anas-didi95/anas-didi95-school:develop"
+    labels:
+      - "traefik.http.routers.app.rule=Host(`localhost`) && PathPrefix(`/school-staging/`)"
+    logging:
+      driver: "local"
+    networks:
+      - "anas-didi95-network"
+    volumes:
+      - "./.h2/:/home/app/.h2/:z"
