@@ -8,6 +8,7 @@ import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Value;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.slf4j.MDC;
 @Slf4j
 public class AuthConfig {
 
+  private static final String REVOKE_KEY = "__REFRESH_TOKEN_REVOKE";
   private final VertxConfig vertx;
   private final AuthRepository authRepository;
 
@@ -42,7 +44,7 @@ public class AuthConfig {
     vertx.startPeriodic(
         0,
         refreshTokenRevokedSecs,
-        "__REFRESH_TOKEN_REVOKE",
+        REVOKE_KEY,
         (id) -> {
           MDC.clear();
           var maxValidDate =
@@ -53,5 +55,10 @@ public class AuthConfig {
                       criteriaBuilder.lessThan(root.get("updateDate"), maxValidDate));
           log.info("Total {} token revoked...{}", deleteCount, maxValidDate);
         });
+  }
+
+  @PreDestroy
+  void preDestroy() {
+    vertx.stopTimer(REVOKE_KEY);
   }
 }
