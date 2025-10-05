@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Named(UserConstants.Event.USER_DELETE_USER)
-@Transactional
+@Transactional(transactionManager = UserConstants.CONNECTION_NAME)
 @RequiredArgsConstructor
 @Slf4j
 class DeleteUserService extends UserService<DeleteUserReqDTO, DeleteUserResDTO> {

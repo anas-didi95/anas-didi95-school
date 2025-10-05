@@ -15,6 +15,7 @@ import com.anasdidi.school.user.dto.GetUserResDTO;
 import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
 import io.micronaut.security.token.jwt.validator.JWTClaimsSetUtils;
 import io.micronaut.security.token.jwt.validator.JsonWebTokenParser;
+import io.micronaut.transaction.annotation.Transactional;
 import io.vertx.core.json.JsonObject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
@@ -29,6 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
 @Named(AuthConstants.Event.AUTH_REFRESH_TOKEN)
+@Transactional(transactionManager = AuthConstants.CONNECTION_NAME)
 @RequiredArgsConstructor
 @Slf4j
 class RefreshTokenService extends AuthService<RefreshTokenReqDTO, RefreshTokenResDTO> {

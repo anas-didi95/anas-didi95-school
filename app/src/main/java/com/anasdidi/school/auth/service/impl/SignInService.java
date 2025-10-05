@@ -15,6 +15,7 @@ import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.dto.ListUserReqDTO;
 import com.anasdidi.school.user.dto.ListUserResDTO;
 import io.micronaut.security.token.generator.AccessRefreshTokenGenerator;
+import io.micronaut.transaction.annotation.Transactional;
 import io.vertx.core.json.JsonObject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
@@ -25,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
 @Named(AuthConstants.Event.AUTH_SIGN_IN)
+@Transactional(transactionManager = AuthConstants.CONNECTION_NAME)
 @RequiredArgsConstructor
 @Slf4j
 class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
