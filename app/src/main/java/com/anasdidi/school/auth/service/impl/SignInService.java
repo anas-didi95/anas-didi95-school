@@ -71,7 +71,6 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
             () -> {
               AuthEntity e = new AuthEntity();
               e.setId(user.id());
-              e.setUpdateBy(user.username());
               e.setUsername(user.username());
               e.setRefreshToken(token.getRefreshToken());
               authRepository.save(e);

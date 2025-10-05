@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Singleton
 @Named(UserConstants.Event.USER_ADD_USER)
-@Transactional
+@Transactional(transactionManager = UserConstants.CONNECTION_NAME)
 @RequiredArgsConstructor
 @Slf4j
 class AddUserService extends UserService<AddUserReqDTO, AddUserResDTO> {
@@ -37,12 +37,9 @@ class AddUserService extends UserService<AddUserReqDTO, AddUserResDTO> {
               throw new E02RecordAlreadyExistsError("Username");
             });
 
-    String createBy = "SYSTEM";
     UserEntity user = new UserEntity();
     user.setIsDeleted(false);
     user.setVersion(0);
-    user.setCreateBy(createBy);
-    user.setUpdateBy(createBy);
     user.setUsername(in.username());
     user.setPassword(passwordEncoder.encode(in.password()));
     user.setName(in.name());

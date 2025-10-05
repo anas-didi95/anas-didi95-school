@@ -4,6 +4,7 @@ package com.anasdidi.school.common.entity;
 import io.micronaut.data.annotation.DateCreated;
 import io.micronaut.data.annotation.DateUpdated;
 import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,7 +16,8 @@ import lombok.Data;
 
 @MappedSuperclass
 @Data
-public abstract class CommonEntity {
+@EntityListeners(AuditEntityListener.class)
+public abstract class CommonEntity implements CreateAudit, UpdateAudit {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

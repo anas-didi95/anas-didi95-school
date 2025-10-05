@@ -7,6 +7,7 @@ import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.security.utils.SecurityService;
 import java.security.Principal;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -26,6 +27,7 @@ class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
   private static final SecureRandom RANDOM = new SecureRandom();
   private static final Base64.Encoder ENCODER = Base64.getUrlEncoder().withoutPadding();
   private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyMMdd");
+  private final SecurityService securityService;
 
   @Override
   public @Nullable Object intercept(MethodInvocationContext<Object, Object> context) {
@@ -58,6 +60,13 @@ class TraceLogInterceptor implements MethodInterceptor<Object, Object> {
           CommonConstants.MDC_TRACEID,
           FORMATTER.format(LocalDateTime.now()) + ENCODER.encodeToString(buffer));
     }
+
+    if (StringUtils.isBlank(MDC.get(CommonConstants.MDC_USERNAME))) {
+      MDC.put(
+          CommonConstants.MDC_USERNAME,
+          securityService.username().orElse(CommonConstants.SYSTEM_USER));
+    }
+
     MDC.put(CommonConstants.MDC_CLASSMETHOD, classMethod);
 
     long timeStart = System.currentTimeMillis();
