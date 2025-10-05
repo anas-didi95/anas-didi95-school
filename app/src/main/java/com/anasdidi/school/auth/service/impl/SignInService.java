@@ -29,7 +29,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Slf4j
 class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
 
-  private final SignInServiceProps props;
   private final VertxConfig vertx;
   private final PasswordEncoder passwordEncoder;
   private final AccessRefreshTokenGenerator generator;
@@ -60,9 +59,7 @@ class SignInService extends AuthService<SignInReqDTO, SignInResDTO> {
       throw new E89InvalidUsernamePasswordError();
     }
 
-    var token =
-        AuthUtils.prepareToken(
-            props.refreshTokenExpiredSecs(), vertx, generator, passwordEncoder, user);
+    var token = AuthUtils.prepareToken(vertx, generator, passwordEncoder, user);
 
     authRepository
         .findByUsername(user.username())

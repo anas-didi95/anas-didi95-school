@@ -88,14 +88,12 @@ class RefreshTokenService extends AuthService<RefreshTokenReqDTO, RefreshTokenRe
                 JsonObject.mapFrom(GetUserReqDTO.builder().id(userId).build()))
             .thenApply(reply -> reply.mapTo(GetUserResDTO.class))
             .join();
-    var token =
-        AuthUtils.prepareToken(
-            props.refreshTokenExpiredSecs(), vertx, generator, passwordEncoder, user.result());
+    var token = AuthUtils.prepareToken(vertx, generator, passwordEncoder, user.result());
 
     auth.setRefreshToken(token.getRefreshToken());
     authRepository.update(auth);
 
-    log.debug("Token refreshed...{}", userId);
+    log.debug("Token refreshed...{}", user.result().username());
     return RefreshTokenResDTO.builder().token(token).build();
   }
 }

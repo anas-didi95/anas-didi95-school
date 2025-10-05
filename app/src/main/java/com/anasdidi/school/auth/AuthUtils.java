@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AuthUtils {
 
   public static final AccessRefreshToken prepareToken(
-      Long timerSeconds,
       VertxConfig vertx,
       AccessRefreshTokenGenerator generator,
       PasswordEncoder passwordEncoder,

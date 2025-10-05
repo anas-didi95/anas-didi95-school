@@ -168,7 +168,7 @@ public class VertxConfig {
     var mdc = MDC.getCopyOfContextMap();
     var mapName = VertxTimer.class.getSimpleName();
     var id = vertx.setTimer(Duration.ofSeconds(seconds).toMillis(), handler);
-    var data = VertxTimer.builder().id(id).build();
+    var data = VertxTimer.builder().id(id).type(VertxTimer.TimerType.ONETIME).build();
 
     return vertx
         .sharedData()
@@ -177,7 +177,13 @@ public class VertxConfig {
         .onComplete(
             event -> {
               MDC.setContextMap(mdc);
-              log.info("Vertx timer start...{},{},{},{}", mapName, key, seconds, event.succeeded());
+              log.info(
+                  "Vertx timer start...{},{},{},{},{}",
+                  data.type,
+                  mapName,
+                  key,
+                  seconds,
+                  event.succeeded());
               // MDC.clear();
             })
         .toCompletionStage()
@@ -205,7 +211,7 @@ public class VertxConfig {
                       t -> {
                         var stop = vertx.cancelTimer(t.id());
                         log.info(
-                            "Vertx timer stop...{},{},{},{}",
+                            "Vertx timer stop...{},{},{},{},{}",
                             mapName,
                             key,
                             stop,
@@ -219,6 +225,38 @@ public class VertxConfig {
         .toCompletableFuture();
   }
 
+  public void startPeriodic(
+      long initialDelaySecs, long delaySecs, String key, Handler<Long> handler) {
+    var mdc = MDC.getCopyOfContextMap();
+    var mapName = VertxTimer.class.getSimpleName();
+    var id =
+        vertx.setPeriodic(
+            Duration.ofSeconds(initialDelaySecs).toMillis(),
+            Duration.ofSeconds(delaySecs).toMillis(),
+            handler);
+    var data = VertxTimer.builder().id(id).type(VertxTimer.TimerType.PERIODIC).build();
+
+    vertx
+        .sharedData()
+        .getAsyncMap(mapName)
+        .compose(map -> map.put(key, JsonObject.mapFrom(data).encode()))
+        .onComplete(
+            event -> {
+              MDC.setContextMap(mdc);
+              log.info(
+                  "Vertx timer start...{},{},{},{},{},{}",
+                  data.type,
+                  mapName,
+                  key,
+                  initialDelaySecs,
+                  delaySecs,
+                  event.succeeded());
+              // MDC.clear();
+            })
+        .toCompletionStage()
+        .toCompletableFuture();
+  }
+
   public interface VertxData {}
   ;
 
@@ -226,7 +264,12 @@ public class VertxConfig {
   public record VertxUser(String refreshToken, UUID userId) implements VertxData {}
 
   @Builder
-  public record VertxTimer(long id) implements VertxData {}
+  public record VertxTimer(long id, TimerType type) implements VertxData {
+    enum TimerType {
+      ONETIME,
+      PERIODIC
+    }
+  }
 
   @Builder
   public record VertxAccess(Set<String> accessSet) implements VertxData {}

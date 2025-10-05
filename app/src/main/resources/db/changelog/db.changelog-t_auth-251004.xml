@@ -46,5 +46,9 @@
     <createIndex indexName="IX_AUTH_USERNAME" tableName="T_AUTH">
       <column name="USERNAME" />
     </createIndex>
+
+    <createIndex indexName="IX_AUTH_UPDATE_DT" tableName="T_AUTH">
+      <column name="UPDATE_DT" />
+    </createIndex>
   </changeSet>
 </databaseChangeLog>
