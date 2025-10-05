@@ -6,8 +6,6 @@ import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
 import com.anasdidi.school.rbac.dto.CheckAccessReqDTO;
 import com.anasdidi.school.rbac.dto.CheckAccessResDTO;
-import com.anasdidi.school.rbac.dto.HelloWorldReqDTO;
-import com.anasdidi.school.rbac.dto.HelloWorldResDTO;
 import com.anasdidi.school.rbac.dto.ListAccessReqDTO;
 import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import lombok.Getter;
@@ -19,7 +17,6 @@ public class RbacConstants {
 
   @UtilityClass
   public static class Event {
-    public static final String RBAC_HELLO_WORLD = "RBAC_HELLO_WORLD";
     public static final String RBAC_LIST_ACCESS = "RBAC_LST_ACCS";
     public static final String RBAC_CHECK_ACCESS = "RBAC_CHK_ACCS";
   }
@@ -27,7 +24,6 @@ public class RbacConstants {
   @Getter
   @RequiredArgsConstructor
   public enum EventEnum implements CommonEvent {
-    RBAC_HELLO_WORLD(Event.RBAC_HELLO_WORLD, HelloWorldReqDTO.class, HelloWorldResDTO.class),
     RBAC_LIST_ACCESS(Event.RBAC_LIST_ACCESS, ListAccessReqDTO.class, ListAccessResDTO.class),
     RBAC_CHECK_ACCESS(Event.RBAC_CHECK_ACCESS, CheckAccessReqDTO.class, CheckAccessResDTO.class);
 
