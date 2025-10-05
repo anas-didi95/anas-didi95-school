@@ -7,4 +7,5 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.NonNull;
 
 @ConfigurationProperties(CommonConstants.PROP_PREFIX + AuthConstants.Event.AUTH_REFRESH_TOKEN)
-record RefreshTokenServiceProps(@NonNull Long refreshTokenExpiredSecs) {}
+record RefreshTokenServiceProps(
+    @NonNull Long refreshTokenExpiredSecs, @NonNull Long refreshTokenLeewaySecs) {}

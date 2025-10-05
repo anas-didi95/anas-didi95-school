@@ -1,0 +1,54 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                      http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="db.changelog-t_rbac-251004" author="anas" labels="rbac">
+    <createTable
+      tableName="T_AUTH">
+      <!-- Metadata START -->
+      <column name="ID" type="UUID">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <!--
+      <column name="IS_DEL" type="BOOLEAN">
+        <constraints nullable="false" />
+      </column>
+      <column name="VER" type="INTEGER">
+        <constraints nullable="false" />
+      </column>
+      <column name="CREATE_BY" type="VARCHAR(20)">
+        <constraints nullable="false" />
+      </column>
+      <column name="CREATE_DT" type="TIMESTAMP WITH TIME ZONE">
+        <constraints nullable="false" />
+      </column>
+      -->
+      <column name="UPDATE_BY" type="VARCHAR(20)">
+        <constraints nullable="false" />
+      </column>
+      <column name="UPDATE_DT" type="TIMESTAMP WITH TIME ZONE">
+        <constraints nullable="false" />
+      </column>
+      <!-- Metadata END   -->
+      <column name="USERNAME" type="VARCHAR(20)">
+        <constraints nullable="false" />
+      </column>
+      <column name="REFRESH_TOKEN" type="VARCHAR(100)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <addUniqueConstraint tableName="T_AUTH" columnNames="USERNAME" />
+
+    <createIndex indexName="IX_AUTH_USERNAME" tableName="T_AUTH">
+      <column name="USERNAME" />
+    </createIndex>
+
+    <createIndex indexName="IX_AUTH_UPDATE_DT" tableName="T_AUTH">
+      <column name="UPDATE_DT" />
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

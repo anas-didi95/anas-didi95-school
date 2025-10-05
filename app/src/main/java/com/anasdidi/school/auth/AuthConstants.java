@@ -20,7 +20,7 @@ public class AuthConstants {
   @UtilityClass
   public static class Event {
     public static final String AUTH_SIGN_IN = "AUTH_SIGN_IN";
-    public static final String AUTH_REFRESH_TOKEN = "AUTH_REFRESH_TOKEN";
+    public static final String AUTH_REFRESH_TOKEN = "AUTH_RFSH_TKN";
     public static final String AUTH_SIGN_OUT = "AUTH_SIGN_OUT";
   }
 
@@ -38,5 +38,7 @@ public class AuthConstants {
   }
 
   public static final String BASE_URL = "/auth";
-  // public static final String CONNECTION_NAME = "CN-USER";
+  public static final String CONNECTION_NAME = "CN-AUTH";
+
+  public static final String JWT_ATTR_USERID = "__userId";
 }

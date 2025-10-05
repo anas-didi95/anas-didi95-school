@@ -1,0 +1,20 @@
+# DEV
+@BASE_URL=http://localhost:8080/school
+
+###
+
+# Hello World
+POST {{BASE_URL}}/api/v1/rbac/hello-world
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "anas.didi95"
+}
+
+###
+
+# List Access
+GET {{BASE_URL}}/api/v1/rbac/list-access
+Accept: application/json
+Content-Type: application/json

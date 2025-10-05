@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Named(UserConstants.Event.USER_UPDATE_USER)
-@Transactional
+@Transactional(transactionManager = UserConstants.CONNECTION_NAME)
 @RequiredArgsConstructor
 @Slf4j
 class UpdateUserService extends UserService<UpdateUserReqDTO, UpdateUserResDTO> {
@@ -49,7 +49,7 @@ class UpdateUserService extends UserService<UpdateUserReqDTO, UpdateUserResDTO> 
 
     UserEntity entity = result.get();
     entity.setName(in.update().name());
-    userRepository.save(entity);
+    userRepository.update(entity);
 
     log.debug("User updated...{}", entity.getUsername());
     return UpdateUserResDTO.builder().id(id).build();

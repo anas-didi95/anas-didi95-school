@@ -9,7 +9,7 @@ import lombok.Builder;
 
 @Serdeable
 @Builder
-public record SearchUserResDTO(List<UserDTO> resultList, Pagination pagination)
+public record ListUserResDTO(List<UserDTO> resultList, Pagination pagination)
     implements CommonResDTO {
 
   @Serdeable

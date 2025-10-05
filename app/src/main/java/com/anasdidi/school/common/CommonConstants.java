@@ -12,6 +12,7 @@ public class CommonConstants {
     E01_VALIDATION_ERR,
     E02_RECORD_ALREADY_EXIST_ERR,
     E03_RECORD_NOT_FOUND_ERR,
+    E86_ACCESS_DENIED_ERR,
     E87_TOKEN_INVALID_ERR,
     E88_USER_DISABLED_ERR,
     E89_INVALID_USERNM_PASSWD_ERR,
@@ -35,6 +36,9 @@ public class CommonConstants {
 
   public static final String MDC_TRACEID = "TraceId";
   public static final String MDC_CLASSMETHOD = "ClassMethod";
+  public static final String MDC_USERNAME = "Username";
 
   public static final String PROP_PREFIX = "application.";
+
+  public static final String SYSTEM_USER = "SYSTEM";
 }
