@@ -3,8 +3,12 @@ package com.anasdidi.school;
 
 import io.micronaut.runtime.Micronaut;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 @OpenAPIDefinition(
@@ -13,8 +17,17 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
             title = "anas-didi95-school",
             version = "v0.1.0",
             contact =
-                @Contact(email = "anas.didi95@tutamail", name = "Anas Juwaidi Bin Mohd Jeffry")))
+                @Contact(email = "anas.didi95@tutamail", name = "Anas Juwaidi Bin Mohd Jeffry")),
+    security = @SecurityRequirement(name = Application.OPENAPI_JWTSCHEME))
+@SecuritySchemes(
+    @SecurityScheme(
+        name = Application.OPENAPI_JWTSCHEME,
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT"))
 public class Application {
+
+  public static final String OPENAPI_JWTSCHEME = "JWTScheme";
 
   public static void main(String[] args) {
     SLF4JBridgeHandler.removeHandlersForRootLogger();
