@@ -68,7 +68,7 @@ micronaut:
           - "isAnonymous()"
       - pattern: "/api/*/rbac/**"
         access:
-          - "isAnonymous()"
+          - "isAuthenticated()"
       - pattern: "/swagger/**"
         access:
           - "isAnonymous()"
