@@ -39,5 +39,3 @@ micronaut:
           secret:
             generator:
               secret: "${JWT_SECRET}"
-  server:
-    context-path: "${APP_CONTEXT_PATH}"

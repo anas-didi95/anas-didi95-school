@@ -1,0 +1,22 @@
+---
+networks:
+  anas-didi95-network:
+    external: true
+services:
+  app-school-staging:
+    env_file:
+      - ".env"
+    image: "ghcr.io/anas-didi95/anas-didi95-school:develop"
+    labels:
+      - "traefik.http.routers.app-school-staging.rule=Host(`app.anasdidi.dev`) && PathPrefix(`/school-staging`)"
+      - "traefik.http.routers.app-school-staging.tls=true"
+      - "traefik.http.routers.app-school-staging.tls.certresolver=myresolver"
+      - "traefik.http.routers.app-school-staging.middlewares=app-school-staging-stripprefix"
+      - "traefik.http.middlewares.app-school-staging-stripprefix.stripprefix.prefixes=/school-staging"
+    logging:
+      driver: "local"
+    networks:
+      - "anas-didi95-network"
+    volumes:
+      - "./.h2/:/home/app/.h2/:z"
+      - "./openapi.properties:/home/app/openapi.properties:z"

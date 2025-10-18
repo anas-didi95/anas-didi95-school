@@ -44,6 +44,7 @@ liquibase:
 logger:
   levels:
     com.anasdidi.school: "TRACE"
+    io.micronaut.management.health.aggregator.DefaultHealthAggregator: "TRACE"
 micronaut:
   application:
     name: "school"
@@ -85,5 +86,4 @@ micronaut:
             generator:
               secret: "pleaseChangeThisSecretForANewOne"
   server:
-    context-path: "/school"
     host: "0.0.0.0"
