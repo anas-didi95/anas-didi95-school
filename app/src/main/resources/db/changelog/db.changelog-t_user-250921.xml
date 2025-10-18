@@ -61,5 +61,33 @@
       ]]>
       <comment>Add username[anas.didi95], password[p@ssw0rd]</comment>
     </sql>
+    <sql>
+      <![CDATA[
+        INSERT INTO T_USER(ID, IS_DEL, VER, CREATE_BY, CREATE_DT, UPDATE_BY, UPDATE_DT, USERNAME, PWD, NM, ROLES)
+        VALUES('8d9c27e6-7369-409b-a5ec-8bc95a76bb1e', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'anas.admin01', '$2a$10$a0Jbstzts01SqpViRN3H2OyKMxMo5B4yXkcF6somKgvK1PBAr7r2S', 'Anas Admin 01', '["ADMIN"]');
+      ]]>
+      <comment>Add username[anas.admin01], password[p@ssw0rd]</comment>
+    </sql>
+    <sql>
+      <![CDATA[
+        INSERT INTO T_USER(ID, IS_DEL, VER, CREATE_BY, CREATE_DT, UPDATE_BY, UPDATE_DT, USERNAME, PWD, NM, ROLES)
+        VALUES('35b84741-b267-4b78-b724-fad8b4d84b25', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'anas.admin02', '$2a$10$a0Jbstzts01SqpViRN3H2OyKMxMo5B4yXkcF6somKgvK1PBAr7r2S', 'Anas Admin 02', '["ADMIN"]');
+      ]]>
+      <comment>Add username[anas.admin02], password[p@ssw0rd]</comment>
+    </sql>
+    <sql>
+      <![CDATA[
+        INSERT INTO T_USER(ID, IS_DEL, VER, CREATE_BY, CREATE_DT, UPDATE_BY, UPDATE_DT, USERNAME, PWD, NM, ROLES)
+        VALUES('9b1dd950-70a5-471b-a871-b6a59fa5051a', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'anas.teacher01', '$2a$10$a0Jbstzts01SqpViRN3H2OyKMxMo5B4yXkcF6somKgvK1PBAr7r2S', 'Anas Teacher 01', '["TEACHER"]');
+      ]]>
+      <comment>Add username[anas.teacher01], password[p@ssw0rd]</comment>
+    </sql>
+    <sql>
+      <![CDATA[
+        INSERT INTO T_USER(ID, IS_DEL, VER, CREATE_BY, CREATE_DT, UPDATE_BY, UPDATE_DT, USERNAME, PWD, NM, ROLES)
+        VALUES('803300be-7ed5-43e3-9920-d161b95d0b04', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'anas.teacher02', '$2a$10$a0Jbstzts01SqpViRN3H2OyKMxMo5B4yXkcF6somKgvK1PBAr7r2S', 'Anas Teacher 02', '["TEACHER"]');
+      ]]>
+      <comment>Add username[anas.teacher02], password[p@ssw0rd]</comment>
+    </sql>
   </changeSet>
 </databaseChangeLog>
