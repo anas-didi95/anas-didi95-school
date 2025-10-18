@@ -1,5 +1,6 @@
 # DEV
-@BASE_URL=http://localhost:8080/school
+@BASE_URL=http://localhost:8080
+@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MDgwMTAyOCwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjA4MDQ2MjgsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYwODAxMDI4fQ.jdlwSUpaoJnLkNfTyPLRlvH9PiqFmEhYw49soGGrUhI
 
 ###
 
@@ -7,7 +8,7 @@
 POST {{BASE_URL}}/api/v1/user
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc1OTY0NTY2Miwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NTk2NDkyNjIsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzU5NjQ1NjYyfQ.VtNPXHvQGf8NSIMNYofQXm4IOimJwEWoHIZzi_oSRRg
+Authorization: Bearer {{TOKEN}}
 
 {
   "username": "test",
