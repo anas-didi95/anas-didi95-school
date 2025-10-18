@@ -44,6 +44,7 @@ liquibase:
 logger:
   levels:
     com.anasdidi.school: "TRACE"
+    io.micronaut.management.health.aggregator.DefaultHealthAggregator: "TRACE"
 micronaut:
   application:
     name: "school"
