@@ -6,6 +6,7 @@ import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.dto.UpdateUserReqDTO;
 import com.anasdidi.school.user.dto.UpdateUserResDTO;
 import com.anasdidi.school.user.entity.UserEntity;
+import com.anasdidi.school.user.entity.UserEntity_;
 import com.anasdidi.school.user.repository.UserRepository;
 import com.anasdidi.school.user.service.UserService;
 import io.micronaut.transaction.annotation.Transactional;
@@ -38,8 +39,8 @@ class UpdateUserService extends UserService<UpdateUserReqDTO, UpdateUserResDTO> 
         userRepository.findOne(
             (root, criteriaBuilder) -> {
               List<Predicate> list = new ArrayList<>();
-              list.add(criteriaBuilder.equal(root.get("id"), id));
-              list.add(criteriaBuilder.equal(root.get("version"), version));
+              list.add(criteriaBuilder.equal(root.get(UserEntity_.ID), id));
+              list.add(criteriaBuilder.equal(root.get(UserEntity_.VERSION), version));
               return criteriaBuilder.and(list.toArray(Predicate[]::new));
             });
     if (result.isEmpty()) {

@@ -1,6 +1,7 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.auth;
 
+import com.anasdidi.school.auth.entity.AuthEntity_;
 import com.anasdidi.school.auth.repository.AuthRepository;
 import com.anasdidi.school.common.CommonConstants;
 import com.anasdidi.school.common.config.VertxConfig;
@@ -55,7 +56,7 @@ public class AuthConfig {
             long deleteCount =
                 authRepository.deleteAll(
                     (root, criteriaBuilder) ->
-                        criteriaBuilder.lessThan(root.get("updateDate"), maxValidDate));
+                        criteriaBuilder.lessThan(root.get(AuthEntity_.UPDATE_DATE), maxValidDate));
             log.info("Total {} token revoked...{}", deleteCount, maxValidDate);
           });
     };

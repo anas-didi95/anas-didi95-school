@@ -21,6 +21,7 @@ dependencies {
   annotationProcessor("io.micronaut.security:micronaut-security-annotations")
   annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
   annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
+  annotationProcessor("org.hibernate.orm:hibernate-jpamodelgen")
   implementation("io.micronaut:micronaut-jackson-databind")
   implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
   implementation("io.micronaut.liquibase:micronaut-liquibase")
