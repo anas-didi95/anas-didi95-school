@@ -4,10 +4,12 @@ package com.anasdidi.school.auth;
 import com.anasdidi.school.auth.repository.AuthRepository;
 import com.anasdidi.school.common.CommonConstants;
 import com.anasdidi.school.common.config.VertxConfig;
+import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Value;
-import jakarta.annotation.PostConstruct;
+import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.context.event.StartupEvent;
 import jakarta.annotation.PreDestroy;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
@@ -39,22 +41,24 @@ public class AuthConfig {
           + ".refreshTokenRevokedSecs}")
   private Long refreshTokenRevokedSecs;
 
-  @PostConstruct
-  void postContruct() {
-    vertx.startPeriodic(
-        0,
-        refreshTokenRevokedSecs,
-        REVOKE_KEY,
-        (id) -> {
-          MDC.clear();
-          var maxValidDate =
-              OffsetDateTime.now().minus(refreshTokenExpiredSecs, ChronoUnit.SECONDS);
-          long deleteCount =
-              authRepository.deleteAll(
-                  (root, criteriaBuilder) ->
-                      criteriaBuilder.lessThan(root.get("updateDate"), maxValidDate));
-          log.info("Total {} token revoked...{}", deleteCount, maxValidDate);
-        });
+  @Bean
+  ApplicationEventListener<StartupEvent> onStartupEvent() {
+    return event -> {
+      vertx.startPeriodic(
+          10,
+          refreshTokenRevokedSecs,
+          REVOKE_KEY,
+          (id) -> {
+            MDC.clear();
+            var maxValidDate =
+                OffsetDateTime.now().minus(refreshTokenExpiredSecs, ChronoUnit.SECONDS);
+            long deleteCount =
+                authRepository.deleteAll(
+                    (root, criteriaBuilder) ->
+                        criteriaBuilder.lessThan(root.get("updateDate"), maxValidDate));
+            log.info("Total {} token revoked...{}", deleteCount, maxValidDate);
+          });
+    };
   }
 
   @PreDestroy
