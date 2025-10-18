@@ -8,7 +8,9 @@ services:
       - ".env"
     image: "ghcr.io/anas-didi95/anas-didi95-school:develop"
     labels:
-      - "traefik.http.routers.app.rule=Host(`localhost`) && PathPrefix(`/school-staging/`)"
+      - "traefik.http.routers.app-school-staging.rule=Host(`localhost`) && PathPrefix(`/school-staging`)"
+      - "traefik.http.routers.app-school-staging.middlewares=app-school-staging-stripprefix"
+      - "traefik.http.middlewares.app-school-staging-stripprefix.stripprefix.prefixes=/school-staging"
     logging:
       driver: "local"
     networks:
