@@ -211,7 +211,7 @@ public class VertxConfig {
                       t -> {
                         var stop = vertx.cancelTimer(t.id());
                         log.info(
-                            "Vertx timer stop...{},{},{},{},{}",
+                            "Vertx timer stop...{},{},{},{}",
                             mapName,
                             key,
                             stop,
