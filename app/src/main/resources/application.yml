@@ -70,6 +70,9 @@ micronaut:
       - pattern: "/api/*/rbac/**"
         access:
           - "isAuthenticated()"
+      - pattern: "/api/*/timesheet/**"
+        access:
+          - "isAuthenticated()"
       - pattern: "/swagger/**"
         access:
           - "isAnonymous()"
