@@ -58,27 +58,25 @@ micronaut:
         paths: "classpath:META-INF/swagger/views/swagger-ui"
   security:
     intercept-url-map:
+      # user
       - pattern: "/api/*/user/**"
-        access:
-          - "isAuthenticated()"
+        access: ["isAuthenticated()"]
+      # auth
       - pattern: "/api/*/auth/sign-out"
-        access:
-          - "isAuthenticated()"
+        access: ["isAuthenticated()"]
       - pattern: "/api/*/auth/**"
-        access:
-          - "isAnonymous()"
+        access: ["isAnonymous()"]
+      # rbac
       - pattern: "/api/*/rbac/**"
-        access:
-          - "isAuthenticated()"
+        access: ["isAuthenticated()"]
+      # timesheet
       - pattern: "/api/*/timesheet/**"
-        access:
-          - "isAuthenticated()"
+        access: ["isAuthenticated()"]
+      # swagger
       - pattern: "/swagger/**"
-        access:
-          - "isAnonymous()"
+        access: ["isAnonymous()"]
       - pattern: "/swagger-ui/**"
-        access:
-          - "isAnonymous()"
+        access: ["isAnonymous()"]
     token:
       generator:
         access-token:
