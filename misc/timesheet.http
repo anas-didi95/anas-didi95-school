@@ -1,6 +1,6 @@
 # DEV
 @BASE_URL=http://localhost:8080
-@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MDg0OTA0OCwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjA4NTI2NDgsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYwODQ5MDQ4fQ.0GDjBliB_BwkW1IRABp8LkLFEDT9vDoL4SdFawBY0MI
+@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MDg1NzE4OCwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjA4NjA3ODgsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYwODU3MTg4fQ.X8WMYlFaSZ2OgXM_-fJX50B70d70GkNIgS1-1Gy5ygE
 
 ###
 
@@ -13,3 +13,11 @@ Authorization: Bearer {{TOKEN}}
 {
   "name": "test"
 }
+
+###
+
+# Check in
+GET {{BASE_URL}}/api/v1/timesheet/check-in
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}

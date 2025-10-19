@@ -4,8 +4,11 @@ package com.anasdidi.school.timesheet;
 import com.anasdidi.school.common.CommonConstants.CommonEvent;
 import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
+import com.anasdidi.school.timesheet.dto.CheckInReqDTO;
+import com.anasdidi.school.timesheet.dto.CheckInResDTO;
 import com.anasdidi.school.timesheet.dto.HelloWorldReqDTO;
 import com.anasdidi.school.timesheet.dto.HelloWorldResDTO;
+import jakarta.persistence.AttributeConverter;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
@@ -16,18 +19,38 @@ public class TimesheetConstants {
   @UtilityClass
   public static class Event {
     public static final String TSHT_HELLO_WORLD = "TSHT_HELLO_WORLD";
+    public static final String TSHT_CHECK_IN = "TSHT_CHECK_IN";
   }
 
   @Getter
   @RequiredArgsConstructor
   public enum EventEnum implements CommonEvent {
-    TSHT_HELLO_WORLD(Event.TSHT_HELLO_WORLD, HelloWorldReqDTO.class, HelloWorldResDTO.class);
+    TSHT_HELLO_WORLD(Event.TSHT_HELLO_WORLD, HelloWorldReqDTO.class, HelloWorldResDTO.class),
+    TSHT_CHECK_IN(Event.TSHT_CHECK_IN, CheckInReqDTO.class, CheckInResDTO.class);
 
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;
     private final Class<? extends CommonResDTO> resClass;
   }
 
+  public enum TimesheetTypeEnum {
+    CHECK_IN,
+    CHECK_OUT;
+
+    public static class Converter implements AttributeConverter<TimesheetTypeEnum, String> {
+
+      @Override
+      public String convertToDatabaseColumn(TimesheetTypeEnum attribute) {
+        return attribute.name();
+      }
+
+      @Override
+      public TimesheetTypeEnum convertToEntityAttribute(String dbData) {
+        return TimesheetTypeEnum.valueOf(dbData);
+      }
+    }
+  }
+
   public static final String BASE_URL = "/timesheet";
-  // public static final String CONNECTION_NAME = "CN-USER";
+  public static final String CONNECTION_NAME = "CN-TIMESHEET";
 }

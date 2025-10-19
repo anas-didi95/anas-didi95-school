@@ -13,6 +13,10 @@ datasources:
     password: "sa"
     url: "jdbc:h2:./.h2/DB_SCHOOL_RBAC;AUTO_SERVER=TRUE"
     username: "sa"
+  CN-TIMESHEET:
+    password: "sa"
+    url: "jdbc:h2:./.h2/DB_SCHOOL_TIMESHEET;AUTO_SERVER=TRUE"
+    username: "sa"
   CN-USER:
     password: "sa"
     url: "jdbc:h2:./.h2/DB_SCHOOL_USER;AUTO_SERVER=TRUE"
@@ -35,6 +39,10 @@ liquibase:
       enabled: true
     CN-RBAC:
       change-log: "classpath:db/db.changelog-rbac.xml"
+      contexts: "dev"
+      enabled: true
+    CN-TIMESHEET:
+      change-log: "classpath:db/db.changelog-timesheet.xml"
       contexts: "dev"
       enabled: true
     CN-USER:

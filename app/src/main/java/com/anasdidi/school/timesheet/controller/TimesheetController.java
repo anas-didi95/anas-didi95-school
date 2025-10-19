@@ -3,6 +3,7 @@ package com.anasdidi.school.timesheet.controller;
 
 import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
+import com.anasdidi.school.timesheet.dto.CheckInResDTO;
 import com.anasdidi.school.timesheet.dto.HelloWorldReqDTO;
 import com.anasdidi.school.timesheet.dto.HelloWorldResDTO;
 import io.micronaut.http.HttpRequest;
@@ -17,4 +18,8 @@ public abstract class TimesheetController extends CommonController {
   @Operation(summary = "Hello world", tags = OPENAPI_TAG)
   protected abstract HttpResponse<HelloWorldResDTO> helloWorld(
       HttpRequest<?> request, HelloWorldReqDTO body);
+
+  @TraceLog
+  @Operation(summary = "Check in", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<CheckInResDTO> checkIn(HttpRequest<?> request);
 }
