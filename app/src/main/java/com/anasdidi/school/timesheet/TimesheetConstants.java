@@ -6,6 +6,8 @@ import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
 import com.anasdidi.school.timesheet.dto.CheckInReqDTO;
 import com.anasdidi.school.timesheet.dto.CheckInResDTO;
+import com.anasdidi.school.timesheet.dto.CheckOutReqDTO;
+import com.anasdidi.school.timesheet.dto.CheckOutResDTO;
 import com.anasdidi.school.timesheet.dto.HelloWorldReqDTO;
 import com.anasdidi.school.timesheet.dto.HelloWorldResDTO;
 import jakarta.persistence.AttributeConverter;
@@ -20,13 +22,15 @@ public class TimesheetConstants {
   public static class Event {
     public static final String TSHT_HELLO_WORLD = "TSHT_HELLO_WORLD";
     public static final String TSHT_CHECK_IN = "TSHT_CHECK_IN";
+    public static final String TSHT_CHECK_OUT = "TSHT_CHECK_OUT";
   }
 
   @Getter
   @RequiredArgsConstructor
   public enum EventEnum implements CommonEvent {
     TSHT_HELLO_WORLD(Event.TSHT_HELLO_WORLD, HelloWorldReqDTO.class, HelloWorldResDTO.class),
-    TSHT_CHECK_IN(Event.TSHT_CHECK_IN, CheckInReqDTO.class, CheckInResDTO.class);
+    TSHT_CHECK_IN(Event.TSHT_CHECK_IN, CheckInReqDTO.class, CheckInResDTO.class),
+    TSHT_CHECK_OUT(Event.TSHT_CHECK_OUT, CheckOutReqDTO.class, CheckOutResDTO.class);
 
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;

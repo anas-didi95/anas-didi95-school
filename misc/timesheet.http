@@ -21,3 +21,11 @@ GET {{BASE_URL}}/api/v1/timesheet/check-in
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
+
+###
+
+# Check out
+GET {{BASE_URL}}/api/v1/timesheet/check-out
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}

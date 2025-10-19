@@ -7,6 +7,8 @@ import com.anasdidi.school.timesheet.TimesheetConstants.EventEnum;
 import com.anasdidi.school.timesheet.controller.TimesheetController;
 import com.anasdidi.school.timesheet.dto.CheckInReqDTO;
 import com.anasdidi.school.timesheet.dto.CheckInResDTO;
+import com.anasdidi.school.timesheet.dto.CheckOutReqDTO;
+import com.anasdidi.school.timesheet.dto.CheckOutResDTO;
 import com.anasdidi.school.timesheet.dto.HelloWorldReqDTO;
 import com.anasdidi.school.timesheet.dto.HelloWorldResDTO;
 import com.anasdidi.school.timesheet.service.TimesheetServiceRegistry;
@@ -38,5 +40,13 @@ class TimesheetControllerV1 extends TimesheetController {
     return HttpResponse.ok(
         (CheckInResDTO)
             registry.get(EventEnum.TSHT_CHECK_IN).process(CheckInReqDTO.builder().build()));
+  }
+
+  @Override
+  @Get("/check-out")
+  protected HttpResponse<CheckOutResDTO> checkOut(HttpRequest<?> request) {
+    return HttpResponse.ok(
+        (CheckOutResDTO)
+            registry.get(EventEnum.TSHT_CHECK_OUT).process(CheckOutReqDTO.builder().build()));
   }
 }
