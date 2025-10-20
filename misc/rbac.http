@@ -1,16 +1,6 @@
 # DEV
-@BASE_URL=http://localhost:8080/school
-
-###
-
-# Hello World
-POST {{BASE_URL}}/api/v1/rbac/hello-world
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name": "anas.didi95"
-}
+@BASE_URL=http://localhost:8080
+@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MDk1NjY5Nywicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjA5NjAyOTcsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYwOTU2Njk3fQ.pntGXi3QhcKDzWdjtJimubHyxlsZFbD0o0vtiFjoqYc
 
 ###
 
@@ -18,3 +8,12 @@ Content-Type: application/json
 GET {{BASE_URL}}/api/v1/rbac/list-access
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+###
+
+# List role
+GET {{BASE_URL}}/api/v1/rbac/role
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
