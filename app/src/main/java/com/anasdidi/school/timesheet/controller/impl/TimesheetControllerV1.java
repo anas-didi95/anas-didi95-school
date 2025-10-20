@@ -9,15 +9,11 @@ import com.anasdidi.school.timesheet.dto.CheckInReqDTO;
 import com.anasdidi.school.timesheet.dto.CheckInResDTO;
 import com.anasdidi.school.timesheet.dto.CheckOutReqDTO;
 import com.anasdidi.school.timesheet.dto.CheckOutResDTO;
-import com.anasdidi.school.timesheet.dto.HelloWorldReqDTO;
-import com.anasdidi.school.timesheet.dto.HelloWorldResDTO;
 import com.anasdidi.school.timesheet.service.TimesheetServiceRegistry;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
 import lombok.RequiredArgsConstructor;
 
 @Controller(CommonConstants.V1_URL + TimesheetConstants.BASE_URL)
@@ -25,14 +21,6 @@ import lombok.RequiredArgsConstructor;
 class TimesheetControllerV1 extends TimesheetController {
 
   private final TimesheetServiceRegistry registry;
-
-  @Override
-  @Post("/helloWorld")
-  protected HttpResponse<HelloWorldResDTO> helloWorld(
-      HttpRequest<?> request, @Body HelloWorldReqDTO body) {
-    return HttpResponse.ok(
-        (HelloWorldResDTO) registry.get(EventEnum.TSHT_HELLO_WORLD).process(body));
-  }
 
   @Override
   @Get("/check-in")
