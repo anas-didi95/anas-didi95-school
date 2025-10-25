@@ -28,7 +28,7 @@ class RbacControllerV1 extends RbacController {
   private final RbacServiceRegistry registry;
 
   @Override
-  @Get("/list-access")
+  @Get("/access")
   protected HttpResponse<ListAccessResDTO> listAccess(HttpRequest<?> request) {
     var body = ListAccessReqDTO.builder().build();
     return HttpResponse.ok(
