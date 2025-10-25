@@ -60,7 +60,7 @@ class CheckOutService extends TimesheetService<CheckOutReqDTO, CheckOutResDTO> {
     }
 
     var out2 = out.build();
-    log.info("Checked out {}...{}", username, out2.lastDateTime());
+    log.debug("Checked out {}...{}", username, out2.lastDateTime());
     return out2;
   }
 }

@@ -60,7 +60,7 @@ class CheckInService extends TimesheetService<CheckInReqDTO, CheckInResDTO> {
     }
 
     var out2 = out.build();
-    log.info("Checked in {}...{}", username, out2.lastDateTime());
+    log.debug("Checked in {}...{}", username, out2.lastDateTime());
     return out2;
   }
 }

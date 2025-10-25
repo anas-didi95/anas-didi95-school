@@ -27,7 +27,7 @@ class ListRoleService extends RbacService<ListRoleReqDTO, ListRoleResDTO> {
 
     var resultList = rbacRepository.findAll().stream().map(rbacMapper::toRoleDTO).toList();
 
-    log.info("List completed...");
+    log.debug("List completed...");
     return ListRoleResDTO.builder().resultList(resultList).build();
   }
 }
