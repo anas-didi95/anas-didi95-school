@@ -1,6 +1,7 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.user.service.impl;
 
+import com.anasdidi.school.common.dto.PaginationDTO;
 import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.UserMapper;
 import com.anasdidi.school.user.dto.ListUserReqDTO;
@@ -68,7 +69,7 @@ class ListUserService extends UserService<ListUserReqDTO, ListUserResDTO> {
     return ListUserResDTO.builder()
         .resultList(search.getContent().stream().map(userMapper::toUserDTO).toList())
         .pagination(
-            ListUserResDTO.Pagination.builder()
+            PaginationDTO.builder()
                 .pageNo(pageNo)
                 .totalRecords(search.getTotalSize())
                 .totalRecordsPerPage(totalRecordsPerPage)
