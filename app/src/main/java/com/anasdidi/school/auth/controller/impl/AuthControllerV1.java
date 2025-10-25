@@ -31,7 +31,8 @@ class AuthControllerV1 extends AuthController {
   @Override
   @Post("/sign-in")
   protected HttpResponse<SignInResDTO> signIn(HttpRequest<?> request, @Body SignInReqDTO body) {
-    return HttpResponse.ok((SignInResDTO) registry.get(EventEnum.AUTH_SIGN_IN).process(body));
+    return HttpResponse.ok(
+        (SignInResDTO) registry.get(EventEnum.AUTH_SIGN_IN).process(body, false));
   }
 
   @Override
@@ -39,7 +40,7 @@ class AuthControllerV1 extends AuthController {
   protected HttpResponse<RefreshTokenResDTO> refreshToken(
       HttpRequest<?> request, @Body RefreshTokenReqDTO body) {
     return HttpResponse.ok(
-        (RefreshTokenResDTO) registry.get(EventEnum.AUTH_REFRESH_TOKEN).process(body));
+        (RefreshTokenResDTO) registry.get(EventEnum.AUTH_REFRESH_TOKEN).process(body, false));
   }
 
   @Override
@@ -47,6 +48,7 @@ class AuthControllerV1 extends AuthController {
   protected HttpResponse<SignOutResDTO> signOut(
       HttpRequest<?> request, @Nullable Authentication authentication) {
     var body = SignOutReqDTO.builder().username(authentication.getName()).build();
-    return HttpResponse.ok((SignOutResDTO) registry.get(EventEnum.AUTH_SIGN_OUT).process(body));
+    return HttpResponse.ok(
+        (SignOutResDTO) registry.get(EventEnum.AUTH_SIGN_OUT).process(body, false));
   }
 }

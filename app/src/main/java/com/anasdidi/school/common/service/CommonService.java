@@ -31,7 +31,7 @@ public abstract class CommonService<A extends CommonReqDTO, B extends CommonResD
 
   @TraceLog
   public B process(@Valid A in, boolean checkAccess) {
-    if (securityService.isAuthenticated() && checkAccess) {
+    if (checkAccess && securityService.isAuthenticated()) {
       var access = beanContext.getBeanDefinition(this.getClass()).getBeanName().get();
       var roles =
           Optional.ofNullable(securityService.getAuthentication().get().getRoles())
