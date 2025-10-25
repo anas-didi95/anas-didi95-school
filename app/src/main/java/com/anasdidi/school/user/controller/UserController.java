@@ -6,6 +6,7 @@ import com.anasdidi.school.common.controller.CommonController;
 import com.anasdidi.school.common.dto.Views;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
+import com.anasdidi.school.user.dto.AssignUserRoleResDTO;
 import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
 import com.anasdidi.school.user.dto.ListUserResDTO;
@@ -49,4 +50,9 @@ public abstract class UserController extends CommonController {
   @TraceLog
   @Operation(summary = "Delete user", tags = OPENAPI_TAG)
   protected abstract HttpResponse<DeleteUserResDTO> deleteUser(HttpRequest<?> request, UUID userId);
+
+  @TraceLog
+  @Operation(summary = "Assign user role", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<AssignUserRoleResDTO> assignUserRole(
+      HttpRequest<?> request, UserDTO update, UUID userId);
 }
