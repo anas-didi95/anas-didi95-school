@@ -38,7 +38,7 @@ class AddRoleService extends RbacService<AddRoleReqDTO, AddRoleResDTO> {
     RbacEntity entity = new RbacEntity();
     entity.setVersion(0);
     entity.setIsDeleted(false);
-    entity.setRole(in.role());
+    entity.setRole(in.role().toUpperCase());
     entity.setAccessList(in.accessList());
     entity.setIsSuperadmin(false);
     entity = rbacRepository.save(entity);

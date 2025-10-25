@@ -1,6 +1,6 @@
 # DEV
 @BASE_URL=http://localhost:8080
-@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MTM4Njk1MCwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjEzOTA1NTAsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYxMzg2OTUwfQ.ZiLmsDREVqgBLdWqIUHwX-PGsiWUvXlUmI39J2muQaY
+@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MTQwNTAzNSwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjE0MDg2MzUsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYxNDA1MDM1fQ.Kd2yWQDgW5Wl2qpHras0nG-4OH077yGUOuW2CjQknNM"
 
 ###
 
@@ -13,7 +13,7 @@ Authorization: Bearer {{TOKEN}}
 ###
 
 # List role
-GET {{BASE_URL}}/api/v1/rbac/role
+GET {{BASE_URL}}/api/v1/rbac/role?
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}

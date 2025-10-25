@@ -21,7 +21,8 @@ public abstract class RbacController extends CommonController {
 
   @TraceLog
   @Operation(summary = "List role", tags = OPENAPI_TAG)
-  protected abstract HttpResponse<ListRoleResDTO> listRole(HttpRequest<?> request);
+  protected abstract HttpResponse<ListRoleResDTO> listRole(
+      HttpRequest<?> request, String role, Integer pageNo, Integer totalRecordsPerPage);
 
   @TraceLog
   @Operation(summary = "Add role", tags = OPENAPI_TAG)

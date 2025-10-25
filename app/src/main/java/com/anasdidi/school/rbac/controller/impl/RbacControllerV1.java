@@ -12,6 +12,7 @@ import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import com.anasdidi.school.rbac.dto.ListRoleReqDTO;
 import com.anasdidi.school.rbac.dto.ListRoleResDTO;
 import com.anasdidi.school.rbac.service.RbacServiceRegistry;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
@@ -36,8 +37,17 @@ class RbacControllerV1 extends RbacController {
 
   @Override
   @Get("/role")
-  protected HttpResponse<ListRoleResDTO> listRole(HttpRequest<?> request) {
-    var body = ListRoleReqDTO.builder().build();
+  protected HttpResponse<ListRoleResDTO> listRole(
+      HttpRequest<?> request,
+      @Nullable String role,
+      @Nullable Integer pageNo,
+      @Nullable Integer totalRecordsPerPage) {
+    var body =
+        ListRoleReqDTO.builder()
+            .role(role)
+            .pageNo(pageNo)
+            .totalRecordsPerPage(totalRecordsPerPage)
+            .build();
     return HttpResponse.ok((ListRoleResDTO) registry.get(EventEnum.RBAC_LIST_ROLE).process(body));
   }
 
