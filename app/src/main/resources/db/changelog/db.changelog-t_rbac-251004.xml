@@ -34,7 +34,7 @@
       <column name="ROL" type="VARCHAR(20)">
         <constraints nullable="false" />
       </column>
-      <column name="ACCS_LS" type="CLOB">
+      <column name="ACCS_LS" type="VARCHAR(MAX)">
         <constraints nullable="false" />
       </column>
       <column name="IS_SUPERADMIN" type="BOOLEAN">
