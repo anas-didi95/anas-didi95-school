@@ -4,6 +4,8 @@ package com.anasdidi.school.rbac;
 import com.anasdidi.school.common.CommonConstants.CommonEvent;
 import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
+import com.anasdidi.school.rbac.dto.AddRoleReqDTO;
+import com.anasdidi.school.rbac.dto.AddRoleResDTO;
 import com.anasdidi.school.rbac.dto.CheckAccessReqDTO;
 import com.anasdidi.school.rbac.dto.CheckAccessResDTO;
 import com.anasdidi.school.rbac.dto.ListAccessReqDTO;
@@ -22,6 +24,7 @@ public class RbacConstants {
     public static final String RBAC_LIST_ACCESS = "RBAC_LST_ACCS";
     public static final String RBAC_CHECK_ACCESS = "RBAC_CHK_ACCS";
     public static final String RBAC_LIST_ROLE = "RBAC_LST_ROLE";
+    public static final String RBAC_ADD_ROLE = "RBAC_ADD_ROLE";
   }
 
   @Getter
@@ -29,7 +32,8 @@ public class RbacConstants {
   public enum EventEnum implements CommonEvent {
     RBAC_LIST_ACCESS(Event.RBAC_LIST_ACCESS, ListAccessReqDTO.class, ListAccessResDTO.class),
     RBAC_CHECK_ACCESS(Event.RBAC_CHECK_ACCESS, CheckAccessReqDTO.class, CheckAccessResDTO.class),
-    RBAC_LIST_ROLE(Event.RBAC_LIST_ROLE, ListRoleReqDTO.class, ListRoleResDTO.class);
+    RBAC_LIST_ROLE(Event.RBAC_LIST_ROLE, ListRoleReqDTO.class, ListRoleResDTO.class),
+    RBAC_ADD_ROLE(Event.RBAC_ADD_ROLE, AddRoleReqDTO.class, AddRoleResDTO.class);
 
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;

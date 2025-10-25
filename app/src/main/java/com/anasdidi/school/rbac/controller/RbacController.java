@@ -3,6 +3,8 @@ package com.anasdidi.school.rbac.controller;
 
 import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
+import com.anasdidi.school.rbac.dto.AddRoleReqDTO;
+import com.anasdidi.school.rbac.dto.AddRoleResDTO;
 import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import com.anasdidi.school.rbac.dto.ListRoleResDTO;
 import io.micronaut.http.HttpRequest;
@@ -20,4 +22,9 @@ public abstract class RbacController extends CommonController {
   @TraceLog
   @Operation(summary = "List role", tags = OPENAPI_TAG)
   protected abstract HttpResponse<ListRoleResDTO> listRole(HttpRequest<?> request);
+
+  @TraceLog
+  @Operation(summary = "Add role", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<AddRoleResDTO> addRole(
+      HttpRequest<?> request, AddRoleReqDTO body);
 }

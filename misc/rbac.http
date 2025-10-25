@@ -1,6 +1,6 @@
 # DEV
 @BASE_URL=http://localhost:8080
-@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MDk1NjY5Nywicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjA5NjAyOTcsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYwOTU2Njk3fQ.pntGXi3QhcKDzWdjtJimubHyxlsZFbD0o0vtiFjoqYc
+@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MTM4Njk1MCwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjEzOTA1NTAsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYxMzg2OTUwfQ.ZiLmsDREVqgBLdWqIUHwX-PGsiWUvXlUmI39J2muQaY
 
 ###
 
@@ -17,3 +17,16 @@ GET {{BASE_URL}}/api/v1/rbac/role
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
+
+###
+
+# Add role
+POST {{BASE_URL}}/api/v1/rbac/role
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "role": "TEST",
+  "accessList": ["ACC1", "ACC2"]
+}
