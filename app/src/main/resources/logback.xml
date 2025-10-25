@@ -1,6 +1,6 @@
 <configuration>
   <property name="pattern"
-    value="%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %gray([%12.12thread]) %highlight(%-5level) %magenta(%logger{20}) - [%X{TraceId}][%X{ClassMethod}] | %msg%n" />
+    value="%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %gray([%12.12thread]) %highlight(%-5level) %magenta(%logger{20}) - [%X{Username}][%X{TraceId}][%X{ClassMethod}] | %msg%n" />
 
   <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator" />
 
