@@ -5,11 +5,13 @@ import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
 import com.anasdidi.school.rbac.dto.AddRoleReqDTO;
 import com.anasdidi.school.rbac.dto.AddRoleResDTO;
+import com.anasdidi.school.rbac.dto.GetRoleResDTO;
 import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import com.anasdidi.school.rbac.dto.ListRoleResDTO;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.UUID;
 
 public abstract class RbacController extends CommonController {
 
@@ -28,4 +30,8 @@ public abstract class RbacController extends CommonController {
   @Operation(summary = "Add role", tags = OPENAPI_TAG)
   protected abstract HttpResponse<AddRoleResDTO> addRole(
       HttpRequest<?> request, AddRoleReqDTO body);
+
+  @TraceLog
+  @Operation(summary = "Get role", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<GetRoleResDTO> getRole(HttpRequest<?> request, UUID roleId);
 }

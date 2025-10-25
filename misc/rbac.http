@@ -30,3 +30,11 @@ Authorization: Bearer {{TOKEN}}
   "role": "TEST",
   "accessList": ["ACC1", "ACC2"]
 }
+
+###
+
+# Get role
+GET {{BASE_URL}}/api/v1/rbac/role/8df3cd2c-7ef2-48aa-b009-d2424c1aa044
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}

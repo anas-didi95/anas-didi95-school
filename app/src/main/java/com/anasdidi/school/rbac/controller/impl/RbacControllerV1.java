@@ -7,6 +7,8 @@ import com.anasdidi.school.rbac.RbacConstants.EventEnum;
 import com.anasdidi.school.rbac.controller.RbacController;
 import com.anasdidi.school.rbac.dto.AddRoleReqDTO;
 import com.anasdidi.school.rbac.dto.AddRoleResDTO;
+import com.anasdidi.school.rbac.dto.GetRoleReqDTO;
+import com.anasdidi.school.rbac.dto.GetRoleResDTO;
 import com.anasdidi.school.rbac.dto.ListAccessReqDTO;
 import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import com.anasdidi.school.rbac.dto.ListRoleReqDTO;
@@ -19,6 +21,7 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
 @Controller(CommonConstants.V1_URL + RbacConstants.BASE_URL)
@@ -55,5 +58,12 @@ class RbacControllerV1 extends RbacController {
   @Post("/role")
   protected HttpResponse<AddRoleResDTO> addRole(HttpRequest<?> request, @Body AddRoleReqDTO body) {
     return HttpResponse.ok((AddRoleResDTO) registry.get(EventEnum.RBAC_ADD_ROLE).process(body));
+  }
+
+  @Override
+  @Get("/role/{roleId}")
+  protected HttpResponse<GetRoleResDTO> getRole(HttpRequest<?> request, UUID roleId) {
+    var body = GetRoleReqDTO.builder().id(roleId).build();
+    return HttpResponse.ok((GetRoleResDTO) registry.get(EventEnum.RBAC_GET_ROLE).process(body));
   }
 }
