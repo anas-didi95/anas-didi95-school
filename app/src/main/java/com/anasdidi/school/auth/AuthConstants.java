@@ -19,9 +19,9 @@ public class AuthConstants {
 
   @UtilityClass
   public static class Event {
-    public static final String AUTH_SIGN_IN = "AUTH_SIGN_IN";
-    public static final String AUTH_REFRESH_TOKEN = "AUTH_RFSH_TKN";
-    public static final String AUTH_SIGN_OUT = "AUTH_SIGN_OUT";
+    public static final String AUTH_SIGN_IN = "AUTH_SGN_IN";
+    public static final String AUTH_REFRESH_TOKEN = "AUTH_RFH_TKN";
+    public static final String AUTH_SIGN_OUT = "AUTH_SGN_OUT";
   }
 
   @Getter

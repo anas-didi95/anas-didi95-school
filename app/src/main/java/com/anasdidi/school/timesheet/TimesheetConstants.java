@@ -18,8 +18,8 @@ public class TimesheetConstants {
 
   @UtilityClass
   public static class Event {
-    public static final String TSHT_CHECK_IN = "TSHT_CHECK_IN";
-    public static final String TSHT_CHECK_OUT = "TSHT_CHECK_OUT";
+    public static final String TSHT_CHECK_IN = "TSHT_CHK_IN";
+    public static final String TSHT_CHECK_OUT = "TSHT_CHK_OUT";
   }
 
   @Getter

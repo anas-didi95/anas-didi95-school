@@ -21,10 +21,10 @@ public class RbacConstants {
 
   @UtilityClass
   public static class Event {
-    public static final String RBAC_LIST_ACCESS = "RBAC_LST_ACCS";
-    public static final String RBAC_CHECK_ACCESS = "RBAC_CHK_ACCS";
-    public static final String RBAC_LIST_ROLE = "RBAC_LST_ROLE";
-    public static final String RBAC_ADD_ROLE = "RBAC_ADD_ROLE";
+    public static final String RBAC_LIST_ACCESS = "RBAC_LST_ACS";
+    public static final String RBAC_CHECK_ACCESS = "RBAC_CHK_ACS";
+    public static final String RBAC_LIST_ROLE = "RBAC_LST_ROL";
+    public static final String RBAC_ADD_ROLE = "RBAC_ADD_ROL";
   }
 
   @Getter

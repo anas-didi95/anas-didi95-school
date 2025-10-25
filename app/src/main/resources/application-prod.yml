@@ -1,6 +1,6 @@
 ---
 application:
-  AUTH_RFSH_TKN:
+  AUTH_RFH_TKN:
     refreshTokenExpiredSecs: "${APP_REFRESH_TOKEN_EXPIRY_SEC}"
     refreshTokenLeewaySecs: "${APP_REFRESH_TOKEN_LEEWAY_SEC}"
     refreshTokenRevokedSecs: "${APP_REFRESH_TOKEN_REVOKE_SEC}"
