@@ -3,9 +3,8 @@ package com.anasdidi.school.rbac.service.impl;
 
 import com.anasdidi.school.common.error.E03RecordNotFoundError;
 import com.anasdidi.school.rbac.RbacConstants;
-import com.anasdidi.school.rbac.dto.UpdateRoleReqDTO;
-import com.anasdidi.school.rbac.dto.UpdateRoleResDTO;
-import com.anasdidi.school.rbac.entity.RbacEntity_;
+import com.anasdidi.school.rbac.dto.DeleteRoleReqDTO;
+import com.anasdidi.school.rbac.dto.DeleteRoleResDTO;
 import com.anasdidi.school.rbac.repository.RbacRepository;
 import com.anasdidi.school.rbac.service.RbacService;
 import io.micronaut.transaction.annotation.Transactional;
@@ -15,37 +14,32 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
-@Named(RbacConstants.Event.RBAC_UPDATE_ROLE)
+@Named(RbacConstants.Event.RBAC_DELETE_ROLE)
 @Transactional(transactionManager = RbacConstants.CONNECTION_NAME)
 @RequiredArgsConstructor
 @Slf4j
-class UpdateRoleService extends RbacService<UpdateRoleReqDTO, UpdateRoleResDTO> {
+class DeleteRoleService extends RbacService<DeleteRoleReqDTO, DeleteRoleResDTO> {
 
   private final RbacRepository rbacRepository;
 
   @Override
-  protected UpdateRoleResDTO execute(UpdateRoleReqDTO in) {
+  protected DeleteRoleResDTO execute(DeleteRoleReqDTO in) {
     log.trace("START...");
 
     var id = in.id();
-    var version = in.update().version();
     var entity =
         rbacRepository
-            .findOne(
-                (root, criteriaBuilder) ->
-                    criteriaBuilder.and(
-                        criteriaBuilder.equal(root.get(RbacEntity_.ID), id),
-                        criteriaBuilder.equal(root.get(RbacEntity_.VERSION), version)))
+            .findById(id)
             .orElseThrow(
                 () -> {
-                  log.error("Role not found! id={}, version={}", id, version);
+                  log.error("Role not found! {}", id);
                   throw new E03RecordNotFoundError("Role");
                 });
 
-    entity.setAccessList(in.update().accessList());
+    entity.setIsDeleted(true);
     entity = rbacRepository.update(entity);
 
-    log.debug("Role updated...{}", entity.getRole());
-    return UpdateRoleResDTO.builder().id(id).build();
+    log.debug("Role deleted...{}", entity.getRole());
+    return DeleteRoleResDTO.builder().id(id).build();
   }
 }

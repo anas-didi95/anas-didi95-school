@@ -35,7 +35,7 @@ class GetRoleService extends RbacService<GetRoleReqDTO, GetRoleResDTO> {
                   throw new E03RecordNotFoundError("Role");
                 });
 
-    log.debug("Role found...{}");
+    log.debug("Role found...{}", result.getRole());
     return GetRoleResDTO.builder().result(rbacMapper.toRoleDTO(result)).build();
   }
 }

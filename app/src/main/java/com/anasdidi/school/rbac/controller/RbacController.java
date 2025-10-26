@@ -5,6 +5,7 @@ import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
 import com.anasdidi.school.rbac.dto.AddRoleReqDTO;
 import com.anasdidi.school.rbac.dto.AddRoleResDTO;
+import com.anasdidi.school.rbac.dto.DeleteRoleResDTO;
 import com.anasdidi.school.rbac.dto.GetRoleResDTO;
 import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import com.anasdidi.school.rbac.dto.ListRoleResDTO;
@@ -39,6 +40,10 @@ public abstract class RbacController extends CommonController {
 
   @TraceLog
   @Operation(summary = "Update role", tags = OPENAPI_TAG)
-  protected abstract HttpResponse<UpdateRoleResDTO> getRole(
+  protected abstract HttpResponse<UpdateRoleResDTO> updateRole(
       HttpRequest<?> request, RoleDTO body, UUID roleId);
+
+  @TraceLog
+  @Operation(summary = "Delete role", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<DeleteRoleResDTO> deleteRole(HttpRequest<?> request, UUID roleId);
 }

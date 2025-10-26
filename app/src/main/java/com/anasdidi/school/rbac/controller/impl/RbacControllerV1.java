@@ -7,6 +7,8 @@ import com.anasdidi.school.rbac.RbacConstants.EventEnum;
 import com.anasdidi.school.rbac.controller.RbacController;
 import com.anasdidi.school.rbac.dto.AddRoleReqDTO;
 import com.anasdidi.school.rbac.dto.AddRoleResDTO;
+import com.anasdidi.school.rbac.dto.DeleteRoleReqDTO;
+import com.anasdidi.school.rbac.dto.DeleteRoleResDTO;
 import com.anasdidi.school.rbac.dto.GetRoleReqDTO;
 import com.anasdidi.school.rbac.dto.GetRoleResDTO;
 import com.anasdidi.school.rbac.dto.ListAccessReqDTO;
@@ -22,6 +24,7 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
@@ -73,10 +76,18 @@ class RbacControllerV1 extends RbacController {
 
   @Override
   @Put("/role/{roleId}")
-  protected HttpResponse<UpdateRoleResDTO> getRole(
+  protected HttpResponse<UpdateRoleResDTO> updateRole(
       HttpRequest<?> request, @Body RoleDTO body, UUID roleId) {
     var req = UpdateRoleReqDTO.builder().id(roleId).update(body).build();
     return HttpResponse.ok(
         (UpdateRoleResDTO) registry.get(EventEnum.RBAC_UPDATE_ROLE).process(req));
+  }
+
+  @Override
+  @Delete("/role/{roleId}")
+  protected HttpResponse<DeleteRoleResDTO> deleteRole(HttpRequest<?> request, UUID roleId) {
+    var req = DeleteRoleReqDTO.builder().id(roleId).build();
+    return HttpResponse.ok(
+        (DeleteRoleResDTO) registry.get(EventEnum.RBAC_DELETE_ROLE).process(req));
   }
 }
