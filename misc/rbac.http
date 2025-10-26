@@ -1,6 +1,6 @@
 # DEV
 @BASE_URL=http://localhost:8080
-@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MTQwNTAzNSwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjE0MDg2MzUsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYxNDA1MDM1fQ.Kd2yWQDgW5Wl2qpHras0nG-4OH077yGUOuW2CjQknNM"
+@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MTQ4OTY5NCwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjE0OTMyOTQsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYxNDg5Njk0fQ._di29T8EPhtZaUl4wzdL5GpiyCpzogo-zGOTcLTDbLw
 
 ###
 
@@ -38,3 +38,16 @@ GET {{BASE_URL}}/api/v1/rbac/role/8df3cd2c-7ef2-48aa-b009-d2424c1aa044
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
+
+###
+
+# Update role
+PUT {{BASE_URL}}/api/v1/rbac/role/8df3cd2c-7ef2-48aa-b009-d2424c1aa044
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "version": 0,
+  "accessList": []
+}

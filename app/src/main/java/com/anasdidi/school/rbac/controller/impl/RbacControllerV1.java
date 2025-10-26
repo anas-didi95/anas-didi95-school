@@ -13,6 +13,9 @@ import com.anasdidi.school.rbac.dto.ListAccessReqDTO;
 import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import com.anasdidi.school.rbac.dto.ListRoleReqDTO;
 import com.anasdidi.school.rbac.dto.ListRoleResDTO;
+import com.anasdidi.school.rbac.dto.UpdateRoleReqDTO;
+import com.anasdidi.school.rbac.dto.UpdateRoleResDTO;
+import com.anasdidi.school.rbac.dto.model.RoleDTO;
 import com.anasdidi.school.rbac.service.RbacServiceRegistry;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpRequest;
@@ -21,6 +24,7 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
@@ -65,5 +69,14 @@ class RbacControllerV1 extends RbacController {
   protected HttpResponse<GetRoleResDTO> getRole(HttpRequest<?> request, UUID roleId) {
     var body = GetRoleReqDTO.builder().id(roleId).build();
     return HttpResponse.ok((GetRoleResDTO) registry.get(EventEnum.RBAC_GET_ROLE).process(body));
+  }
+
+  @Override
+  @Put("/role/{roleId}")
+  protected HttpResponse<UpdateRoleResDTO> getRole(
+      HttpRequest<?> request, @Body RoleDTO body, UUID roleId) {
+    var req = UpdateRoleReqDTO.builder().id(roleId).update(body).build();
+    return HttpResponse.ok(
+        (UpdateRoleResDTO) registry.get(EventEnum.RBAC_UPDATE_ROLE).process(req));
   }
 }

@@ -14,6 +14,8 @@ import com.anasdidi.school.rbac.dto.ListAccessReqDTO;
 import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import com.anasdidi.school.rbac.dto.ListRoleReqDTO;
 import com.anasdidi.school.rbac.dto.ListRoleResDTO;
+import com.anasdidi.school.rbac.dto.UpdateRoleReqDTO;
+import com.anasdidi.school.rbac.dto.UpdateRoleResDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
@@ -28,6 +30,7 @@ public class RbacConstants {
     public static final String RBAC_LIST_ROLE = "RBAC_LST_ROL";
     public static final String RBAC_ADD_ROLE = "RBAC_ADD_ROL";
     public static final String RBAC_GET_ROLE = "RBAC_GET_ROL";
+    public static final String RBAC_UPDATE_ROLE = "RBAC_UPD_ROL";
   }
 
   @Getter
@@ -37,7 +40,8 @@ public class RbacConstants {
     RBAC_CHECK_ACCESS(Event.RBAC_CHECK_ACCESS, CheckAccessReqDTO.class, CheckAccessResDTO.class),
     RBAC_LIST_ROLE(Event.RBAC_LIST_ROLE, ListRoleReqDTO.class, ListRoleResDTO.class),
     RBAC_ADD_ROLE(Event.RBAC_ADD_ROLE, AddRoleReqDTO.class, AddRoleResDTO.class),
-    RBAC_GET_ROLE(Event.RBAC_GET_ROLE, GetRoleReqDTO.class, GetRoleResDTO.class);
+    RBAC_GET_ROLE(Event.RBAC_GET_ROLE, GetRoleReqDTO.class, GetRoleResDTO.class),
+    RBAC_UPDATE_ROLE(Event.RBAC_UPDATE_ROLE, UpdateRoleReqDTO.class, UpdateRoleResDTO.class);
 
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;

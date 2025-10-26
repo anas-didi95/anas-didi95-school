@@ -8,6 +8,8 @@ import com.anasdidi.school.rbac.dto.AddRoleResDTO;
 import com.anasdidi.school.rbac.dto.GetRoleResDTO;
 import com.anasdidi.school.rbac.dto.ListAccessResDTO;
 import com.anasdidi.school.rbac.dto.ListRoleResDTO;
+import com.anasdidi.school.rbac.dto.UpdateRoleResDTO;
+import com.anasdidi.school.rbac.dto.model.RoleDTO;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,4 +36,9 @@ public abstract class RbacController extends CommonController {
   @TraceLog
   @Operation(summary = "Get role", tags = OPENAPI_TAG)
   protected abstract HttpResponse<GetRoleResDTO> getRole(HttpRequest<?> request, UUID roleId);
+
+  @TraceLog
+  @Operation(summary = "Update role", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<UpdateRoleResDTO> getRole(
+      HttpRequest<?> request, RoleDTO body, UUID roleId);
 }
