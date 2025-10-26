@@ -33,6 +33,7 @@ class CheckAccessService extends RbacService<CheckAccessReqDTO, CheckAccessResDT
             (root, criteriaBuilder) -> {
               List<Predicate> list = new ArrayList<>();
               list.add(root.get(RbacEntity_.ROLE).in(in.roleList()));
+              list.add(criteriaBuilder.isFalse(root.get(RbacEntity_.IS_DELETED)));
               list.add(
                   criteriaBuilder.or(
                       criteriaBuilder.isTrue(root.get(RbacEntity_.IS_SUPERADMIN)),
