@@ -7,6 +7,8 @@ import com.anasdidi.school.user.UserConstants.EventEnum;
 import com.anasdidi.school.user.controller.UserController;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
+import com.anasdidi.school.user.dto.AssignUserRoleReqDTO;
+import com.anasdidi.school.user.dto.AssignUserRoleResDTO;
 import com.anasdidi.school.user.dto.DeleteUserReqDTO;
 import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.dto.GetUserReqDTO;
@@ -82,5 +84,19 @@ class UserControllerV1 extends UserController {
     DeleteUserReqDTO body = DeleteUserReqDTO.builder().id(userId).build();
     return HttpResponse.ok(
         (DeleteUserResDTO) registry.get(EventEnum.USER_DELETE_USER).process(body));
+  }
+
+  @Override
+  @Post("/{userId}/role")
+  protected HttpResponse<AssignUserRoleResDTO> assignUserRole(
+      HttpRequest<?> request, @Body UserDTO update, UUID userId) {
+    AssignUserRoleReqDTO body =
+        AssignUserRoleReqDTO.builder()
+            .id(userId)
+            .version(update.version())
+            .roleList(update.roleList())
+            .build();
+    return HttpResponse.ok(
+        (AssignUserRoleResDTO) registry.get(EventEnum.USER_ASSIGN_USER_ROLE).process(body));
   }
 }

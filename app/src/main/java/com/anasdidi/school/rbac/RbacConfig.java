@@ -10,6 +10,7 @@ import com.anasdidi.school.common.dto.CommonResDTO;
 import com.anasdidi.school.rbac.RbacConstants.EventEnum;
 import com.anasdidi.school.rbac.service.RbacService;
 import com.anasdidi.school.rbac.service.RbacServiceRegistry;
+import com.anasdidi.school.timesheet.TimesheetConstants;
 import com.anasdidi.school.user.UserConstants;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Factory;
@@ -39,6 +40,7 @@ public class RbacConfig {
     eventSet.addAll(Arrays.asList(UserConstants.EventEnum.values()));
     eventSet.addAll(Arrays.asList(AuthConstants.EventEnum.values()));
     eventSet.addAll(Arrays.asList(RbacConstants.EventEnum.values()));
+    eventSet.addAll(Arrays.asList(TimesheetConstants.EventEnum.values()));
     vertx.putData(
         VertxConfig.ACCESS_SET_KEY,
         VertxAccess.builder()

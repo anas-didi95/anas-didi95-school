@@ -6,6 +6,7 @@ import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.dto.DeleteUserReqDTO;
 import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.entity.UserEntity;
+import com.anasdidi.school.user.entity.UserEntity_;
 import com.anasdidi.school.user.repository.UserRepository;
 import com.anasdidi.school.user.service.UserService;
 import io.micronaut.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ class DeleteUserService extends UserService<DeleteUserReqDTO, DeleteUserResDTO> 
     Optional<UserEntity> result =
         userRepository.findOne(
             (root, criteriaBuilder) -> {
-              return criteriaBuilder.equal(root.get("id"), id);
+              return criteriaBuilder.equal(root.get(UserEntity_.ID), id);
             });
     if (result.isEmpty()) {
       log.error("User not found! {}", id);

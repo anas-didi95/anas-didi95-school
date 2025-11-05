@@ -25,4 +25,7 @@ public class RbacEntity extends CommonEntity {
   @Column(name = "ACCS_LS")
   @Convert(converter = ListStringConverter.class)
   private List<String> accessList;
+
+  @Column(name = "IS_SUPERADMIN")
+  private Boolean isSuperadmin;
 }

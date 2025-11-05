@@ -33,7 +33,7 @@ public class VertxConfig {
 
   private static final String HEADER_MDC = "__MDC";
   private static final int ERROR_CODE = 98;
-  public static final String ACCESS_SET_KEY = "__ACC_SET";
+  public static final String ACCESS_SET_KEY = "__ACS_SET";
   private final Vertx vertx;
   private final JsonMapper jsonMapper;
 
@@ -211,7 +211,7 @@ public class VertxConfig {
                       t -> {
                         var stop = vertx.cancelTimer(t.id());
                         log.info(
-                            "Vertx timer stop...{},{},{},{},{}",
+                            "Vertx timer stop...{},{},{},{}",
                             mapName,
                             key,
                             stop,

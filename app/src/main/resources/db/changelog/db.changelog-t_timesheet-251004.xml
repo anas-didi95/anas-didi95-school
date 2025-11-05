@@ -1,0 +1,47 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                      http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="db.changelog-t_timesheet-251004" author="anas" labels="timesheet">
+    <createTable
+      tableName="T_TIMESHEET">
+      <!-- Metadata START -->
+      <column name="ID" type="UUID">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <!--
+      <column name="IS_DEL" type="BOOLEAN">
+        <constraints nullable="false" />
+      </column>
+      <column name="VER" type="INTEGER">
+        <constraints nullable="false" />
+      </column>
+      <column name="CREATE_BY" type="VARCHAR(20)">
+        <constraints nullable="false" />
+      </column>
+      <column name="CREATE_DT" type="TIMESTAMP WITH TIME ZONE">
+        <constraints nullable="false" />
+      </column>
+      -->
+      <column name="UPDATE_BY" type="VARCHAR(20)">
+        <constraints nullable="false" />
+      </column>
+      <column name="UPDATE_DT" type="TIMESTAMP WITH TIME ZONE">
+        <constraints nullable="false" />
+      </column>
+      <!-- Metadata END   -->
+      <column name="TYP" type="VARCHAR(10)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <createIndex indexName="IX_TIMESHEET_UPDATE_BY_DT_TYP" tableName="T_TIMESHEET">
+      <column name="UPDATE_BY" />
+      <column name="UPDATE_DT" />
+      <column name="TYP" />
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

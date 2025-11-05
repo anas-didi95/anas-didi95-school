@@ -1,20 +1,61 @@
 # DEV
-@BASE_URL=http://localhost:8080/school
-
-###
-
-# Hello World
-POST {{BASE_URL}}/api/v1/rbac/hello-world
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name": "anas.didi95"
-}
+@BASE_URL=http://localhost:8080
+@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MjA5NjY2Niwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjIxMDAyNjYsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYyMDk2NjY2fQ.msiJaGTHut7mepJ8Uq1CDjHurOGeHNGajVhDv7YiGug",
 
 ###
 
 # List Access
-GET {{BASE_URL}}/api/v1/rbac/list-access
+GET {{BASE_URL}}/api/v1/rbac/access
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+###
+
+# List role
+GET {{BASE_URL}}/api/v1/rbac/role?
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+###
+
+# Add role
+POST {{BASE_URL}}/api/v1/rbac/role
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "role": "TEST",
+  "accessList": ["ACC1", "ACC2"]
+}
+
+###
+
+# Get role
+GET {{BASE_URL}}/api/v1/rbac/role/8df3cd2c-7ef2-48aa-b009-d2424c1aa044
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+###
+
+# Update role
+PUT {{BASE_URL}}/api/v1/rbac/role/8df3cd2c-7ef2-48aa-b009-d2424c1aa044
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "version": 0,
+  "accessList": []
+}
+
+###
+
+# Delete role
+DELETE {{BASE_URL}}/api/v1/rbac/role/8df3cd2c-7ef2-48aa-b009-d2424c1aa044
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}

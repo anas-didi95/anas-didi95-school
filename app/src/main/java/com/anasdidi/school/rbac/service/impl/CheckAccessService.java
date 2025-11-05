@@ -5,6 +5,7 @@ import com.anasdidi.school.common.error.E86AccessDeniedError;
 import com.anasdidi.school.rbac.RbacConstants;
 import com.anasdidi.school.rbac.dto.CheckAccessReqDTO;
 import com.anasdidi.school.rbac.dto.CheckAccessResDTO;
+import com.anasdidi.school.rbac.entity.RbacEntity_;
 import com.anasdidi.school.rbac.repository.RbacRepository;
 import com.anasdidi.school.rbac.service.RbacService;
 import jakarta.inject.Named;
@@ -31,12 +32,13 @@ class CheckAccessService extends RbacService<CheckAccessReqDTO, CheckAccessResDT
         rbacRepository.findOne(
             (root, criteriaBuilder) -> {
               List<Predicate> list = new ArrayList<>();
-              list.add(root.get("role").in(in.roleList()));
+              list.add(root.get(RbacEntity_.ROLE).in(in.roleList()));
+              list.add(criteriaBuilder.isFalse(root.get(RbacEntity_.IS_DELETED)));
               list.add(
                   criteriaBuilder.or(
+                      criteriaBuilder.isTrue(root.get(RbacEntity_.IS_SUPERADMIN)),
                       criteriaBuilder.like(
-                          root.get("accessList"), "%" + RbacConstants.FULL_ACCESS + "%"),
-                      criteriaBuilder.like(root.get("accessList"), "%" + in.access() + "%")));
+                          root.get(RbacEntity_.ACCESS_LIST), "%" + in.access() + "%")));
               return criteriaBuilder.and(list.toArray(Predicate[]::new));
             });
     if (result.isEmpty()) {

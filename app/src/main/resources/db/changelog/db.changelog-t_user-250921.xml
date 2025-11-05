@@ -40,7 +40,7 @@
       <column name="NM" type="VARCHAR(200)">
         <constraints nullable="false" />
       </column>
-      <column name="ROLES" type="VARCHAR(200)">
+      <column name="ROLES" type="VARCHAR(MAX)">
         <constraints nullable="true" />
       </column>
     </createTable>

@@ -9,5 +9,5 @@ import lombok.Builder;
 @Serdeable
 @Builder
 public record ListUserReqDTO(
-    String username, String name, @Min(1) Integer pageNo, Integer totalRecordsPerPage)
+    String username, String name, @Min(1) Integer pageNo, @Min(1) Integer totalRecordsPerPage)
     implements CommonReqDTO {}

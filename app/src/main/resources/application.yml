@@ -1,6 +1,6 @@
 ---
 application:
-  AUTH_RFSH_TKN:
+  AUTH_RFH_TKN:
     refreshTokenExpiredSecs: 86400
     refreshTokenLeewaySecs: 30
     refreshTokenRevokedSecs: 3600
@@ -12,6 +12,10 @@ datasources:
   CN-RBAC:
     password: "sa"
     url: "jdbc:h2:./.h2/DB_SCHOOL_RBAC;AUTO_SERVER=TRUE"
+    username: "sa"
+  CN-TIMESHEET:
+    password: "sa"
+    url: "jdbc:h2:./.h2/DB_SCHOOL_TIMESHEET;AUTO_SERVER=TRUE"
     username: "sa"
   CN-USER:
     password: "sa"
@@ -37,6 +41,10 @@ liquibase:
       change-log: "classpath:db/db.changelog-rbac.xml"
       contexts: "dev"
       enabled: true
+    CN-TIMESHEET:
+      change-log: "classpath:db/db.changelog-timesheet.xml"
+      contexts: "dev"
+      enabled: true
     CN-USER:
       change-log: "classpath:db/db.changelog-user.xml"
       contexts: "dev"
@@ -58,24 +66,25 @@ micronaut:
         paths: "classpath:META-INF/swagger/views/swagger-ui"
   security:
     intercept-url-map:
+      # user
       - pattern: "/api/*/user/**"
-        access:
-          - "isAuthenticated()"
+        access: ["isAuthenticated()"]
+      # auth
       - pattern: "/api/*/auth/sign-out"
-        access:
-          - "isAuthenticated()"
+        access: ["isAuthenticated()"]
       - pattern: "/api/*/auth/**"
-        access:
-          - "isAnonymous()"
+        access: ["isAnonymous()"]
+      # rbac
       - pattern: "/api/*/rbac/**"
-        access:
-          - "isAuthenticated()"
+        access: ["isAuthenticated()"]
+      # timesheet
+      - pattern: "/api/*/timesheet/**"
+        access: ["isAuthenticated()"]
+      # swagger
       - pattern: "/swagger/**"
-        access:
-          - "isAnonymous()"
+        access: ["isAnonymous()"]
       - pattern: "/swagger-ui/**"
-        access:
-          - "isAnonymous()"
+        access: ["isAnonymous()"]
     token:
       generator:
         access-token:

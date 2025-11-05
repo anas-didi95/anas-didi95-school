@@ -34,7 +34,7 @@
       <column name="ROL" type="VARCHAR(20)">
         <constraints nullable="false" />
       </column>
-      <column name="ACCS_LS" type="CLOB">
+      <column name="ACCS_LS" type="VARCHAR(MAX)">
         <constraints nullable="false" />
       </column>
       <column name="IS_SUPERADMIN" type="BOOLEAN">
@@ -52,21 +52,21 @@
     <sql>
       <![CDATA[
         INSERT INTO T_RBAC (ID, IS_DEL, VER, CREATE_BY, CREATE_DT, UPDATE_BY, UPDATE_DT, ROL, ACCS_LS, IS_SUPERADMIN)
-        VALUES('36e54fdc-6470-4ad0-8546-13d6e3040a47', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'SUPERADMIN', '["FULL_ACCS"]', true);
+        VALUES('36e54fdc-6470-4ad0-8546-13d6e3040a47', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'SUPERADMIN', '[]', true);
       ]]>
       <comment>Add role[SUPERADMIN]</comment>
     </sql>
     <sql>
       <![CDATA[
         INSERT INTO T_RBAC (ID, IS_DEL, VER, CREATE_BY, CREATE_DT, UPDATE_BY, UPDATE_DT, ROL, ACCS_LS, IS_SUPERADMIN)
-        VALUES('8df3cd2c-7ef2-48aa-b009-d2424c1aa044', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'ADMIN', '["USER_ADD_USR","USER_LST_USR","USER_GET_USR","USER_UPD_USR","USER_DEL_USR"]', false);
+        VALUES('8df3cd2c-7ef2-48aa-b009-d2424c1aa044', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'ADMIN', '["RBAC_ADD_ROL","RBAC_DEL_ROL","RBAC_GET_ROL","RBAC_LST_ACS","RBAC_LST_ROL","RBAC_UPD_ROL","TSHT_CHK_IN","TSHT_CHK_OUT","USER_ADD_USR","USER_ASG_USR_ROL","USER_DEL_USR","USER_GET_USR","USER_LST_USR","USER_UPD_USR"]', false);
       ]]>
       <comment>Add role[ADMIN]</comment>
     </sql>
     <sql>
       <![CDATA[
         INSERT INTO T_RBAC (ID, IS_DEL, VER, CREATE_BY, CREATE_DT, UPDATE_BY, UPDATE_DT, ROL, ACCS_LS, IS_SUPERADMIN)
-        VALUES('9e3f7cb2-9276-4934-b1cf-8cbbe581c9bf', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'TEACHER', '["USER_LST_USR","USER_GET_USR"]', false);
+        VALUES('9e3f7cb2-9276-4934-b1cf-8cbbe581c9bf', false, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP, 'TEACHER', '["TSHT_CHK_IN","TSHT_CHK_OUT","USER_GET_USR","USER_LST_USR"]', false);
       ]]>
       <comment>Add role[TEACHER]</comment>
     </sql>

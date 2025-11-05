@@ -1,5 +1,6 @@
 # DEV
-@BASE_URL=http://localhost:8080/school
+@BASE_URL=http://localhost:8080
+@TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc2MTQwNDE0OCwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NjE0MDc3NDgsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzYxNDA0MTQ4fQ.MqxlwQer7vSN_dUbnPEJZWKhc0EufS4c56838dIxAto
 
 ###
 
@@ -7,7 +8,7 @@
 POST {{BASE_URL}}/api/v1/user
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc1OTY0NTY2Miwicm9sZXMiOlsiU1VQRVJBRE1JTiJdLCJpc3MiOiJzY2hvb2wiLCJleHAiOjE3NTk2NDkyNjIsIl9fdXNlcklkIjoiNDRjNDlmZmYtZWRjNC00MmE0LTkwZDUtNDQ5ZDgzZDAyYjZmIiwiaWF0IjoxNzU5NjQ1NjYyfQ.VtNPXHvQGf8NSIMNYofQXm4IOimJwEWoHIZzi_oSRRg
+Authorization: Bearer {{TOKEN}}
 
 {
   "username": "test",
@@ -21,14 +22,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6M
 GET {{BASE_URL}}/api/v1/user?username=anas.didi95
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzY2hvb2wiLCJzdWIiOiJhbmFzLmRpZGk5NSIsIm5iZiI6MTc1OTU4NjM4NSwiZXhwIjoxNzU5NTg5OTg1LCJpYXQiOjE3NTk1ODYzODUsInJvbGVzIjpbIlNVUEVSQURNSU4iXX0.gU4Cb8WUWCW7BUYCiBs7zDYwn1cPObqf4Y519cjRNTQ
+Authorization: Bearer {{TOKEN}}
 
 ###
 
 # Get User
-GET {{BASE_URL}}/api/v1/user/c5125478-8923-4c0a-a78f-1a448c62eac8
+GET {{BASE_URL}}/api/v1/user/44c49fff-edc4-42a4-90d5-449d83d02b6f
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
 
 ###
 
@@ -48,3 +50,16 @@ Content-Type: application/json
 DELETE {{BASE_URL}}/api/v1/user/c5125478-8923-4c0a-a78f-1a448c62eac8
 Accept: application/json
 Content-Type: application/json
+
+###
+
+# Assign User Role
+POST {{BASE_URL}}/api/v1/user/44c49fff-edc4-42a4-90d5-449d83d02b6f/role
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "roleList": ["SUPERADMIN1"],
+  "version": 0
+}

@@ -6,6 +6,8 @@ import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
 import com.anasdidi.school.user.dto.AddUserReqDTO;
 import com.anasdidi.school.user.dto.AddUserResDTO;
+import com.anasdidi.school.user.dto.AssignUserRoleReqDTO;
+import com.anasdidi.school.user.dto.AssignUserRoleResDTO;
 import com.anasdidi.school.user.dto.DeleteUserReqDTO;
 import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.dto.GetUserReqDTO;
@@ -28,6 +30,7 @@ public class UserConstants {
     public static final String USER_GET_USER = "USER_GET_USR";
     public static final String USER_UPDATE_USER = "USER_UPD_USR";
     public static final String USER_DELETE_USER = "USER_DEL_USR";
+    public static final String USER_ASSIGN_USER_ROLE = "USER_ASG_USR_ROL";
   }
 
   @Getter
@@ -37,7 +40,9 @@ public class UserConstants {
     USER_LIST_USER(Event.USER_LIST_USER, ListUserReqDTO.class, ListUserResDTO.class),
     USER_GET_USER(Event.USER_GET_USER, GetUserReqDTO.class, GetUserResDTO.class),
     USER_UPDATE_USER(Event.USER_UPDATE_USER, UpdateUserReqDTO.class, UpdateUserResDTO.class),
-    USER_DELETE_USER(Event.USER_DELETE_USER, DeleteUserReqDTO.class, DeleteUserResDTO.class);
+    USER_DELETE_USER(Event.USER_DELETE_USER, DeleteUserReqDTO.class, DeleteUserResDTO.class),
+    USER_ASSIGN_USER_ROLE(
+        Event.USER_ASSIGN_USER_ROLE, AssignUserRoleReqDTO.class, AssignUserRoleResDTO.class);
 
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;

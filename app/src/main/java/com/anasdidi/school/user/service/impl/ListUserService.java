@@ -1,11 +1,13 @@
 /* (C) Anas Juwaidi Bin Mohd Jeffry. All rights reserved. */
 package com.anasdidi.school.user.service.impl;
 
+import com.anasdidi.school.common.dto.PaginationDTO;
 import com.anasdidi.school.user.UserConstants;
 import com.anasdidi.school.user.UserMapper;
 import com.anasdidi.school.user.dto.ListUserReqDTO;
 import com.anasdidi.school.user.dto.ListUserResDTO;
 import com.anasdidi.school.user.entity.UserEntity;
+import com.anasdidi.school.user.entity.UserEntity_;
 import com.anasdidi.school.user.repository.UserRepository;
 import com.anasdidi.school.user.service.UserService;
 import io.micronaut.data.model.Page;
@@ -44,12 +46,15 @@ class ListUserService extends UserService<ListUserReqDTO, ListUserResDTO> {
 
               Optional.ofNullable(in.username())
                   .ifPresent(
-                      t -> list.add(criteriaBuilder.equal(root.get("username"), in.username())));
+                      t ->
+                          list.add(
+                              criteriaBuilder.equal(
+                                  root.get(UserEntity_.USERNAME), in.username())));
 
               Optional.ofNullable(in.name())
                   .ifPresent(
                       v -> {
-                        Expression<String> expr = criteriaBuilder.lower(root.get("name"));
+                        Expression<String> expr = criteriaBuilder.lower(root.get(UserEntity_.NAME));
                         list.add(criteriaBuilder.like(expr, "%" + in.name().toLowerCase() + "%"));
                       });
 
@@ -64,7 +69,7 @@ class ListUserService extends UserService<ListUserReqDTO, ListUserResDTO> {
     return ListUserResDTO.builder()
         .resultList(search.getContent().stream().map(userMapper::toUserDTO).toList())
         .pagination(
-            ListUserResDTO.Pagination.builder()
+            PaginationDTO.builder()
                 .pageNo(pageNo)
                 .totalRecords(search.getTotalSize())
                 .totalRecordsPerPage(totalRecordsPerPage)
