@@ -1,1 +1,9 @@
 @import "tailwindcss";
+@plugin "daisyui" {
+  /*
+  Disable radial progress to hide warning
+  If need, exclude properties and copy-paste the definition of the property
+  https://github.com/saadeghi/daisyui/blob/master/packages/daisyui/src/base/properties.css
+  */
+  exclude: properties;
+}

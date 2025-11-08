@@ -12,12 +12,14 @@
     "prettier:write": "npm run prettier -- --write",
     "prettier": "prettier eslint.config.js vite.config.ts index.html src/**/*.{js,ts,jsx,tsx,css,sass,scss}",
     "serve": "vite preview --host=0.0.0.0",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "watch": "vite build --watch"
   },
   "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@tailwindcss/vite": "^4.1.13",
+    "daisyui": "^5.4.7",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.6.2",
