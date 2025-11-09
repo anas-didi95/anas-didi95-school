@@ -18,22 +18,22 @@ interface IButton {
   >;
 }
 
-const Button: Component<IButton> = ({ label, color, onClick, type }) => {
+const Button: Component<IButton> = (props) => {
   return (
     <button
       classList={{
-        "btn-primary": color === "primary",
-        "btn-secondary": color === "secondary",
-        "btn-accent": color === "accent",
-        "btn-info": color === "info",
-        "btn-success": color === "success",
-        "btn-warning": color === "warning",
-        "btn-error": color === "error",
+        "btn-primary": props.color === "primary",
+        "btn-secondary": props.color === "secondary",
+        "btn-accent": props.color === "accent",
+        "btn-info": props.color === "info",
+        "btn-success": props.color === "success",
+        "btn-warning": props.color === "warning",
+        "btn-error": props.color === "error",
       }}
       class="btn"
-      onClick={onClick}
-      type={type}>
-      {label}
+      onClick={props.onClick}
+      type={props.type}>
+      {props.label}
     </button>
   );
 };

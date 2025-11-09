@@ -3,6 +3,7 @@ import { Show, type Component } from "solid-js";
 
 interface IFieldText {
   label: string;
+  type: "text" | "password";
   helper?: string;
   required?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,7 +23,7 @@ const FieldText: Component<IFieldText> = (props) => {
       </legend>
       <input
         {...props.attrs}
-        type="text"
+        type={props.type}
         class="input w-full"
         classList={{ "input-error": !!props.field?.error }}
       />

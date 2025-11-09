@@ -28,6 +28,7 @@ const App: Component = () => {
                 validate={[required("Username is required!")]}>
                 {(field, attrs) => (
                   <FieldText
+                    type="text"
                     label="Username"
                     field={field}
                     attrs={attrs}
@@ -40,6 +41,7 @@ const App: Component = () => {
                 validate={[required("Password is required!")]}>
                 {(field, attrs) => (
                   <FieldText
+                    type="password"
                     label="Password"
                     field={field}
                     attrs={attrs}
