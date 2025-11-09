@@ -12,9 +12,12 @@ import FieldText from "./components/FieldText";
 const App: Component = () => {
   const [form, { Form, Field }] = createForm<ISignInForm>();
 
-  const handleSubmit: SubmitHandler<ISignInForm> = (values, event) => {
+  const handleSubmit: SubmitHandler<ISignInForm> = async (values, event) => {
     console.log("values", values);
     console.log("event", event);
+
+    const res = await signInApi(values.username, values.password);
+    console.log("res", res);
   };
 
   return (
@@ -65,4 +68,29 @@ export default App;
 interface ISignInForm extends FieldValues {
   username: string;
   password: string;
+}
+
+interface ISignInRes {
+  token: {
+    access_token: string;
+    refresh_token: string;
+    token_type: string;
+    expires_in: number;
+  };
+}
+
+async function signInApi(username: string, password: string) {
+  const res = await fetch("/api/v1/auth/sign-in", {
+    method: "POST",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+
+  if (!res.ok) {
+    const resBody = await res.text();
+    console.log("error resBody", resBody);
+    throw new Error(resBody);
+  }
+
+  return (await res.json()) as ISignInRes;
 }
