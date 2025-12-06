@@ -27,7 +27,7 @@ const App: Component = () => {
   };
 
   return (
-    <div class="min-h-screen flex items-center justify-center bg-base-300">
+    <div class="min-h-screen flex items-center justify-center">
       <div class="mx-4 w-full md:w-1/3">
         <Card title="Sign In to your account">
           <Form onSubmit={handleSubmit}>

@@ -3,9 +3,9 @@ import "@/index.css";
 import "solid-devtools";
 import { render } from "solid-js/web";
 
-import { HashRouter, RouteDefinition } from "@solidjs/router";
+import { HashRouter, Route } from "@solidjs/router";
 import { lazy } from "solid-js";
-import { ToastProvider, Toaster } from "solid-notifications";
+import AppLayout from "./layouts/AppLayout";
 
 const root = document.getElementById("root");
 
@@ -17,14 +17,13 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(
   () => (
-    <ToastProvider>
-      <Toaster />
-      <HashRouter>{getRoutes()}</HashRouter>
-    </ToastProvider>
+    <HashRouter root={AppLayout}>
+      <Route path="/" component={lazy(() => import("@/App"))} />
+      <Route
+        path="*404"
+        component={lazy(() => import("@/pages/NotFoundPage"))}
+      />
+    </HashRouter>
   ),
   root!,
 );
-
-function getRoutes(): RouteDefinition[] {
-  return [{ path: "/", component: lazy(() => import("@/App")) }];
-}
