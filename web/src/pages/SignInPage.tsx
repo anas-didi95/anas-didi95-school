@@ -10,7 +10,7 @@ import {
 import type { Component } from "solid-js";
 import { useToast } from "solid-notifications";
 
-const App: Component = () => {
+const SignInPage: Component = () => {
   const [form, { Form, Field }] = createForm<ISignInForm>();
   const { notify } = useToast();
 
@@ -69,7 +69,7 @@ const App: Component = () => {
   );
 };
 
-export default App;
+export default SignInPage;
 
 interface ISignInForm extends FieldValues {
   username: string;

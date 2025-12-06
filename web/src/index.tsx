@@ -18,7 +18,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 render(
   () => (
     <HashRouter root={AppLayout}>
-      <Route path="/" component={lazy(() => import("@/App"))} />
+      <Route path="/" component={lazy(() => import("@/pages/SignInPage"))} />
       <Route
         path="*404"
         component={lazy(() => import("@/pages/NotFoundPage"))}
