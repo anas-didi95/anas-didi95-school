@@ -27,7 +27,7 @@ const SignInPage: Component = () => {
   };
 
   return (
-    <div class="min-h-screen flex items-center justify-center">
+    <section class="flex-1 flex items-center justify-center">
       <div class="mx-4 w-full md:w-1/3">
         <Card title="Sign In to your account">
           <Form onSubmit={handleSubmit}>
@@ -65,7 +65,7 @@ const SignInPage: Component = () => {
           </Form>
         </Card>
       </div>
-    </div>
+    </section>
   );
 };
 
