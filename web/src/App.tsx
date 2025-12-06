@@ -1,3 +1,6 @@
+import Button from "@/components/Button";
+import Card from "@/components/Card";
+import FieldText from "@/components/FieldText";
 import {
   createForm,
   FieldValues,
@@ -6,9 +9,6 @@ import {
 } from "@modular-forms/solid";
 import type { Component } from "solid-js";
 import { useToast } from "solid-notifications";
-import Button from "./components/Button";
-import Card from "./components/Card";
-import FieldText from "./components/FieldText";
 
 const App: Component = () => {
   const [form, { Form, Field }] = createForm<ISignInForm>();

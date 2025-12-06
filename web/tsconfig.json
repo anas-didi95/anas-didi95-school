@@ -15,6 +15,11 @@
 
     // Type Checking & Safety
     "strict": true,
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+
+    // Path
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }

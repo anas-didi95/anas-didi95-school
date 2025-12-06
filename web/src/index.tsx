@@ -1,7 +1,7 @@
 /* @refresh reload */
+import "@/index.css";
 import "solid-devtools";
 import { render } from "solid-js/web";
-import "./index.css";
 
 import { HashRouter, RouteDefinition } from "@solidjs/router";
 import { lazy } from "solid-js";
@@ -26,5 +26,5 @@ render(
 );
 
 function getRoutes(): RouteDefinition[] {
-  return [{ path: "/", component: lazy(() => import("./App")) }];
+  return [{ path: "/", component: lazy(() => import("@/App")) }];
 }
