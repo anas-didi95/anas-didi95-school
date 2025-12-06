@@ -1,28 +1,29 @@
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import FieldText from "@/components/FieldText";
+import SignInAction, { ISignInRes } from "@/utils/actions/SignInAction";
 import {
   createForm,
   FieldValues,
   required,
   SubmitHandler,
 } from "@modular-forms/solid";
-import type { Component } from "solid-js";
+import { useAction } from "@solidjs/router";
+import { type Component } from "solid-js";
 import { useToast } from "solid-notifications";
 
 const SignInPage: Component = () => {
   const [form, { Form, Field }] = createForm<ISignInForm>();
   const { notify } = useToast();
+  const signIn = useAction(SignInAction().action);
 
-  const handleSubmit: SubmitHandler<ISignInForm> = async (values, event) => {
-    console.log("values", values);
-    console.log("event", event);
+  const handleSubmit: SubmitHandler<ISignInForm> = async (values) => {
+    const res = await signIn({ ...values });
 
-    try {
-      const res = await signInApi(values.username, values.password);
-      console.log("res", res);
-    } catch (err) {
-      notify((err as Error).message, { type: "error" });
+    if (res.ok) {
+      console.log("data", res.data as ISignInRes);
+    } else {
+      notify(res.data as string, { type: "error" });
     }
   };
 
@@ -74,28 +75,4 @@ export default SignInPage;
 interface ISignInForm extends FieldValues {
   username: string;
   password: string;
-}
-
-interface ISignInRes {
-  token: {
-    access_token: string;
-    refresh_token: string;
-    token_type: string;
-    expires_in: number;
-  };
-}
-
-async function signInApi(username: string, password: string) {
-  const res = await fetch("/api/v1/auth/sign-in", {
-    method: "POST",
-    headers: { Accept: "application/json", "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
-  });
-
-  if (!res.ok) {
-    const resBody = await res.text();
-    throw new Error(resBody);
-  }
-
-  return (await res.json()) as ISignInRes;
 }
