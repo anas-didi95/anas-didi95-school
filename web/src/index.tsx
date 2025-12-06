@@ -3,6 +3,7 @@ import "solid-devtools";
 import { render } from "solid-js/web";
 import "./index.css";
 
+import { ToastProvider, Toaster } from "solid-notifications";
 import App from "./App";
 
 const root = document.getElementById("root");
@@ -13,4 +14,12 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
-render(() => <App />, root!);
+render(
+  () => (
+    <ToastProvider>
+      <Toaster />
+      <App />
+    </ToastProvider>
+  ),
+  root!,
+);

@@ -10,3 +10,4 @@
     light --default,
     light --prefersdark;
 }
+@import "solid-notifications/index.css";

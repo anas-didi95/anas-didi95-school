@@ -5,19 +5,25 @@ import {
   SubmitHandler,
 } from "@modular-forms/solid";
 import type { Component } from "solid-js";
+import { useToast } from "solid-notifications";
 import Button from "./components/Button";
 import Card from "./components/Card";
 import FieldText from "./components/FieldText";
 
 const App: Component = () => {
   const [form, { Form, Field }] = createForm<ISignInForm>();
+  const { notify } = useToast();
 
   const handleSubmit: SubmitHandler<ISignInForm> = async (values, event) => {
     console.log("values", values);
     console.log("event", event);
 
-    const res = await signInApi(values.username, values.password);
-    console.log("res", res);
+    try {
+      const res = await signInApi(values.username, values.password);
+      console.log("res", res);
+    } catch (err) {
+      notify((err as Error).message, { type: "error" });
+    }
   };
 
   return (
@@ -88,7 +94,6 @@ async function signInApi(username: string, password: string) {
 
   if (!res.ok) {
     const resBody = await res.text();
-    console.log("error resBody", resBody);
     throw new Error(resBody);
   }
 
