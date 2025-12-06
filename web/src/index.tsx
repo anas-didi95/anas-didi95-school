@@ -3,8 +3,9 @@ import "solid-devtools";
 import { render } from "solid-js/web";
 import "./index.css";
 
+import { HashRouter, RouteDefinition } from "@solidjs/router";
+import { lazy } from "solid-js";
 import { ToastProvider, Toaster } from "solid-notifications";
-import App from "./App";
 
 const root = document.getElementById("root");
 
@@ -18,8 +19,12 @@ render(
   () => (
     <ToastProvider>
       <Toaster />
-      <App />
+      <HashRouter>{getRoutes()}</HashRouter>
     </ToastProvider>
   ),
   root!,
 );
+
+function getRoutes(): RouteDefinition[] {
+  return [{ path: "/", component: lazy(() => import("./App")) }];
+}
