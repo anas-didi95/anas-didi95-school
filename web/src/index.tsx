@@ -19,6 +19,13 @@ render(
   () => (
     <HashRouter root={AppLayout}>
       <Route path="/" component={lazy(() => import("@/pages/SignInPage"))} />
+      {/** Authenticated Route */}
+      <Route
+        path="/dashboard"
+        component={lazy(() => import("@/layouts/AuthenticatedLayout"))}>
+        <Route component={lazy(() => import("@/pages/DashboardPage"))} />
+      </Route>
+      {/** Error Route */}
       <Route
         path="*404"
         component={lazy(() => import("@/pages/NotFoundPage"))}
