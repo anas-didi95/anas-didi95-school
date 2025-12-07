@@ -1,3 +1,4 @@
+import { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
 import { Component, createContext, ParentProps, useContext } from "solid-js";
 import { createStore } from "solid-js/store";
 
@@ -8,13 +9,13 @@ interface IUserContext {
 const UserContext = createContext<IUserContext>();
 
 const UserProvider: Component<ParentProps> = (props) => {
-  const [store, setStore] = createStore<IUserContextStore>(initialToken());
+  const [store, setStore] = createStore<IUserContextStore>(initialUser());
 
   const value: IUserContext = {
     store,
     action: {
-      setToken: (newToken) => setStore(newToken),
-      resetToken: () => setStore(initialToken()),
+      setUser: (user) => setStore(user),
+      resetUser: () => setStore(initialUser()),
     },
   };
 
@@ -28,26 +29,26 @@ export default UserProvider;
 export const useUserContext = () => useContext(UserContext)!;
 
 export interface IUserContextStore {
-  token: {
-    access_token: string;
-    refresh_token: string;
-    token_type: string;
-    expires_in: number;
-  };
+  user: ITokenInfoRes["result"];
 }
 
 interface IUserContextAction {
-  setToken: (token: IUserContextStore) => void;
-  resetToken: () => void;
+  setUser: (token: IUserContextStore) => void;
+  resetUser: () => void;
 }
 
-function initialToken(): IUserContextStore {
+function initialUser(): IUserContextStore {
   return {
-    token: {
-      access_token: "",
-      expires_in: -1,
-      refresh_token: "",
-      token_type: "",
+    user: {
+      __userId: "",
+      roles: [],
+      active: false,
+      username: "",
+      exp: -1,
+      iat: -1,
+      nbf: -1,
+      sub: "",
+      iss: "",
     },
   };
 }

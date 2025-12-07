@@ -49,31 +49,38 @@ const FetchClient = (props: IFetchClient = {}) => {
     let lastError: unknown;
 
     while (attempt <= retryCount) {
-      try {
-        const { url: finalUrl, ...finalConfig } = mergedConfig;
+      const { url: finalUrl, ...finalConfig } = mergedConfig;
 
-        const response = await fetchWithTimeout(finalUrl ?? url, finalConfig);
-        const processedResponse = await applyResponseMiddleware(response);
+      const response = await fetchWithTimeout(finalUrl ?? url, finalConfig);
+      const processedResponse = await applyResponseMiddleware(response);
 
-        if (!processedResponse.ok) {
-          throw new Error(`HTTP ${processedResponse.status}`);
-        }
-
+      if (processedResponse.ok) {
         return processedResponse;
-      } catch (err: unknown) {
-        const error = err instanceof Error ? err : new Error(String(err));
-        lastError = error;
+      }
 
-        if (error.name === "AbortError" || attempt === retryCount) {
-          throw error;
-        }
+      let error: IResponseError = { canRetry: false, message: "" };
+      if (processedResponse.status === 401) {
+        error = {
+          canRetry: false,
+          message: "Unauthenticated. Please re-login.",
+        };
+      } else {
+        const message = await processedResponse.text();
+        error = {
+          canRetry: true,
+          message,
+        };
+      }
 
+      lastError = Error(JSON.stringify(error));
+      if (error.canRetry) {
         const delay = retryDelayMs * Math.pow(2, attempt);
         await new Promise((res) => setTimeout(res, delay));
         attempt++;
+      } else {
+        throw lastError;
       }
     }
-
     throw lastError;
   };
 
@@ -95,3 +102,8 @@ type RequestMiddleware = (
 ) => Promise<RequestInit & { url?: string }> | (RequestInit & { url?: string });
 
 type ResponseMiddleware = (response: Response) => Promise<Response> | Response;
+
+export interface IResponseError {
+  canRetry: boolean;
+  message: string;
+}

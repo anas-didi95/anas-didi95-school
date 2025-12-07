@@ -1,25 +1,31 @@
+import FetchClient, { IResponseError } from "@/utils/FetchClient";
 import { action, json } from "@solidjs/router";
+import { useToast } from "solid-notifications";
 
 const key = "SignInAction";
 const SignInAction = (revalidate?: string[]) => {
+  const client = FetchClient({ retryCount: 0 });
+  const { notify } = useToast();
+
   return {
     action: action(async (req: ISignInReq) => {
-      const res = await fetch("/api/v1/auth/sign-in", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...req }),
-      });
+      try {
+        const res = await client.request("/api/v1/auth/sign-in", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...req }),
+        });
 
-      if (!res.ok) {
-        const resBody = await res.text();
-        return json({ ok: false, data: resBody }, { revalidate });
+        const resBody = (await res.json()) as ISignInRes;
+        return json({ ok: true, data: resBody }, { revalidate });
+      } catch (err) {
+        const error = JSON.parse((err as Error).message) as IResponseError;
+        notify(error.message, { type: "error" });
+        return json({ ok: false, data: error.message }, { revalidate });
       }
-
-      const resBody = (await res.json()) as ISignInRes;
-      return json({ ok: true, data: resBody }, { revalidate });
     }, key),
     key,
   };
