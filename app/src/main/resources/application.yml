@@ -78,6 +78,8 @@ micronaut:
       # auth
       - pattern: "/api/*/auth/sign-out"
         access: ["isAuthenticated()"]
+      - pattern: "/api/*/auth/token-info"
+        access: ["isAuthenticated()"]
       - pattern: "/api/*/auth/**"
         access: ["isAnonymous()"]
       # rbac
