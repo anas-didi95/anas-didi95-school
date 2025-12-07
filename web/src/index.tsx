@@ -3,9 +3,10 @@ import "@/index.css";
 import "solid-devtools";
 import { render } from "solid-js/web";
 
+import AppLayout from "@/layouts/AppLayout";
+import TokenInfoQuery from "@/utils/queries/TokenInfoQuery";
 import { HashRouter, Route } from "@solidjs/router";
 import { lazy } from "solid-js";
-import AppLayout from "./layouts/AppLayout";
 
 const root = document.getElementById("root");
 
@@ -22,7 +23,8 @@ render(
       {/** Authenticated Route */}
       <Route
         path="/dashboard"
-        component={lazy(() => import("@/layouts/AuthenticatedLayout"))}>
+        component={lazy(() => import("@/layouts/AuthenticatedLayout"))}
+        preload={() => TokenInfoQuery().query()}>
         <Route component={lazy(() => import("@/pages/DashboardPage"))} />
       </Route>
       {/** Error Route */}
