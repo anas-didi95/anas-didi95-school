@@ -1,14 +1,15 @@
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import FieldText from "@/components/FieldText";
-import SignInAction, { ISignInRes } from "@/utils/actions/SignInAction";
+import { IUserContextStore, useUserContext } from "@/contexts/UserContext";
+import SignInAction from "@/utils/actions/SignInAction";
 import {
   createForm,
   FieldValues,
   required,
   SubmitHandler,
 } from "@modular-forms/solid";
-import { useAction } from "@solidjs/router";
+import { useAction, useNavigate } from "@solidjs/router";
 import { type Component } from "solid-js";
 import { useToast } from "solid-notifications";
 
@@ -16,12 +17,14 @@ const SignInPage: Component = () => {
   const [form, { Form, Field }] = createForm<ISignInForm>();
   const { notify } = useToast();
   const signIn = useAction(SignInAction().action);
+  const navigate = useNavigate();
+  const userContext = useUserContext();
 
   const handleSubmit: SubmitHandler<ISignInForm> = async (values) => {
-    const res = await signIn({ ...values });
-
+    const res = await signIn(values);
     if (res.ok) {
-      console.log("data", res.data as ISignInRes);
+      userContext.action.setToken(res.data as IUserContextStore);
+      navigate("/dashboard");
     } else {
       notify(res.data as string, { type: "error" });
     }
