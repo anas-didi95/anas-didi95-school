@@ -22,7 +22,7 @@ const SignInPage: Component = () => {
     const res = await signIn(values);
     if (res.ok) {
       sessionUtil.putSignIn(res.data as ISignInRes);
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true });
     }
   };
 

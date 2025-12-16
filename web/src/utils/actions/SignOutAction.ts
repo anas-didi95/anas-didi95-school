@@ -7,24 +7,27 @@ const SignOutAction = (revalidate?: string[]) => {
   const client = FetchClient({ retryCount: 0, hasAuth: true });
   const { notify } = useToast();
 
-  return {
-    action: action(async () => {
-      try {
-        await client.request("/api/v1/auth/sign-out", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        });
+  const handler = async () => {
+    try {
+      await client.request("/api/v1/auth/sign-out", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
 
-        return json({ ok: true }, { revalidate });
-      } catch (err) {
-        const error = JSON.parse((err as Error).message) as IResponseError;
-        notify(error.message, { type: "error" });
-        return json({ ok: false, data: error.message }, { revalidate });
-      }
-    }, key),
+      return json({ ok: true }, { revalidate });
+    } catch (err) {
+      const error = JSON.parse((err as Error).message) as IResponseError;
+      notify(error.message, { type: "error" });
+      return json({ ok: false, data: error.message }, { revalidate });
+    }
+  };
+
+  return {
+    handler,
+    action: action(handler, key),
     key,
   };
 };
