@@ -1,13 +1,13 @@
 import { ISignInRes } from "./actions/SignInAction";
 
 const SessionUtil = () => {
-  const TOKEN_KEY = "__TOKEN_KEY";
+  const SIGN_IN_KEY = "__SGN_IN#_KEY";
 
-  const putToken = (token: ISignInRes) =>
-    sessionStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+  const putSignIn = (token: ISignInRes) =>
+    sessionStorage.setItem(SIGN_IN_KEY, JSON.stringify(token));
 
-  const getToken = () => {
-    const token = sessionStorage.getItem(TOKEN_KEY);
+  const getSignIn = () => {
+    const token = sessionStorage.getItem(SIGN_IN_KEY);
 
     if (!token) {
       return null;
@@ -17,7 +17,7 @@ const SessionUtil = () => {
 
   const clear = () => sessionStorage.clear();
 
-  return { putToken, getToken, clear };
+  return { putSignIn, getSignIn, clear };
 };
 
 export default SessionUtil;

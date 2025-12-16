@@ -21,7 +21,7 @@ const SignInPage: Component = () => {
   const handleSubmit: SubmitHandler<ISignInForm> = async (values) => {
     const res = await signIn(values);
     if (res.ok) {
-      sessionUtil.putToken(res.data as ISignInRes);
+      sessionUtil.putSignIn(res.data as ISignInRes);
       navigate("/dashboard");
     }
   };

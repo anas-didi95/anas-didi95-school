@@ -1,12 +1,10 @@
-import SessionUtil from "@/utils//SessionUtil";
 import FetchClient, { IResponseError } from "@/utils/FetchClient";
 import { json, query } from "@solidjs/router";
 import { useToast } from "solid-notifications";
 
 const key = "TokenInfoQuery";
 const TokenInfoQuery = (revalidate?: string[]) => {
-  const client = FetchClient();
-  const sessionUtil = SessionUtil();
+  const client = FetchClient({ hasAuth: true });
   const { notify } = useToast();
 
   return {
@@ -17,7 +15,6 @@ const TokenInfoQuery = (revalidate?: string[]) => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${sessionUtil.getToken()?.token.access_token}`,
           },
         });
 

@@ -1,12 +1,10 @@
 import FetchClient, { IResponseError } from "@/utils/FetchClient";
-import SessionUtil from "@/utils/SessionUtil";
 import { action, json } from "@solidjs/router";
 import { useToast } from "solid-notifications";
 
 const key = "SignOutAction";
 const SignOutAction = (revalidate?: string[]) => {
-  const client = FetchClient({ retryCount: 0 });
-  const sessionUtil = SessionUtil();
+  const client = FetchClient({ retryCount: 0, hasAuth: true });
   const { notify } = useToast();
 
   return {
@@ -17,7 +15,6 @@ const SignOutAction = (revalidate?: string[]) => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${sessionUtil.getToken()?.token.access_token}`,
           },
         });
 

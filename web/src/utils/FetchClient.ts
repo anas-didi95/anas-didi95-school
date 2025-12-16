@@ -1,3 +1,5 @@
+import SessionUtil from "./SessionUtil";
+
 const FetchClient = (props: IFetchClient = {}) => {
   const {
     requestMiddlewares = [],
@@ -5,6 +7,7 @@ const FetchClient = (props: IFetchClient = {}) => {
     timeoutMs = 5000,
     retryCount = 2,
     retryDelayMs = 500,
+    hasAuth = false,
   } = props;
 
   const applyRequestMiddleware = async (
@@ -13,7 +16,20 @@ const FetchClient = (props: IFetchClient = {}) => {
     for (const mw of requestMiddlewares) {
       config = (await mw(config)) || config;
     }
-    return config;
+
+    if (hasAuth) {
+      const session = SessionUtil();
+      const signIn = session.getSignIn();
+      return {
+        ...config,
+        headers: {
+          ...(config.headers ?? {}),
+          Authorization: signIn ? `Bearer ${signIn.token?.access_token}` : "",
+        },
+      };
+    } else {
+      return config;
+    }
   };
 
   const applyResponseMiddleware = async (
@@ -90,6 +106,7 @@ const FetchClient = (props: IFetchClient = {}) => {
 export default FetchClient;
 
 interface IFetchClient {
+  hasAuth?: boolean;
   timeoutMs?: number;
   retryCount?: number;
   retryDelayMs?: number;
