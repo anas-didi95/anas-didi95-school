@@ -15,7 +15,9 @@ const SessionUtil = () => {
     return JSON.parse(token) as ISignInRes;
   };
 
-  return { putToken, getToken };
+  const clear = () => sessionStorage.clear();
+
+  return { putToken, getToken, clear };
 };
 
 export default SessionUtil;

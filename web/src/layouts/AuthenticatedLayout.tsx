@@ -1,9 +1,27 @@
-import TokenInfoQuery from "@/utils/queries/TokenInfoQuery";
-import { createAsync, Navigate } from "@solidjs/router";
+import SignOutAction from "@/utils/actions/SignOutAction";
+import TokenInfoQuery, { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
+import SessionUtil from "@/utils/SessionUtil";
+import { createAsync, Navigate, useAction, useNavigate } from "@solidjs/router";
+import { FaRegularUser } from "solid-icons/fa";
+import { TbLayoutSidebarLeftExpand } from "solid-icons/tb";
 import { Component, Match, ParentProps, Switch } from "solid-js";
+import { useToast } from "solid-notifications";
 
 const DashboardPage: Component<ParentProps> = (props) => {
   const tokenInfoQuery = createAsync(() => TokenInfoQuery().query());
+  const signOut = useAction(SignOutAction().action);
+  const navigate = useNavigate();
+  const { notify } = useToast();
+  const session = SessionUtil();
+
+  const handleSignOut = async () => {
+    const res = await signOut();
+    if (res.ok) {
+      session.clear();
+      notify("User sign-out success", { type: "success" });
+      navigate("/", { replace: true });
+    }
+  };
 
   return (
     <Switch fallback={<div class="skeleton h-32 w-32"></div>}>
@@ -15,28 +33,55 @@ const DashboardPage: Component<ParentProps> = (props) => {
           <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
           <div class="drawer-content min-h-screen">
             {/*<!-- Navbar -->*/}
-            <nav class="navbar w-full bg-base-300">
-              <label
-                for="my-drawer-4"
-                aria-label="open sidebar"
-                class="btn btn-square btn-ghost">
-                {/*<!-- Sidebar toggle icon -->*/}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                  stroke-width="2"
-                  fill="none"
-                  stroke="currentColor"
-                  class="my-1.5 inline-block size-4">
-                  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-                  <path d="M9 4v16"></path>
-                  <path d="M14 10l2 2l-2 2"></path>
-                </svg>
-              </label>
-              <div class="px-4">Navbar Title</div>
-            </nav>
+            <div class="navbar bg-base-300 px-4">
+              <div class="navbar-start">
+                <label
+                  for="my-drawer-4"
+                  aria-label="open sidebar"
+                  class="btn btn-square btn-ghost">
+                  {/*<!-- Sidebar toggle icon -->*/}
+                  <TbLayoutSidebarLeftExpand class="my-1.5 inline-block size-4" />
+                </label>
+              </div>
+              <div class="navbar-center">
+                <a class="btn btn-ghost text-xl">Dashboard</a>
+              </div>
+              <div class="navbar-end">
+                <div class="dropdown dropdown-end">
+                  <div
+                    tabindex="0"
+                    role="button"
+                    class="btn btn-ghost btn-circle avatar">
+                    <FaRegularUser class="my-1.5 inline-block size-4 rounded-full" />
+                  </div>
+                  <ul
+                    tabindex="-1"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                      <p class="font-bold">
+                        Hi,{" "}
+                        {
+                          (tokenInfoQuery()?.data as ITokenInfoRes).result
+                            .username
+                        }
+                      </p>
+                    </li>
+                    <li>
+                      <a class="justify-between">
+                        Profile
+                        <span class="badge">New</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>Settings</a>
+                    </li>
+                    <li onClick={() => void handleSignOut()}>
+                      <a>Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
             {/*<!-- Page content here -->*/}
             <div class="p-4">{props.children}</div>
           </div>

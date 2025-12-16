@@ -8,7 +8,7 @@ const AppLayout: Component<ParentProps> = (props) => (
       <Toaster />
       <main class="min-h-screen flex flex-col bg-base-300">
         {props.children}
-        <footer class="footer sm:footer-horizontal footer-center bg-base-200 text-base-content p-4">
+        <footer class="footer sm:footer-horizontal footer-center text-base-content p-4">
           <aside>
             <p>
               Copyright © {new Date().getFullYear()} - All right reserved by
