@@ -35,6 +35,15 @@ logger:
   levels:
     com.anasdidi.school: "${LOG_LEVEL}"
 micronaut:
+  router:
+    static-resources:
+      swagger:
+        enabled: "${APP_SWAGGER_ENABLED}"
+      swagger-ui:
+        enabled: "${APP_SWAGGER_ENABLED}"
+      web:
+        enabled: "${APP_WEB_ENABLED}"
+        paths: "file:/home/app/dist/"
   security:
     token:
       generator:

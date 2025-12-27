@@ -7,6 +7,8 @@ import com.anasdidi.school.auth.dto.SignInReqDTO;
 import com.anasdidi.school.auth.dto.SignInResDTO;
 import com.anasdidi.school.auth.dto.SignOutReqDTO;
 import com.anasdidi.school.auth.dto.SignOutResDTO;
+import com.anasdidi.school.auth.dto.TokenInfoReqDTO;
+import com.anasdidi.school.auth.dto.TokenInfoResDTO;
 import com.anasdidi.school.common.CommonConstants.CommonEvent;
 import com.anasdidi.school.common.dto.CommonReqDTO;
 import com.anasdidi.school.common.dto.CommonResDTO;
@@ -22,6 +24,7 @@ public class AuthConstants {
     public static final String AUTH_SIGN_IN = "AUTH_SGN_IN";
     public static final String AUTH_REFRESH_TOKEN = "AUTH_RFH_TKN";
     public static final String AUTH_SIGN_OUT = "AUTH_SGN_OUT";
+    public static final String AUTH_TOKEN_INFO = "AUTH_TKN_INF";
   }
 
   @Getter
@@ -30,7 +33,8 @@ public class AuthConstants {
     AUTH_SIGN_IN(Event.AUTH_SIGN_IN, SignInReqDTO.class, SignInResDTO.class),
     AUTH_REFRESH_TOKEN(
         Event.AUTH_REFRESH_TOKEN, RefreshTokenReqDTO.class, RefreshTokenResDTO.class),
-    AUTH_SIGN_OUT(Event.AUTH_SIGN_OUT, SignOutReqDTO.class, SignOutResDTO.class);
+    AUTH_SIGN_OUT(Event.AUTH_SIGN_OUT, SignOutReqDTO.class, SignOutResDTO.class),
+    AUTH_TOKEN_INFO(Event.AUTH_TOKEN_INFO, TokenInfoReqDTO.class, TokenInfoResDTO.class);
 
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;

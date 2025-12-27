@@ -6,6 +6,7 @@ import com.anasdidi.school.auth.dto.RefreshTokenResDTO;
 import com.anasdidi.school.auth.dto.SignInReqDTO;
 import com.anasdidi.school.auth.dto.SignInResDTO;
 import com.anasdidi.school.auth.dto.SignOutResDTO;
+import com.anasdidi.school.auth.dto.TokenInfoResDTO;
 import com.anasdidi.school.common.config.TraceLog;
 import com.anasdidi.school.common.controller.CommonController;
 import io.micronaut.http.HttpRequest;
@@ -29,5 +30,10 @@ public abstract class AuthController extends CommonController {
   @TraceLog
   @Operation(summary = "Sign Out", tags = OPENAPI_TAG)
   protected abstract HttpResponse<SignOutResDTO> signOut(
+      HttpRequest<?> request, Authentication authentication);
+
+  @TraceLog
+  @Operation(summary = "Token Info", tags = OPENAPI_TAG)
+  protected abstract HttpResponse<TokenInfoResDTO> token(
       HttpRequest<?> request, Authentication authentication);
 }

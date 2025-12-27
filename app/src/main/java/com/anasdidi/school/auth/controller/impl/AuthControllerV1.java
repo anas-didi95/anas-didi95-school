@@ -10,6 +10,8 @@ import com.anasdidi.school.auth.dto.SignInReqDTO;
 import com.anasdidi.school.auth.dto.SignInResDTO;
 import com.anasdidi.school.auth.dto.SignOutReqDTO;
 import com.anasdidi.school.auth.dto.SignOutResDTO;
+import com.anasdidi.school.auth.dto.TokenInfoReqDTO;
+import com.anasdidi.school.auth.dto.TokenInfoResDTO;
 import com.anasdidi.school.auth.service.AuthServiceRegistry;
 import com.anasdidi.school.common.CommonConstants;
 import io.micronaut.core.annotation.Nullable;
@@ -50,5 +52,13 @@ class AuthControllerV1 extends AuthController {
     var body = SignOutReqDTO.builder().username(authentication.getName()).build();
     return HttpResponse.ok(
         (SignOutResDTO) registry.get(EventEnum.AUTH_SIGN_OUT).process(body, false));
+  }
+
+  @Override
+  @Get("/token-info")
+  protected HttpResponse<TokenInfoResDTO> token(
+      HttpRequest<?> request, @Nullable Authentication authentication) {
+    var body = TokenInfoReqDTO.builder().authentication(authentication).request(request).build();
+    return HttpResponse.ok((TokenInfoResDTO) registry.get(EventEnum.AUTH_TOKEN_INFO).process(body));
   }
 }
