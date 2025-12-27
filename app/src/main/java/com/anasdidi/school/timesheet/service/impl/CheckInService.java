@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
-@Named(TimesheetConstants.Event.TSHT_CHECK_IN)
+@Named(TimesheetConstants.Event.TIMESHEET_CHECK_IN)
 @RequiredArgsConstructor
 @Slf4j
 class CheckInService extends TimesheetService<CheckInReqDTO, CheckInResDTO> {

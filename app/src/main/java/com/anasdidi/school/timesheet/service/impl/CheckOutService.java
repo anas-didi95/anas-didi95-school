@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
-@Named(TimesheetConstants.Event.TSHT_CHECK_OUT)
+@Named(TimesheetConstants.Event.TIMESHEET_CHECK_OUT)
 @RequiredArgsConstructor
 @Slf4j
 class CheckOutService extends TimesheetService<CheckOutReqDTO, CheckOutResDTO> {

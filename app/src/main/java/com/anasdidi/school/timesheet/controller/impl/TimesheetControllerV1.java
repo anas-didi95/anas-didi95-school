@@ -27,7 +27,7 @@ class TimesheetControllerV1 extends TimesheetController {
   protected HttpResponse<CheckInResDTO> checkIn(HttpRequest<?> request) {
     return HttpResponse.ok(
         (CheckInResDTO)
-            registry.get(EventEnum.TSHT_CHECK_IN).process(CheckInReqDTO.builder().build()));
+            registry.get(EventEnum.TIMESHEET_CHECK_IN).process(CheckInReqDTO.builder().build()));
   }
 
   @Override
@@ -35,6 +35,6 @@ class TimesheetControllerV1 extends TimesheetController {
   protected HttpResponse<CheckOutResDTO> checkOut(HttpRequest<?> request) {
     return HttpResponse.ok(
         (CheckOutResDTO)
-            registry.get(EventEnum.TSHT_CHECK_OUT).process(CheckOutReqDTO.builder().build()));
+            registry.get(EventEnum.TIMESHEET_CHECK_OUT).process(CheckOutReqDTO.builder().build()));
   }
 }
