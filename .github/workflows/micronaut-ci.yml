@@ -53,35 +53,35 @@ jobs:
           path: app/artifact/
           retention-days: 1
 
-  #build-web:
-  #  runs-on: ubuntu-latest
-  #  defaults:
-  #    run:
-  #      working-directory: ./web
-  #  steps:
-  #    - name: Checkout project
-  #      uses: actions/checkout@v4
-  #    - name: Use Node.js ${{ env.NODE_VERSION }}
-  #      uses: actions/setup-node@v4
-  #      with:
-  #        node-version: ${{ env.NODE_VERSION }}
-  #    - name: Install packages
-  #      run: npm ci
-  #    - name: Build distribution
-  #      run: npm run build --if-present
-  #    - name: Prepare artifact
-  #      run: |
-  #        mkdir artifact
-  #        cp -Rv dist/ artifact/
-  #    - name: Upload artifact
-  #      uses: actions/upload-artifact@v4
-  #      with:
-  #        name: web
-  #        path: web/artifact/
-  #        retention-days: 1
+  build-web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install packages
+        run: npm ci
+      - name: Build distribution
+        run: npm run build --if-present
+      - name: Prepare artifact
+        run: |
+          mkdir artifact
+          cp -Rv dist/ artifact/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: web/artifact/
+          retention-days: 1
 
   docker-publish:
-    needs: [build-app]
+    needs: [build-app, build-web]
     runs-on: ubuntu-latest
     permissions:
       contents: read
