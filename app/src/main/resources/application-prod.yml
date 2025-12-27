@@ -43,7 +43,7 @@ micronaut:
         enabled: "${APP_SWAGGER_ENABLED}"
       web:
         enabled: "${APP_WEB_ENABLED}"
-        paths: "file:/home/app/dist/"
+        paths: "file:${APP_WEB_DIST_PATH:/home/app/dist/}"
   security:
     token:
       generator:

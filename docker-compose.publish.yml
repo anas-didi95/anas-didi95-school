@@ -1,4 +1,7 @@
 ---
+networks:
+  anas-didi95-network:
+    external: true
 services:
   app-publish:
     build:
@@ -9,6 +12,8 @@ services:
       - ".env"
     logging:
       driver: "local"
+    networks:
+      - "anas-didi95-network"
     ports:
       - "8081:8080"
     volumes:
