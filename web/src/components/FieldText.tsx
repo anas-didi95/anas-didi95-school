@@ -24,6 +24,8 @@ const FieldText: Component<IFieldText> = (props) => {
       <input
         {...props.attrs}
         type={props.type}
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        value={props.field?.value}
         class="input w-full"
         classList={{ "input-error": !!props.field?.error }}
       />

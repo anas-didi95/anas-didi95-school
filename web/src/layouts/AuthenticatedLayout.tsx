@@ -36,7 +36,7 @@ const AuthenticatedLayout: Component<ParentProps> = (props) => {
           <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
           <div class="drawer-content min-h-screen">
             {/*<!-- Navbar -->*/}
-            <div class="navbar bg-base-300 px-4">
+            <div class="navbar bg-base-300 px-6">
               <div class="navbar-start">
                 <label
                   for="my-drawer-4"
@@ -92,7 +92,7 @@ const AuthenticatedLayout: Component<ParentProps> = (props) => {
               </div>
             </div>
             {/*<!-- Page content here -->*/}
-            <div class="p-4">{props.children}</div>
+            <div class="p-8">{props.children}</div>
           </div>
 
           <div class=" drawer-side is-drawer-close:overflow-visible">
