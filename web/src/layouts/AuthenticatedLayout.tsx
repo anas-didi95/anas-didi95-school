@@ -1,23 +1,26 @@
+import { usePageContext } from "@/contexts/PageContext";
 import SignOutAction from "@/utils/actions/SignOutAction";
 import TokenInfoQuery, { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
 import SessionUtil from "@/utils/SessionUtil";
 import { A, createAsync, Navigate, useNavigate } from "@solidjs/router";
 import { FaRegularUser } from "solid-icons/fa";
 import { TbLayoutSidebarLeftExpand } from "solid-icons/tb";
-import { Component, Match, ParentProps, Switch } from "solid-js";
+import { Component, For, Match, ParentProps, Switch } from "solid-js";
 import { useToast } from "solid-notifications";
 
-const DashboardPage: Component<ParentProps> = (props) => {
+const AuthenticatedLayout: Component<ParentProps> = (props) => {
   const tokenInfoQuery = createAsync(() => TokenInfoQuery().query());
   const signOut = SignOutAction().handler;
   const navigate = useNavigate();
   const { notify } = useToast();
   const session = SessionUtil();
+  const pageContext = usePageContext();
 
   const handleSignOut = async () => {
     const res = await signOut();
     if (res.ok) {
       session.clear();
+      pageContext.action.reset();
       notify("User sign-out success", { type: "success" });
       navigate("/", { replace: true });
     }
@@ -44,7 +47,13 @@ const DashboardPage: Component<ParentProps> = (props) => {
                 </label>
               </div>
               <div class="navbar-center">
-                <a class="btn btn-ghost text-xl">Dashboard</a>
+                <div class="breadcrumbs font-bold">
+                  <ul>
+                    <For each={pageContext.store.breadcrumbs}>
+                      {(breadcrumb) => <li>{breadcrumb}</li>}
+                    </For>
+                  </ul>
+                </div>
               </div>
               <div class="navbar-end">
                 <div class="dropdown dropdown-end">
@@ -148,4 +157,4 @@ const DashboardPage: Component<ParentProps> = (props) => {
   );
 };
 
-export default DashboardPage;
+export default AuthenticatedLayout;
