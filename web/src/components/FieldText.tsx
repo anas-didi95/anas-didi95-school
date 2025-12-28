@@ -1,5 +1,6 @@
+import { usePageContext } from "@/contexts/PageContext";
 import { FieldElementProps, FieldStore } from "@modular-forms/solid";
-import { Show, type Component } from "solid-js";
+import { Match, Show, Switch, type Component } from "solid-js";
 
 interface IFieldText {
   label: string;
@@ -13,6 +14,8 @@ interface IFieldText {
 }
 
 const FieldText: Component<IFieldText> = (props) => {
+  const pageContext = usePageContext();
+
   return (
     <fieldset class="fieldset bg-base-200 border-base-300 rounded-box border p-4">
       <legend class="fieldset-legend">
@@ -21,14 +24,21 @@ const FieldText: Component<IFieldText> = (props) => {
           <span class="text-error">*</span>
         </Show>
       </legend>
-      <input
-        {...props.attrs}
-        type={props.type}
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        value={props.field?.value}
-        class="input w-full"
-        classList={{ "input-error": !!props.field?.error }}
-      />
+      <Switch fallback={<p>Fail to render field text!</p>}>
+        <Match when={pageContext.store.isEditMode}>
+          <input
+            {...props.attrs}
+            type={props.type}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            value={props.field?.value}
+            class="input w-full"
+            classList={{ "input-error": !!props.field?.error }}
+          />
+        </Match>
+        <Match when={!pageContext.store.isEditMode}>
+          <p>{props.field?.value}</p>
+        </Match>
+      </Switch>
       <Show when={!!props.field?.error}>
         <p class="label text-error">{props.field?.error}</p>
       </Show>

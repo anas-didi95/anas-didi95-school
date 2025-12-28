@@ -9,7 +9,7 @@ import {
   SubmitHandler,
 } from "@modular-forms/solid";
 import { createAsync } from "@solidjs/router";
-import { Component, createEffect } from "solid-js";
+import { Component, createEffect, onMount } from "solid-js";
 
 const ProfilePage: Component = () => {
   const pageContext = usePageContext();
@@ -19,6 +19,10 @@ const ProfilePage: Component = () => {
   const handleSubmit: SubmitHandler<IProfileForm> = (values) => {
     console.log("values", values);
   };
+
+  onMount(() => {
+    pageContext.action.setEditMode(false);
+  });
 
   createEffect(() => {
     if (!tokenInfoQuery()?.ok) {

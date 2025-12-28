@@ -15,6 +15,8 @@ const PageProvider: Component<ParentProps> = (props) => {
     action: {
       setBreadcrumbs: (breadcrumbs) =>
         setStore((prev) => ({ ...prev, breadcrumbs })),
+      setEditMode: (flag) =>
+        setStore((prev) => ({ ...prev, isEditMode: flag })),
       reset: () => setStore(initialStore),
     },
   };
@@ -30,15 +32,18 @@ export const usePageContext = () => useContext(PageContext)!;
 
 export interface IPageContextStore {
   breadcrumbs: string[];
+  isEditMode: boolean;
 }
 
 interface IPageContextAction {
   setBreadcrumbs: (breadcrumbs: string[]) => void;
+  setEditMode: (flag: boolean) => void;
   reset: () => void;
 }
 
 function initialStore(): IPageContextStore {
   return {
     breadcrumbs: ["Dashboard"],
+    isEditMode: false,
   };
 }

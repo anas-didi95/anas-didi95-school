@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import FieldText from "@/components/FieldText";
+import { usePageContext } from "@/contexts/PageContext";
 import SignInAction, { ISignInRes } from "@/utils/actions/SignInAction";
 import SessionUtil from "@/utils/SessionUtil";
 import {
@@ -10,13 +11,14 @@ import {
   SubmitHandler,
 } from "@modular-forms/solid";
 import { useAction, useNavigate } from "@solidjs/router";
-import { type Component } from "solid-js";
+import { onMount, type Component } from "solid-js";
 
 const SignInPage: Component = () => {
   const [form, { Form, Field }] = createForm<ISignInForm>();
   const signIn = useAction(SignInAction().action);
   const navigate = useNavigate();
   const sessionUtil = SessionUtil();
+  const pageContext = usePageContext();
 
   const handleSubmit: SubmitHandler<ISignInForm> = async (values) => {
     const res = await signIn(values);
@@ -25,6 +27,10 @@ const SignInPage: Component = () => {
       navigate("/dashboard", { replace: true });
     }
   };
+
+  onMount(() => {
+    pageContext.action.setEditMode(true);
+  });
 
   return (
     <section class="flex-1 flex items-center justify-center">
