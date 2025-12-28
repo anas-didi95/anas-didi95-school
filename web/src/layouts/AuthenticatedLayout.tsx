@@ -1,7 +1,7 @@
 import SignOutAction from "@/utils/actions/SignOutAction";
 import TokenInfoQuery, { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
 import SessionUtil from "@/utils/SessionUtil";
-import { createAsync, Navigate, useNavigate } from "@solidjs/router";
+import { A, createAsync, Navigate, useNavigate } from "@solidjs/router";
 import { FaRegularUser } from "solid-icons/fa";
 import { TbLayoutSidebarLeftExpand } from "solid-icons/tb";
 import { Component, Match, ParentProps, Switch } from "solid-js";
@@ -67,10 +67,10 @@ const DashboardPage: Component<ParentProps> = (props) => {
                       </p>
                     </li>
                     <li>
-                      <a class="justify-between">
+                      <A href="/profile" class="justify-between">
                         Profile
                         <span class="badge">New</span>
-                      </a>
+                      </A>
                     </li>
                     <li>
                       <a>Settings</a>

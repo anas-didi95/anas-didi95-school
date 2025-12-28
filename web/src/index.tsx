@@ -22,10 +22,16 @@ render(
       <Route path="/" component={lazy(() => import("@/pages/SignInPage"))} />
       {/** Authenticated Route */}
       <Route
-        path="/dashboard"
         component={lazy(() => import("@/layouts/AuthenticatedLayout"))}
         preload={() => TokenInfoQuery().query()}>
-        <Route component={lazy(() => import("@/pages/DashboardPage"))} />
+        <Route
+          path="/dashboard"
+          component={lazy(() => import("@/pages/DashboardPage"))}
+        />
+        <Route
+          path="/profile"
+          component={lazy(() => import("@/pages/ProfilePage"))}
+        />
       </Route>
       {/** Error Route */}
       <Route
