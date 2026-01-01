@@ -2,7 +2,7 @@ import { usePageContext } from "@/contexts/PageContext";
 import { TextField } from "@kobalte/core/text-field";
 import { type JSX, Show, splitProps } from "solid-js";
 
-interface FieldInputProps {
+interface IFieldInput {
   name: string;
   label: string;
   type?: "text" | "email" | "tel" | "password" | "url" | "date" | undefined;
@@ -18,7 +18,7 @@ interface FieldInputProps {
   onBlur: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, FocusEvent>;
 }
 
-export function FieldInput(props: FieldInputProps) {
+export function FieldInput(props: IFieldInput) {
   const [rootProps, inputProps] = splitProps(
     props,
     ["name", "value", "required", "disabled"],
