@@ -96,6 +96,8 @@ micronaut:
       # web
       - pattern: "${micronaut.router.static-resources.web.mapping}"
         access: ["isAnonymous()"]
+      - pattern: "/favicon.ico"
+        access: ["isAnonymous()"]
     token:
       generator:
         access-token:
