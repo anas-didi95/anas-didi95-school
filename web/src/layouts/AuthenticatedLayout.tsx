@@ -5,10 +5,10 @@ import SessionUtil from "@/utils/SessionUtil";
 import { A, createAsync, Navigate, useNavigate } from "@solidjs/router";
 import { FaRegularUser } from "solid-icons/fa";
 import { TbLayoutSidebarLeftExpand } from "solid-icons/tb";
-import { Component, For, Match, ParentProps, Switch } from "solid-js";
+import { For, Match, ParentProps, Switch } from "solid-js";
 import { useToast } from "solid-notifications";
 
-const AuthenticatedLayout: Component<ParentProps> = (props) => {
+export default function AuthenticatedLayout(props: ParentProps) {
   const tokenInfoQuery = createAsync(() => TokenInfoQuery().query());
   const signOut = SignOutAction().handler;
   const navigate = useNavigate();
@@ -155,6 +155,4 @@ const AuthenticatedLayout: Component<ParentProps> = (props) => {
       </Match>
     </Switch>
   );
-};
-
-export default AuthenticatedLayout;
+}

@@ -1,4 +1,4 @@
-import { Component, createContext, ParentProps, useContext } from "solid-js";
+import { createContext, ParentProps, useContext } from "solid-js";
 import { createStore } from "solid-js/store";
 
 interface IPageContext {
@@ -7,7 +7,7 @@ interface IPageContext {
 }
 const PageContext = createContext<IPageContext>();
 
-const PageProvider: Component<ParentProps> = (props) => {
+export default function PageProvider(props: ParentProps) {
   const [store, setStore] = createStore<IPageContextStore>(initialStore());
 
   const value: IPageContext = {
@@ -24,9 +24,7 @@ const PageProvider: Component<ParentProps> = (props) => {
   return (
     <PageContext.Provider value={value}>{props.children}</PageContext.Provider>
   );
-};
-
-export default PageProvider;
+}
 
 export const usePageContext = () => useContext(PageContext)!;
 
