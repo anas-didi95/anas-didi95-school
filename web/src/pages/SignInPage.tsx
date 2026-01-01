@@ -11,9 +11,9 @@ import {
   SubmitHandler,
 } from "@modular-forms/solid";
 import { useAction, useNavigate } from "@solidjs/router";
-import { onMount, type Component } from "solid-js";
+import { onMount } from "solid-js";
 
-const SignInPage: Component = () => {
+export default function SignInPage() {
   const [form, { Form, Field }] = createForm<ISignInForm>();
   const signIn = useAction(SignInAction().action);
   const navigate = useNavigate();
@@ -73,9 +73,7 @@ const SignInPage: Component = () => {
       </div>
     </section>
   );
-};
-
-export default SignInPage;
+}
 
 interface ISignInForm extends FieldValues {
   username: string;

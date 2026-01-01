@@ -10,9 +10,9 @@ import {
   SubmitHandler,
 } from "@modular-forms/solid";
 import { createAsync } from "@solidjs/router";
-import { Component, createEffect, createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 
-const ProfilePage: Component = () => {
+export default function ProfilePage() {
   const [userId, setUserId] = createSignal("");
   const pageContext = usePageContext();
   const tokenInfoQuery = createAsync(() => TokenInfoQuery().query());
@@ -84,9 +84,7 @@ const ProfilePage: Component = () => {
       </Form>
     </Card>
   );
-};
-
-export default ProfilePage;
+}
 
 interface IProfileForm extends FieldValues {
   username: string;
