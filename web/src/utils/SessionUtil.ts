@@ -1,4 +1,4 @@
-import { ISignInRes } from "./actions/SignInAction";
+import { ISignInRes } from "@/utils/actions/SignInAction";
 
 const SessionUtil = () => {
   const SIGN_IN_KEY = "__SGN_IN#_KEY";

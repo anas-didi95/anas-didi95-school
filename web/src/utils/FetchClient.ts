@@ -1,4 +1,4 @@
-import SessionUtil from "./SessionUtil";
+import SessionUtil from "@/utils/SessionUtil";
 
 const FetchClient = (props: IFetchClient = {}) => {
   const {
