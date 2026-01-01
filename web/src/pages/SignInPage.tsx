@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import Card from "@/components/Card";
-import FieldText from "@/components/FieldText";
+import { FieldInput } from "@/components/FieldInput";
 import { usePageContext } from "@/contexts/PageContext";
 import SignInAction, { ISignInRes } from "@/utils/actions/SignInAction";
 import SessionUtil from "@/utils/SessionUtil";
@@ -41,12 +41,12 @@ const SignInPage: Component = () => {
               <Field
                 name="username"
                 validate={[required("Username is required!")]}>
-                {(field, attrs) => (
-                  <FieldText
+                {(field, props) => (
+                  <FieldInput
+                    {...field}
+                    {...props}
                     type="text"
                     label="Username"
-                    field={field}
-                    attrs={attrs}
                     required
                   />
                 )}
@@ -54,12 +54,12 @@ const SignInPage: Component = () => {
               <Field
                 name="password"
                 validate={[required("Password is required!")]}>
-                {(field, attrs) => (
-                  <FieldText
+                {(field, props) => (
+                  <FieldInput
+                    {...field}
+                    {...props}
                     type="password"
                     label="Password"
-                    field={field}
-                    attrs={attrs}
                     required
                   />
                 )}

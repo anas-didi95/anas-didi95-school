@@ -1,5 +1,5 @@
 import Card from "@/components/Card";
-import FieldText from "@/components/FieldText";
+import { FieldInput } from "@/components/FieldInput";
 import { usePageContext } from "@/contexts/PageContext";
 import GetUserQuery, { IGetUserRes } from "@/utils/queries/GetUserQuery";
 import TokenInfoQuery, { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
@@ -56,28 +56,31 @@ const ProfilePage: Component = () => {
       <Form onSubmit={handleSubmit}>
         <fieldset class="grid grid-cols-3 gap-6" disabled={form.submitting}>
           <Field name="username">
-            {(field, attrs) => (
-              <FieldText
+            {(field, props) => (
+              <FieldInput
+                {...field}
+                {...props}
                 type="text"
                 label="Username"
-                field={field}
-                attrs={attrs}
                 required
               />
             )}
           </Field>
           <Field name="name">
-            {(field, attrs) => (
-              <FieldText
+            {(field, props) => (
+              <FieldInput
+                {...field}
+                {...props}
                 type="text"
                 label="Name"
-                field={field}
-                attrs={attrs}
                 required
               />
             )}
           </Field>
         </fieldset>
+        <button onClick={() => pageContext.action.setEditMode(true)}>
+          Edit
+        </button>
       </Form>
     </Card>
   );
