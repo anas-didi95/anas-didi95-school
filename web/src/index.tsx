@@ -19,7 +19,11 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 render(
   () => (
     <HashRouter root={AppLayout}>
-      <Route path="/" component={lazy(() => import("@/pages/SignInPage"))} />
+      <Route path="/" component={lazy(() => import("@/pages/IndexPage"))} />
+      <Route
+        path="/sign-in"
+        component={lazy(() => import("@/pages/SignInPage"))}
+      />
       {/** Authenticated Route */}
       <Route
         component={lazy(() => import("@/layouts/AuthenticatedLayout"))}
