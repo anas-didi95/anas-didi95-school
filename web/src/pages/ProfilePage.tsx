@@ -80,10 +80,9 @@ export default function ProfilePage() {
           <Field name="result.isDeleted" type="boolean">
             {(field, props) => (
               <FieldCheckbox
+                {...field}
                 {...props}
                 label="Is Deleted?"
-                checked={field.value}
-                error={field.error}
                 title="Status"
               />
             )}
@@ -111,6 +110,7 @@ export default function ProfilePage() {
             )}
           </Field>
         </fieldset>
+        <br />
         <button onClick={() => pageContext.action.setEditMode(true)}>
           Edit
         </button>

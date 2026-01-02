@@ -30,7 +30,7 @@ export default function FieldInput(props: IFieldInput) {
     <TextField
       {...rootProps}
       validationState={props.error ? "invalid" : "valid"}>
-      <fieldset class="fieldset bg-base-200 border-base-300 rounded-box border p-4">
+      <fieldset class="fieldset bg-base-200 border-base-300 rounded-box border p-4 h-full">
         <legend class="fieldset-legend">
           <TextField.Label>
             <span>{props.label}&nbsp;</span>

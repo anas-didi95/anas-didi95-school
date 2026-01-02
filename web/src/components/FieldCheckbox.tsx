@@ -4,10 +4,10 @@ import { type JSX, Show, splitProps } from "solid-js";
 interface IFieldCheckbox {
   name: string;
   label: string;
+  value: boolean | undefined;
   error: string;
   title?: string;
-  value?: string | undefined;
-  checked: boolean | undefined;
+  checkedValue?: string | undefined;
   required?: boolean | undefined;
   disabled?: boolean | undefined;
   ref: (element: HTMLInputElement) => void;
@@ -19,21 +19,27 @@ interface IFieldCheckbox {
 export default function FieldCheckbox(props: IFieldCheckbox) {
   const [rootProps, inputProps] = splitProps(
     props,
-    ["name", "value", "checked", "required", "disabled"],
+    ["name", "value", "checkedValue", "required", "disabled"],
     ["ref", "onInput", "onChange", "onBlur"],
   );
 
   return (
     <Checkbox
       {...rootProps}
-      validationState={props.error ? "invalid" : "valid"}>
+      validationState={props.error ? "invalid" : "valid"}
+      value={props.checkedValue}>
       <fieldset
-        class={`${props.title ? "fieldset bg-base-200 border-base-300 rounded-box border p-4" : ""}`}>
+        class={`${props.title ? "fieldset bg-base-200 border-base-300 rounded-box border p-4 h-full" : ""}`}>
         <Show when={!!props.title}>
           <legend class="fieldset-legend">{props.title}</legend>
         </Show>
         <label class="label">
-          <input {...inputProps} type="checkbox" class="checkbox" />
+          <input
+            {...inputProps}
+            checked={props.value}
+            type="checkbox"
+            class="checkbox"
+          />
           <Checkbox.Label>{props.label}</Checkbox.Label>
         </label>
       </fieldset>
