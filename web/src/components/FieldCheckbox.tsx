@@ -1,3 +1,4 @@
+import { usePageContext } from "@/contexts/PageContext";
 import { Checkbox } from "@kobalte/core/checkbox";
 import { type JSX, Show, splitProps } from "solid-js";
 
@@ -22,6 +23,7 @@ export default function FieldCheckbox(props: IFieldCheckbox) {
     ["name", "value", "checkedValue", "required", "disabled"],
     ["ref", "onInput", "onChange", "onBlur"],
   );
+  const pageContext = usePageContext();
 
   return (
     <Checkbox
@@ -37,8 +39,9 @@ export default function FieldCheckbox(props: IFieldCheckbox) {
           <input
             {...inputProps}
             checked={props.value}
+            disabled={!pageContext.store.isEditMode}
             type="checkbox"
-            class="checkbox"
+            class="checkbox checkbox-primary"
           />
           <Checkbox.Label>{props.label}</Checkbox.Label>
         </label>

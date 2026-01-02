@@ -45,7 +45,7 @@ export default function ProfilePage() {
     const values = getUserQuery()?.data as IGetUserRes;
     pageContext.action.setBreadcrumbs(["Profile", values.result.name]);
 
-    setValues(form, { result: { ...values.result, isDeleted: true } });
+    setValues(form, { ...values });
   });
 
   return (
