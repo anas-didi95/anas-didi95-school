@@ -1,5 +1,6 @@
 import Card from "@/components/Card";
-import { FieldInput } from "@/components/FieldInput";
+import FieldCheckbox from "@/components/FieldCheckbox";
+import FieldInput from "@/components/FieldInput";
 import { usePageContext } from "@/contexts/PageContext";
 import GetUserQuery, { IGetUserRes } from "@/utils/queries/GetUserQuery";
 import TokenInfoQuery, { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
@@ -44,7 +45,7 @@ export default function ProfilePage() {
     const values = getUserQuery()?.data as IGetUserRes;
     pageContext.action.setBreadcrumbs(["Profile", values.result.name]);
 
-    setValues(form, { ...values });
+    setValues(form, { result: { ...values.result, isDeleted: true } });
   });
 
   return (
@@ -53,7 +54,7 @@ export default function ProfilePage() {
         <fieldset
           class="grid lg:grid-cols-3 grid-cols-1 gap-6"
           disabled={form.submitting}>
-          <Field name="result.username">
+          <Field name="result.username" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -64,7 +65,7 @@ export default function ProfilePage() {
               />
             )}
           </Field>
-          <Field name="result.name">
+          <Field name="result.name" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -76,7 +77,18 @@ export default function ProfilePage() {
             )}
           </Field>
           <div class="lg:block hidden" />
-          <Field name="result.updateBy">
+          <Field name="result.isDeleted" type="boolean">
+            {(field, props) => (
+              <FieldCheckbox
+                {...props}
+                label="Is Deleted?"
+                checked={field.value}
+                error={field.error}
+                title="Status"
+              />
+            )}
+          </Field>
+          <Field name="result.updateBy" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -87,7 +99,7 @@ export default function ProfilePage() {
               />
             )}
           </Field>
-          <Field name="result.updateDate">
+          <Field name="result.updateDate" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
