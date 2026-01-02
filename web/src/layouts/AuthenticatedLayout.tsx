@@ -48,9 +48,13 @@ export default function AuthenticatedLayout(props: ParentProps) {
               </div>
               <div class="navbar-center">
                 <div class="breadcrumbs font-bold">
-                  <ul>
+                  <ul class="sm:w-full w-48">
                     <For each={pageContext.store.breadcrumbs}>
-                      {(breadcrumb) => <li>{breadcrumb}</li>}
+                      {(breadcrumb) => (
+                        <li>
+                          <p class="truncate">{breadcrumb}</p>
+                        </li>
+                      )}
                     </For>
                   </ul>
                 </div>

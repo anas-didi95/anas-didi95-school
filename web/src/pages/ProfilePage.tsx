@@ -54,7 +54,9 @@ export default function ProfilePage() {
   return (
     <Card title="View Profile">
       <Form onSubmit={handleSubmit}>
-        <fieldset class="grid grid-cols-3 gap-6" disabled={form.submitting}>
+        <fieldset
+          class="grid lg:grid-cols-3 grid-cols-1 gap-6"
+          disabled={form.submitting}>
           <Field name="username">
             {(field, props) => (
               <FieldInput
