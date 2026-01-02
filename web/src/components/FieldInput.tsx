@@ -4,11 +4,11 @@ import { type JSX, Show, splitProps } from "solid-js";
 
 interface IFieldInput {
   name: string;
-  label: string;
-  type?: "text" | "email" | "tel" | "password" | "url" | "date" | undefined;
-  placeholder?: string | undefined;
   value: string | undefined;
   error: string;
+  type?: "text" | "email" | "tel" | "password" | "url" | "date" | undefined;
+  label?: string | undefined;
+  placeholder?: string | undefined;
   multiline?: boolean | undefined;
   required?: boolean | undefined;
   disabled?: boolean | undefined;
@@ -18,7 +18,7 @@ interface IFieldInput {
   onBlur: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, FocusEvent>;
 }
 
-export function FieldInput(props: IFieldInput) {
+export default function FieldInput(props: IFieldInput) {
   const [rootProps, inputProps] = splitProps(
     props,
     ["name", "value", "required", "disabled"],

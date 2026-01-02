@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import Card from "@/components/Card";
-import { FieldInput } from "@/components/FieldInput";
+import FieldInput from "@/components/FieldInput";
 import { usePageContext } from "@/contexts/PageContext";
 import SignInAction, { ISignInRes } from "@/utils/actions/SignInAction";
 import SessionUtil from "@/utils/SessionUtil";
