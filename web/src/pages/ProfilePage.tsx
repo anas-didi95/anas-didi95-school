@@ -41,14 +41,10 @@ export default function ProfilePage() {
       return;
     }
 
-    const result = (getUserQuery()?.data as IGetUserRes).result;
-    pageContext.action.setBreadcrumbs(["Profile", result.name]);
+    const values = getUserQuery()?.data as IGetUserRes;
+    pageContext.action.setBreadcrumbs(["Profile", values.result.name]);
 
-    const values: IProfileForm = {
-      username: result.username,
-      name: result.name,
-    };
-    setValues(form, values);
+    setValues(form, { ...values });
   });
 
   return (
@@ -57,7 +53,7 @@ export default function ProfilePage() {
         <fieldset
           class="grid lg:grid-cols-3 grid-cols-1 gap-6"
           disabled={form.submitting}>
-          <Field name="username">
+          <Field name="result.username">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -68,13 +64,36 @@ export default function ProfilePage() {
               />
             )}
           </Field>
-          <Field name="name">
+          <Field name="result.name">
             {(field, props) => (
               <FieldInput
                 {...field}
                 {...props}
                 type="text"
                 label="Name"
+                required
+              />
+            )}
+          </Field>
+          <div class="lg:block hidden" />
+          <Field name="result.updateBy">
+            {(field, props) => (
+              <FieldInput
+                {...field}
+                {...props}
+                type="text"
+                label="Update By"
+                required
+              />
+            )}
+          </Field>
+          <Field name="result.updateDate">
+            {(field, props) => (
+              <FieldInput
+                {...field}
+                {...props}
+                type="text"
+                label="Update Date"
                 required
               />
             )}
@@ -88,7 +107,4 @@ export default function ProfilePage() {
   );
 }
 
-interface IProfileForm extends FieldValues {
-  username: string;
-  name: string;
-}
+interface IProfileForm extends FieldValues, IGetUserRes {}
