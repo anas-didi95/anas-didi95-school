@@ -1,4 +1,6 @@
 import SessionUtil from "@/utils/SessionUtil";
+import RefreshTokenAction from "./actions/RefreshTokenAction";
+import { ISignInRes } from "./actions/SignInAction";
 
 const FetchClient = (props: IFetchClient = {}) => {
   const {
@@ -59,10 +61,11 @@ const FetchClient = (props: IFetchClient = {}) => {
     url: string,
     config: RequestInit = {},
   ): Promise<Response> => {
-    const mergedConfig = await applyRequestMiddleware({ ...config, url });
+    let mergedConfig = await applyRequestMiddleware({ ...config, url });
 
     let attempt = 0;
     let lastError: unknown;
+    let hasRefreshToken = false;
 
     while (attempt <= retryCount) {
       const { url: finalUrl, ...finalConfig } = mergedConfig;
@@ -76,11 +79,54 @@ const FetchClient = (props: IFetchClient = {}) => {
 
       let error: IResponseError = { canRetry: false, message: "" };
       if (processedResponse.status === 401) {
+        error.canRetry = !hasRefreshToken;
+
+        if (error.canRetry) {
+          console.log("do refresh 1");
+          hasRefreshToken = true;
+
+          const signIn = session.getSignIn();
+          const jwt = signIn?.token.access_token ?? "";
+          const refreshToken = signIn?.token.refresh_token ?? "";
+          console.log("jwt", jwt);
+          console.log("refreshToken", refreshToken);
+
+          const refreshTokenHandler = RefreshTokenAction().handler;
+
+          console.log("BEFORE");
+          const refreshTokenResponse = await refreshTokenHandler({
+            jwt,
+            refreshToken,
+          });
+          error.canRetry = refreshTokenResponse.ok;
+
+          if (error.canRetry) {
+            console.log("refresh success");
+            const newSignIn = (await refreshTokenResponse.json()) as {
+              ok: boolean;
+              data: ISignInRes;
+            };
+            session.putSignIn(newSignIn.data);
+
+            mergedConfig = {
+              ...mergedConfig,
+              headers: {
+                ...mergedConfig.headers,
+                Authorization: `Bearer ${newSignIn.data.token.access_token}`,
+              },
+            };
+            attempt--;
+          } else {
+            console.log("refresh failed");
+            session.clear();
+          }
+        }
+
+        console.log("Final canRetry", error.canRetry);
         error = {
-          canRetry: false,
+          canRetry: error.canRetry,
           message: "Unauthenticated. Please re-login.",
         };
-        session.clear();
       } else {
         const message = await processedResponse.text();
         error = {
