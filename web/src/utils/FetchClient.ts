@@ -9,6 +9,7 @@ const FetchClient = (props: IFetchClient = {}) => {
     retryDelayMs = 500,
     hasAuth = false,
   } = props;
+  const session = SessionUtil();
 
   const applyRequestMiddleware = async (
     config: RequestInit & { url?: string },
@@ -18,7 +19,6 @@ const FetchClient = (props: IFetchClient = {}) => {
     }
 
     if (hasAuth) {
-      const session = SessionUtil();
       const signIn = session.getSignIn();
       return {
         ...config,
@@ -80,6 +80,7 @@ const FetchClient = (props: IFetchClient = {}) => {
           canRetry: false,
           message: "Unauthenticated. Please re-login.",
         };
+        session.clear();
       } else {
         const message = await processedResponse.text();
         error = {
