@@ -22,7 +22,9 @@ export default defineConfig(
       },
     },
     plugins: {},
-    rules: {},
+    rules: {
+      "@typescript-eslint/no-unused-vars": ["warn", { caughtErrors: "none" }],
+    },
   },
   eslintConfigPrettier,
 );
