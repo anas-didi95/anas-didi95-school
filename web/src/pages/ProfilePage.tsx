@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import Card from "@/components/Card";
 import FieldCheckbox from "@/components/FieldCheckbox";
 import FieldInput from "@/components/FieldInput";
@@ -11,7 +12,7 @@ import {
   SubmitHandler,
 } from "@modular-forms/solid";
 import { createAsync } from "@solidjs/router";
-import { createEffect, createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount, Show } from "solid-js";
 
 export default function ProfilePage() {
   const [userId, setUserId] = createSignal("");
@@ -109,11 +110,64 @@ export default function ProfilePage() {
               />
             )}
           </Field>
+          <Field name="result.version" type="number">
+            {(field, props) => (
+              <FieldInput
+                {...field}
+                {...props}
+                value={"" + field.value}
+                label="Version"
+                required
+              />
+            )}
+          </Field>
+          <Field name="result.createBy" type="string">
+            {(field, props) => (
+              <FieldInput
+                {...field}
+                {...props}
+                type="text"
+                label="Create By"
+                required
+              />
+            )}
+          </Field>
+          <Field name="result.createDate" type="string">
+            {(field, props) => (
+              <FieldInput
+                {...field}
+                {...props}
+                type="datetime-local"
+                label="Create Date"
+                required
+              />
+            )}
+          </Field>
         </fieldset>
-        <br />
-        <button onClick={() => pageContext.action.setEditMode(true)}>
-          Edit
-        </button>
+        <div class="flex justify-end mt-4 gap-2">
+          <Show
+            when={pageContext.store.isEditMode}
+            fallback={
+              <Button
+                label="Edit"
+                type="button"
+                color="primary"
+                onClick={() => pageContext.action.setEditMode(true)}
+              />
+            }>
+            <Button
+              label="Cancel"
+              type="button"
+              onClick={() => pageContext.action.setEditMode(false)}
+            />
+            <Button
+              label="Save"
+              type="button"
+              color="success"
+              onClick={() => pageContext.action.setEditMode(true)}
+            />
+          </Show>
+        </div>
       </Form>
     </Card>
   );
