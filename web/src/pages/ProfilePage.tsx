@@ -50,7 +50,7 @@ export default function ProfilePage() {
   });
 
   return (
-    <Card title="View Profile">
+    <Card title={`${pageContext.store.isEditMode ? "Edit" : "View"} Profile`}>
       <Form onSubmit={handleSubmit}>
         <fieldset
           class="grid lg:grid-cols-3 grid-cols-1 gap-6"
@@ -63,6 +63,7 @@ export default function ProfilePage() {
                 type="text"
                 label="Username"
                 required
+                editable={false}
               />
             )}
           </Field>
@@ -96,6 +97,7 @@ export default function ProfilePage() {
                 type="text"
                 label="Update By"
                 required
+                editable={false}
               />
             )}
           </Field>
@@ -107,6 +109,7 @@ export default function ProfilePage() {
                 type="datetime-local"
                 label="Update Date"
                 required
+                editable={false}
               />
             )}
           </Field>
@@ -118,6 +121,7 @@ export default function ProfilePage() {
                 value={"" + field.value}
                 label="Version"
                 required
+                editable={false}
               />
             )}
           </Field>
@@ -129,6 +133,7 @@ export default function ProfilePage() {
                 type="text"
                 label="Create By"
                 required
+                editable={false}
               />
             )}
           </Field>
@@ -140,6 +145,7 @@ export default function ProfilePage() {
                 type="datetime-local"
                 label="Create Date"
                 required
+                editable={false}
               />
             )}
           </Field>

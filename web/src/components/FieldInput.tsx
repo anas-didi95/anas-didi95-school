@@ -19,6 +19,7 @@ interface IFieldInput {
   multiline?: boolean | undefined;
   required?: boolean | undefined;
   disabled?: boolean | undefined;
+  editable?: boolean;
   ref: (element: HTMLInputElement | HTMLTextAreaElement) => void;
   onInput: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, InputEvent>;
   onChange: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, Event>;
@@ -47,7 +48,7 @@ export default function FieldInput(props: IFieldInput) {
           </TextField.Label>
         </legend>
         <Show
-          when={pageContext.store.isEditMode}
+          when={(props.editable ?? true) && pageContext.store.isEditMode}
           fallback={
             <p>
               {isDateValue(props.type, props.value)
