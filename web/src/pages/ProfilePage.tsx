@@ -3,6 +3,7 @@ import Card from "@/components/Card";
 import FieldCheckbox from "@/components/FieldCheckbox";
 import FieldInput from "@/components/FieldInput";
 import { usePageContext } from "@/contexts/PageContext";
+import UpdateUserAction from "@/utils/actions/UpdateUserAction";
 import GetUserQuery, { IGetUserRes } from "@/utils/queries/GetUserQuery";
 import TokenInfoQuery, { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
 import {
@@ -11,7 +12,7 @@ import {
   setValues,
   SubmitHandler,
 } from "@modular-forms/solid";
-import { createAsync } from "@solidjs/router";
+import { createAsync, useAction } from "@solidjs/router";
 import { createEffect, createSignal, onMount, Show } from "solid-js";
 
 export default function ProfilePage() {
@@ -20,9 +21,15 @@ export default function ProfilePage() {
   const tokenInfoQuery = createAsync(() => TokenInfoQuery().query());
   const getUserQuery = createAsync(() => GetUserQuery().query(userId()));
   const [form, { Form, Field }] = createForm<IProfileForm>();
+  const updateUserAction = useAction(
+    UpdateUserAction([GetUserQuery().key]).action,
+  );
 
-  const handleSubmit: SubmitHandler<IProfileForm> = (values) => {
-    console.log("values", values);
+  const handleSubmit: SubmitHandler<IProfileForm> = async (values) => {
+    const res = await updateUserAction(userId(), { ...values.result });
+    if (res.ok) {
+      pageContext.action.setEditMode(false);
+    }
   };
 
   onMount(() => {
@@ -166,12 +173,7 @@ export default function ProfilePage() {
               type="button"
               onClick={() => pageContext.action.setEditMode(false)}
             />
-            <Button
-              label="Save"
-              type="button"
-              color="success"
-              onClick={() => pageContext.action.setEditMode(true)}
-            />
+            <Button label="Update" type="submit" color="primary" />
           </Show>
         </div>
       </Form>
