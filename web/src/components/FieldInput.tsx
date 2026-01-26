@@ -4,9 +4,16 @@ import { type JSX, Show, splitProps } from "solid-js";
 
 interface IFieldInput {
   name: string;
-  value: string | undefined;
+  value?: string;
   error: string;
-  type?: "text" | "email" | "tel" | "password" | "url" | "date" | undefined;
+  type?:
+    | "text"
+    | "email"
+    | "tel"
+    | "password"
+    | "url"
+    | "date"
+    | "datetime-local";
   label?: string | undefined;
   placeholder?: string | undefined;
   multiline?: boolean | undefined;
@@ -41,14 +48,24 @@ export default function FieldInput(props: IFieldInput) {
         </legend>
         <Show
           when={pageContext.store.isEditMode}
-          fallback={<p>{props.value}</p>}>
+          fallback={
+            <p>
+              {isDateValue(props.type, props.value)
+                ? new Date(props.value!).toLocaleString()
+                : props.value}
+            </p>
+          }>
           <Show
             when={props.multiline}
             fallback={
               <TextField.Input
                 {...inputProps}
                 type={props.type}
-                value={props.value}
+                value={
+                  isDateValue(props.type, props.value)
+                    ? props.value!.split(".")[0]
+                    : props.value
+                }
                 class="input w-full"
                 classList={{ "input-error": !!props.error }}
               />
@@ -68,4 +85,8 @@ export default function FieldInput(props: IFieldInput) {
       </fieldset>
     </TextField>
   );
+}
+
+function isDateValue(type?: string, value?: string) {
+  return !!type && ["date", "datetime-local"].includes(type) && !!value;
 }

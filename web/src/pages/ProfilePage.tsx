@@ -103,7 +103,7 @@ export default function ProfilePage() {
               <FieldInput
                 {...field}
                 {...props}
-                type="text"
+                type="datetime-local"
                 label="Update Date"
                 required
               />
