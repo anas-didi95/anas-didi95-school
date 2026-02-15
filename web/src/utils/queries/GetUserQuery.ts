@@ -40,16 +40,18 @@ const GetUserQuery = (revalidate?: string[]) => {
 export default GetUserQuery;
 
 export interface IGetUserRes {
-  result: {
-    id: string;
-    isDeleted: boolean;
-    version: number;
-    createBy: string;
-    createDate: string;
-    updateBy: string;
-    updateDate: string;
-    username: string;
-    name: string;
-    roleList: string[];
-  };
+  result: IUserModel;
+}
+
+export interface IUserModel {
+  id: string;
+  isDeleted: boolean;
+  version: number;
+  createBy: string;
+  createDate: string;
+  updateBy: string;
+  updateDate: string;
+  username: string;
+  name: string;
+  roleList: string[];
 }

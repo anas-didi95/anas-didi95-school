@@ -4,7 +4,10 @@ import FieldCheckbox from "@/components/FieldCheckbox";
 import FieldInput from "@/components/FieldInput";
 import { usePageContext } from "@/contexts/PageContext";
 import UpdateUserAction from "@/utils/actions/UpdateUserAction";
-import GetUserQuery, { IGetUserRes } from "@/utils/queries/GetUserQuery";
+import GetUserQuery, {
+  IGetUserRes,
+  IUserModel,
+} from "@/utils/queries/GetUserQuery";
 import TokenInfoQuery, { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
 import {
   createForm,
@@ -26,7 +29,7 @@ export default function ProfilePage() {
   );
 
   const handleSubmit: SubmitHandler<IProfileForm> = async (values) => {
-    const res = await updateUserAction(userId(), { ...values.result });
+    const res = await updateUserAction(userId(), { ...values });
     if (res.ok) {
       pageContext.action.setEditMode(false);
     }
@@ -46,6 +49,10 @@ export default function ProfilePage() {
   });
 
   createEffect(() => {
+    if (pageContext.store.isEditMode) {
+      return;
+    }
+
     if (!getUserQuery()?.ok) {
       return;
     }
@@ -53,7 +60,7 @@ export default function ProfilePage() {
     const values = getUserQuery()?.data as IGetUserRes;
     pageContext.action.setBreadcrumbs(["Profile", values.result.name]);
 
-    setValues(form, { ...values });
+    setValues(form, { ...values.result });
   });
 
   return (
@@ -62,7 +69,7 @@ export default function ProfilePage() {
         <fieldset
           class="grid lg:grid-cols-3 grid-cols-1 gap-6"
           disabled={form.submitting}>
-          <Field name="result.username" type="string">
+          <Field name="username" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -74,7 +81,7 @@ export default function ProfilePage() {
               />
             )}
           </Field>
-          <Field name="result.name" type="string">
+          <Field name="name" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -86,7 +93,7 @@ export default function ProfilePage() {
             )}
           </Field>
           <div class="lg:block hidden" />
-          <Field name="result.isDeleted" type="boolean">
+          <Field name="isDeleted" type="boolean">
             {(field, props) => (
               <FieldCheckbox
                 {...field}
@@ -96,7 +103,7 @@ export default function ProfilePage() {
               />
             )}
           </Field>
-          <Field name="result.updateBy" type="string">
+          <Field name="updateBy" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -108,7 +115,7 @@ export default function ProfilePage() {
               />
             )}
           </Field>
-          <Field name="result.updateDate" type="string">
+          <Field name="updateDate" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -120,7 +127,7 @@ export default function ProfilePage() {
               />
             )}
           </Field>
-          <Field name="result.version" type="number">
+          <Field name="version" type="number">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -132,7 +139,7 @@ export default function ProfilePage() {
               />
             )}
           </Field>
-          <Field name="result.createBy" type="string">
+          <Field name="createBy" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -144,7 +151,7 @@ export default function ProfilePage() {
               />
             )}
           </Field>
-          <Field name="result.createDate" type="string">
+          <Field name="createDate" type="string">
             {(field, props) => (
               <FieldInput
                 {...field}
@@ -181,4 +188,4 @@ export default function ProfilePage() {
   );
 }
 
-interface IProfileForm extends FieldValues, IGetUserRes {}
+interface IProfileForm extends FieldValues, IUserModel {}
