@@ -4,6 +4,7 @@ import {
   ColumnDef,
   createSolidTable,
   getCoreRowModel,
+  getFilteredRowModel,
   getSortedRowModel,
 } from "@tanstack/solid-table";
 import { createSignal, onMount } from "solid-js";
@@ -19,6 +20,8 @@ export default function UserMaintainancePage() {
     columns: defaultColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    globalFilterFn: "includesString",
   });
 
   onMount(() => {

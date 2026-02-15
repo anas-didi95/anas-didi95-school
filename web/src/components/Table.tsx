@@ -1,10 +1,32 @@
+import { debounce } from "@solid-primitives/scheduled";
 import { flexRender, Table as TSTable } from "@tanstack/solid-table";
-import { FaSolidCaretDown, FaSolidCaretUp } from "solid-icons/fa";
+import {
+  FaSolidCaretDown,
+  FaSolidCaretUp,
+  FaSolidSearch,
+} from "solid-icons/fa";
 import { For, Show } from "solid-js";
 
 export default function Table(props: ITable) {
+  const debounceGlobalFilter = debounce(
+    (s: string) => props.table.setGlobalFilter(s),
+    500,
+  );
+
   return (
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 px-4 py-2">
+    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 p-4">
+      <div class="flex justify-end">
+        <label class="input">
+          <FaSolidSearch />
+          <input
+            type="search"
+            class="grow"
+            placeholder="Search"
+            oninput={(e) => debounceGlobalFilter(e.target.value)}
+          />
+        </label>
+      </div>
+      <br />
       <table class="table">
         <thead>
           <For each={props.table.getHeaderGroups()}>
