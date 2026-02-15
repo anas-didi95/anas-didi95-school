@@ -1,23 +1,29 @@
 import Table from "@/components/Table";
 import { usePageContext } from "@/contexts/PageContext";
+import GetUserListQuery, {
+  IGetUserListRes,
+  IUserModel,
+} from "@/utils/queries/GetUserListQuery";
+import { createAsync } from "@solidjs/router";
 import {
-  ColumnDef,
+  createColumnHelper,
   createSolidTable,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
 } from "@tanstack/solid-table";
-import { createSignal, onMount } from "solid-js";
+import { onMount } from "solid-js";
 
 export default function UserMaintainancePage() {
   const pageContext = usePageContext();
-  const [data] = createSignal(defaultData);
+  const getUserListQuery = createAsync(() => GetUserListQuery().query());
 
   const table = createSolidTable({
     get data() {
-      return data();
+      if (!getUserListQuery()?.ok) return [];
+      return (getUserListQuery()?.data as IGetUserListRes).resultList;
     },
-    columns: defaultColumns,
+    columns: tableColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -32,73 +38,22 @@ export default function UserMaintainancePage() {
   return <Table table={table} />;
 }
 
-interface Person {
-  firstName: string;
-  lastName: string;
-  age: number;
-  visits: number;
-  status: string;
-  progress: number;
-}
+const columnHelper = createColumnHelper<IUserModel>();
 
-const defaultData: Person[] = [
-  {
-    firstName: "tanner",
-    lastName: "linsley",
-    age: 24,
-    visits: 100,
-    status: "In Relationship",
-    progress: 50,
-  },
-  {
-    firstName: "tandy",
-    lastName: "miller",
-    age: 40,
-    visits: 40,
-    status: "Single",
-    progress: 80,
-  },
-  {
-    firstName: "joe",
-    lastName: "dirte",
-    age: 45,
-    visits: 20,
-    status: "Complicated",
-    progress: 10,
-  },
-];
-
-const defaultColumns: ColumnDef<Person>[] = [
-  {
-    accessorKey: "firstName",
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  },
-  {
-    accessorFn: (row) => row.lastName,
-    id: "lastName",
-    cell: (info) => <i>{info.getValue<string>()}</i>,
-    header: () => <span>Last Name</span>,
-    footer: (info) => info.column.id,
-  },
-  {
-    accessorKey: "age",
-    header: () => "Age",
-    footer: (info) => info.column.id,
-  },
-  {
-    accessorKey: "visits",
-    header: () => <span>Visits</span>,
-    footer: (info) => info.column.id,
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    footer: (info) => info.column.id,
-  },
-  {
-    accessorKey: "progress",
-    header: "Profile Progress",
-    footer: (info) => info.column.id,
-  },
+const tableColumns = [
+  columnHelper.accessor("username", { header: "Username" }),
+  columnHelper.accessor("name", { header: "Name" }),
+  columnHelper.accessor((row) => row.updateBy ?? row.createBy, {
+    id: "lastModifiedBy",
+    header: "Last Modified By",
+    enableGlobalFilter: false,
+  }),
+  columnHelper.accessor(
+    (row) => new Date(row.updateDate ?? row.createDate).toLocaleString(),
+    {
+      id: "lastModifiedDate",
+      header: "Last Modified Date",
+      enableGlobalFilter: false,
+    },
+  ),
 ];
