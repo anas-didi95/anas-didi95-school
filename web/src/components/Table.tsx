@@ -1,5 +1,6 @@
 import { flexRender, Table as TSTable } from "@tanstack/solid-table";
-import { For } from "solid-js";
+import { FaSolidCaretDown, FaSolidCaretUp } from "solid-icons/fa";
+import { For, Show } from "solid-js";
 
 export default function Table(props: ITable) {
   return (
@@ -11,13 +12,27 @@ export default function Table(props: ITable) {
               <tr>
                 <For each={headerGroup.headers}>
                   {(header) => (
-                    <th>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
+                    <th colSpan={header.colSpan}>
+                      <Show when={!header.isPlaceholder}>
+                        <div
+                          class={
+                            header.column.getCanSort()
+                              ? "cursor-pointer select-none"
+                              : undefined
+                          }
+                          onClick={header.column.getToggleSortingHandler()}>
+                          {flexRender(
                             header.column.columnDef.header,
                             header.getContext(),
                           )}
+                          {{
+                            asc: <FaSolidCaretUp class="ml-1 inline-block" />,
+                            desc: (
+                              <FaSolidCaretDown class="ml-1 inline-block" />
+                            ),
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      </Show>
                     </th>
                   )}
                 </For>
