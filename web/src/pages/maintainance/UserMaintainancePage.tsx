@@ -1,16 +1,15 @@
+import Table from "@/components/Table";
 import { usePageContext } from "@/contexts/PageContext";
 import {
   ColumnDef,
   createSolidTable,
-  flexRender,
   getCoreRowModel,
 } from "@tanstack/solid-table";
-import { createSignal, For, onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 
 export default function UserMaintainancePage() {
   const pageContext = usePageContext();
-  const [data, setData] = createSignal(defaultData);
-  const rerender = () => setData(defaultData);
+  const [data] = createSignal(defaultData);
 
   const table = createSolidTable({
     get data() {
@@ -25,75 +24,7 @@ export default function UserMaintainancePage() {
     pageContext.action.setBreadcrumbs(["User Maintainance"]);
   });
 
-  return (
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-      <table class="table">
-        {" "}
-        <thead>
-          <For each={table.getHeaderGroups()}>
-            {(headerGroup) => (
-              <tr>
-                <For each={headerGroup.headers}>
-                  {(header) => (
-                    <th>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </th>
-                  )}
-                </For>
-              </tr>
-            )}
-          </For>
-        </thead>
-        <tbody>
-          <For each={table.getRowModel().rows}>
-            {(row) => (
-              <tr>
-                <For each={row.getVisibleCells()}>
-                  {(cell) => (
-                    <td>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </td>
-                  )}
-                </For>
-              </tr>
-            )}
-          </For>
-        </tbody>
-        <tfoot>
-          <For each={table.getFooterGroups()}>
-            {(footerGroup) => (
-              <tr>
-                <For each={footerGroup.headers}>
-                  {(header) => (
-                    <th>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.footer,
-                            header.getContext(),
-                          )}
-                    </th>
-                  )}
-                </For>
-              </tr>
-            )}
-          </For>
-        </tfoot>
-      </table>
-      <div class="h-4" />
-      <button onClick={() => rerender()} class="border p-2">
-        Rerender
-      </button>
-    </div>
-  );
+  return <Table table={table} />;
 }
 
 interface Person {
