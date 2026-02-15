@@ -4,7 +4,7 @@ import GetUserListQuery, {
   IGetUserListRes,
   IUserModel,
 } from "@/utils/queries/GetUserListQuery";
-import { createAsync } from "@solidjs/router";
+import { A, createAsync } from "@solidjs/router";
 import {
   createColumnHelper,
   createSolidTable,
@@ -41,7 +41,18 @@ export default function UserMaintainancePage() {
 const columnHelper = createColumnHelper<IUserModel>();
 
 const tableColumns = [
-  columnHelper.accessor("username", { header: "Username" }),
+  columnHelper.accessor((row) => `${row.id}|${row.username}`, {
+    id: "username",
+    header: "Username",
+    cell: (o) => {
+      const [id, username] = o.getValue().split("|");
+      return (
+        <A href={`/maintenance/user/${id}`} class="text-primary">
+          {username}
+        </A>
+      );
+    },
+  }),
   columnHelper.accessor("name", { header: "Name" }),
   columnHelper.accessor((row) => row.updateBy ?? row.createBy, {
     id: "lastModifiedBy",

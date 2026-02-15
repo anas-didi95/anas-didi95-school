@@ -65,7 +65,7 @@ export default function Table(props: ITable) {
         <tbody>
           <For each={props.table.getRowModel().rows}>
             {(row) => (
-              <tr>
+              <tr class="hover:bg-base-300">
                 <For each={row.getVisibleCells()}>
                   {(cell) => (
                     <td>
