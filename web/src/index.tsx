@@ -40,7 +40,7 @@ render(
           <Route
             path="/user"
             component={lazy(
-              () => import("@/pages/maintainance/UserMaintainancePage"),
+              () => import("@/pages/maintainance/UserMaintainanceListPage"),
             )}
           />
         </Route>
