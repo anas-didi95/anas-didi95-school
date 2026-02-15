@@ -1,23 +1,26 @@
+import { usePageContext } from "@/contexts/PageContext";
 import SignOutAction from "@/utils/actions/SignOutAction";
 import TokenInfoQuery, { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
 import SessionUtil from "@/utils/SessionUtil";
-import { createAsync, Navigate, useNavigate } from "@solidjs/router";
+import { A, createAsync, Navigate, useNavigate } from "@solidjs/router";
 import { FaRegularUser } from "solid-icons/fa";
 import { TbLayoutSidebarLeftExpand } from "solid-icons/tb";
-import { Component, Match, ParentProps, Switch } from "solid-js";
+import { For, Match, ParentProps, Switch } from "solid-js";
 import { useToast } from "solid-notifications";
 
-const DashboardPage: Component<ParentProps> = (props) => {
+export default function AuthenticatedLayout(props: ParentProps) {
   const tokenInfoQuery = createAsync(() => TokenInfoQuery().query());
   const signOut = SignOutAction().handler;
   const navigate = useNavigate();
   const { notify } = useToast();
   const session = SessionUtil();
+  const pageContext = usePageContext();
 
   const handleSignOut = async () => {
     const res = await signOut();
     if (res.ok) {
       session.clear();
+      pageContext.action.reset();
       notify("User sign-out success", { type: "success" });
       navigate("/", { replace: true });
     }
@@ -33,7 +36,7 @@ const DashboardPage: Component<ParentProps> = (props) => {
           <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
           <div class="drawer-content min-h-screen">
             {/*<!-- Navbar -->*/}
-            <div class="navbar bg-base-300 px-4">
+            <div class="navbar bg-base-300 px-6">
               <div class="navbar-start">
                 <label
                   for="my-drawer-4"
@@ -44,7 +47,17 @@ const DashboardPage: Component<ParentProps> = (props) => {
                 </label>
               </div>
               <div class="navbar-center">
-                <a class="btn btn-ghost text-xl">Dashboard</a>
+                <div class="breadcrumbs font-bold">
+                  <ul class="sm:w-full w-48">
+                    <For each={pageContext.store.breadcrumbs}>
+                      {(breadcrumb) => (
+                        <li>
+                          <p class="truncate">{breadcrumb}</p>
+                        </li>
+                      )}
+                    </For>
+                  </ul>
+                </div>
               </div>
               <div class="navbar-end">
                 <div class="dropdown dropdown-end">
@@ -67,10 +80,10 @@ const DashboardPage: Component<ParentProps> = (props) => {
                       </p>
                     </li>
                     <li>
-                      <a class="justify-between">
+                      <A href="/profile" class="justify-between">
                         Profile
                         <span class="badge">New</span>
-                      </a>
+                      </A>
                     </li>
                     <li>
                       <a>Settings</a>
@@ -83,7 +96,7 @@ const DashboardPage: Component<ParentProps> = (props) => {
               </div>
             </div>
             {/*<!-- Page content here -->*/}
-            <div class="p-4">{props.children}</div>
+            <div class="p-8">{props.children}</div>
           </div>
 
           <div class=" drawer-side is-drawer-close:overflow-visible">
@@ -146,6 +159,4 @@ const DashboardPage: Component<ParentProps> = (props) => {
       </Match>
     </Switch>
   );
-};
-
-export default DashboardPage;
+}

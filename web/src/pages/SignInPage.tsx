@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import Card from "@/components/Card";
-import FieldText from "@/components/FieldText";
+import FieldInput from "@/components/FieldInput";
+import { usePageContext } from "@/contexts/PageContext";
 import SignInAction, { ISignInRes } from "@/utils/actions/SignInAction";
 import SessionUtil from "@/utils/SessionUtil";
 import {
@@ -10,13 +11,14 @@ import {
   SubmitHandler,
 } from "@modular-forms/solid";
 import { useAction, useNavigate } from "@solidjs/router";
-import { type Component } from "solid-js";
+import { onMount } from "solid-js";
 
-const SignInPage: Component = () => {
+export default function SignInPage() {
   const [form, { Form, Field }] = createForm<ISignInForm>();
   const signIn = useAction(SignInAction().action);
   const navigate = useNavigate();
   const sessionUtil = SessionUtil();
+  const pageContext = usePageContext();
 
   const handleSubmit: SubmitHandler<ISignInForm> = async (values) => {
     const res = await signIn(values);
@@ -25,6 +27,10 @@ const SignInPage: Component = () => {
       navigate("/dashboard", { replace: true });
     }
   };
+
+  onMount(() => {
+    pageContext.action.setEditMode(true);
+  });
 
   return (
     <section class="flex-1 flex items-center justify-center">
@@ -35,12 +41,12 @@ const SignInPage: Component = () => {
               <Field
                 name="username"
                 validate={[required("Username is required!")]}>
-                {(field, attrs) => (
-                  <FieldText
+                {(field, props) => (
+                  <FieldInput
+                    {...field}
+                    {...props}
                     type="text"
                     label="Username"
-                    field={field}
-                    attrs={attrs}
                     required
                   />
                 )}
@@ -48,12 +54,12 @@ const SignInPage: Component = () => {
               <Field
                 name="password"
                 validate={[required("Password is required!")]}>
-                {(field, attrs) => (
-                  <FieldText
+                {(field, props) => (
+                  <FieldInput
+                    {...field}
+                    {...props}
                     type="password"
                     label="Password"
-                    field={field}
-                    attrs={attrs}
                     required
                   />
                 )}
@@ -67,9 +73,7 @@ const SignInPage: Component = () => {
       </div>
     </section>
   );
-};
-
-export default SignInPage;
+}
 
 interface ISignInForm extends FieldValues {
   username: string;

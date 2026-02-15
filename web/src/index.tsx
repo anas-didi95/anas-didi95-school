@@ -19,13 +19,23 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 render(
   () => (
     <HashRouter root={AppLayout}>
-      <Route path="/" component={lazy(() => import("@/pages/SignInPage"))} />
+      <Route path="/" component={lazy(() => import("@/pages/IndexPage"))} />
+      <Route
+        path="/sign-in"
+        component={lazy(() => import("@/pages/SignInPage"))}
+      />
       {/** Authenticated Route */}
       <Route
-        path="/dashboard"
         component={lazy(() => import("@/layouts/AuthenticatedLayout"))}
         preload={() => TokenInfoQuery().query()}>
-        <Route component={lazy(() => import("@/pages/DashboardPage"))} />
+        <Route
+          path="/dashboard"
+          component={lazy(() => import("@/pages/DashboardPage"))}
+        />
+        <Route
+          path="/profile"
+          component={lazy(() => import("@/pages/ProfilePage"))}
+        />
       </Route>
       {/** Error Route */}
       <Route

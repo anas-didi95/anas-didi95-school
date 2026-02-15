@@ -11,3 +11,7 @@
     light --prefersdark;
 }
 @import "solid-notifications/index.css";
+
+.fieldset {
+  font-size: 1rem;
+}

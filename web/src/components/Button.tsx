@@ -1,4 +1,4 @@
-import { Component, JSX } from "solid-js";
+import { JSX } from "solid-js";
 
 interface IButton {
   label: string;
@@ -18,7 +18,7 @@ interface IButton {
   >;
 }
 
-const Button: Component<IButton> = (props) => {
+export default function Button(props: IButton) {
   return (
     <button
       classList={{
@@ -36,6 +36,4 @@ const Button: Component<IButton> = (props) => {
       {props.label}
     </button>
   );
-};
-
-export default Button;
+}

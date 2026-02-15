@@ -18,15 +18,15 @@ public class TimesheetConstants {
 
   @UtilityClass
   public static class Event {
-    public static final String TSHT_CHECK_IN = "TSHT_CHK_IN";
-    public static final String TSHT_CHECK_OUT = "TSHT_CHK_OUT";
+    public static final String TIMESHEET_CHECK_IN = "TSHT_CHK_IN";
+    public static final String TIMESHEET_CHECK_OUT = "TSHT_CHK_OUT";
   }
 
   @Getter
   @RequiredArgsConstructor
   public enum EventEnum implements CommonEvent {
-    TSHT_CHECK_IN(Event.TSHT_CHECK_IN, CheckInReqDTO.class, CheckInResDTO.class),
-    TSHT_CHECK_OUT(Event.TSHT_CHECK_OUT, CheckOutReqDTO.class, CheckOutResDTO.class);
+    TIMESHEET_CHECK_IN(Event.TIMESHEET_CHECK_IN, CheckInReqDTO.class, CheckInResDTO.class),
+    TIMESHEET_CHECK_OUT(Event.TIMESHEET_CHECK_OUT, CheckOutReqDTO.class, CheckOutResDTO.class);
 
     private final String address;
     private final Class<? extends CommonReqDTO> reqClass;

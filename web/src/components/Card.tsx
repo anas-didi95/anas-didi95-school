@@ -1,10 +1,10 @@
-import { Component, ParentProps, Show } from "solid-js";
+import { ParentProps, Show } from "solid-js";
 
 interface ICard {
   title?: string;
 }
 
-const Card: Component<ParentProps & ICard> = (props) => {
+export default function Card(props: ICard & ParentProps) {
   return (
     <div class="card card-border rounded-box bg-base-100">
       <div class="card-body">
@@ -16,6 +16,4 @@ const Card: Component<ParentProps & ICard> = (props) => {
       </div>
     </div>
   );
-};
-
-export default Card;
+}

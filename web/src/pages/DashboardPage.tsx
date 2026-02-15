@@ -1,5 +1,3 @@
-import { Component } from "solid-js";
-
-const DashboardPage: Component = () => <div>DashboardPage</div>;
-
-export default DashboardPage;
+export default function DashboardPage() {
+  return <div>DashboardPage</div>;
+}
