@@ -17,4 +17,3 @@ services:
       - "anas-didi95-network"
     volumes:
       - "./.h2/:/home/app/.h2/:z"
-      - "./openapi.properties:/home/app/openapi.properties:z"
