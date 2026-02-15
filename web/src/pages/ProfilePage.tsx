@@ -17,6 +17,7 @@ import {
 } from "@modular-forms/solid";
 import { createAsync, useAction } from "@solidjs/router";
 import { createEffect, createSignal, onMount, Show } from "solid-js";
+import { useToast } from "solid-notifications";
 
 export default function ProfilePage() {
   const [userId, setUserId] = createSignal("");
@@ -27,11 +28,13 @@ export default function ProfilePage() {
   const updateUserAction = useAction(
     UpdateUserAction([GetUserQuery().key]).action,
   );
+  const { notify } = useToast();
 
   const handleSubmit: SubmitHandler<IProfileForm> = async (values) => {
     const res = await updateUserAction(userId(), { ...values });
     if (res.ok) {
       pageContext.action.setEditMode(false);
+      notify("Success", { type: "success" });
     }
   };
 
