@@ -11,12 +11,20 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
+  PaginationState,
 } from "@tanstack/solid-table";
 import { onMount } from "solid-js";
+import { createStore } from "solid-js/store";
 
 export default function UserMaintainancePage() {
   const pageContext = usePageContext();
-  const getUserListQuery = createAsync(() => GetUserListQuery().query());
+  const [page, setPage] = createStore<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+  const getUserListQuery = createAsync(() =>
+    GetUserListQuery().query(page.pageIndex + 1),
+  );
 
   const table = createSolidTable({
     get data() {
@@ -53,6 +61,7 @@ export default function UserMaintainancePage() {
         };
       },
     },
+    onPaginationChange: setPage,
   });
 
   onMount(() => {

@@ -1,6 +1,8 @@
 import { debounce } from "@solid-primitives/scheduled";
 import { flexRender, Table as TSTable } from "@tanstack/solid-table";
 import {
+  FaSolidAngleLeft,
+  FaSolidAngleRight,
   FaSolidAnglesLeft,
   FaSolidAnglesRight,
   FaSolidCaretDown,
@@ -107,8 +109,15 @@ export default function Table(props: ITable) {
         <div class="join">
           <button
             class="join-item btn"
-            disabled={!props.table.getCanPreviousPage()}>
+            disabled={!props.table.getCanPreviousPage()}
+            onclick={() => props.table.firstPage()}>
             <FaSolidAnglesLeft class="text-xs" />
+          </button>
+          <button
+            class="join-item btn"
+            disabled={!props.table.getCanPreviousPage()}
+            onclick={() => props.table.previousPage()}>
+            <FaSolidAngleLeft class="text-xs" />
           </button>
           <input
             class="join-item input w-16"
@@ -123,7 +132,14 @@ export default function Table(props: ITable) {
           </span>
           <button
             class="join-item btn"
-            disabled={!props.table.getCanNextPage()}>
+            disabled={!props.table.getCanNextPage()}
+            onclick={() => props.table.nextPage()}>
+            <FaSolidAngleRight class="text-xs" />
+          </button>
+          <button
+            class="join-item btn"
+            disabled={!props.table.getCanNextPage()}
+            onclick={() => props.table.lastPage()}>
             <FaSolidAnglesRight class="text-xs" />
           </button>
         </div>

@@ -8,15 +8,18 @@ const GetUserListQuery = (revalidate?: string[]) => {
   const client = FetchClient({ hasAuth: true });
   const { notify } = useToast();
 
-  const handler = async () => {
+  const handler = async (pageNo: number) => {
     try {
-      const res = await client.request(`/api/v1/user?totalRecordsPerPage=2`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+      const res = await client.request(
+        `/api/v1/user?pageNo=${pageNo}&totalRecordsPerPage=2`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       const resBody = (await res.json()) as IGetUserListRes;
       return json({ ok: true, data: resBody }, { revalidate });
