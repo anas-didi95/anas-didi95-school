@@ -28,6 +28,31 @@ export default function UserMaintainancePage() {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: "includesString",
+    manualPagination: true,
+    get rowCount() {
+      if (!getUserListQuery()?.ok) return 0;
+      return (getUserListQuery()?.data as IGetUserListRes).pagination
+        .totalRecords;
+    },
+    get pageCount() {
+      if (!getUserListQuery()?.ok) return 0;
+      const pagination = (getUserListQuery()?.data as IGetUserListRes)
+        .pagination;
+      return Math.ceil(
+        pagination.totalRecords / pagination.totalRecordsPerPage,
+      );
+    },
+    state: {
+      get pagination() {
+        if (!getUserListQuery()?.ok) return { pageIndex: 0, pageSize: 10 };
+        const pagination = (getUserListQuery()?.data as IGetUserListRes)
+          .pagination;
+        return {
+          pageIndex: pagination.pageNo - 1,
+          pageSize: pagination.totalRecordsPerPage,
+        };
+      },
+    },
   });
 
   onMount(() => {

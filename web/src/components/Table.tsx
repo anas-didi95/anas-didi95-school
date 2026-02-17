@@ -105,12 +105,25 @@ export default function Table(props: ITable) {
       </table>
       <div class="flex justify-end">
         <div class="join">
-          <button class="join-item btn">
+          <button
+            class="join-item btn"
+            disabled={!props.table.getCanPreviousPage()}>
             <FaSolidAnglesLeft class="text-xs" />
           </button>
-          <input class="join-item input w-16" type="text" maxlength={2} />
-          <span class="join-item btn">Page of 44</span>
-          <button class="join-item btn">
+          <input
+            class="join-item input w-16"
+            type="text"
+            maxlength={
+              `${props.table.getState().pagination.pageIndex + 1}`.length
+            }
+            value={props.table.getState().pagination.pageIndex + 1}
+          />
+          <span class="join-item btn">
+            Page of {props.table.getPageCount()}
+          </span>
+          <button
+            class="join-item btn"
+            disabled={!props.table.getCanNextPage()}>
             <FaSolidAnglesRight class="text-xs" />
           </button>
         </div>
@@ -122,4 +135,10 @@ export default function Table(props: ITable) {
 interface ITable {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   table: TSTable<any>;
+}
+
+export interface IPagination {
+  pageNo: number;
+  totalRecords: number;
+  totalRecordsPerPage: number;
 }

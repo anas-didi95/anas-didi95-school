@@ -1,3 +1,4 @@
+import { IPagination } from "@/components/Table";
 import FetchClient, { IResponseError } from "@/utils/FetchClient";
 import { json, query } from "@solidjs/router";
 import { useToast } from "solid-notifications";
@@ -9,7 +10,7 @@ const GetUserListQuery = (revalidate?: string[]) => {
 
   const handler = async () => {
     try {
-      const res = await client.request(`/api/v1/user`, {
+      const res = await client.request(`/api/v1/user?totalRecordsPerPage=2`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -37,6 +38,7 @@ export default GetUserListQuery;
 
 export interface IGetUserListRes {
   resultList: IUserModel[];
+  pagination: IPagination;
 }
 
 export interface IUserModel {
