@@ -8,18 +8,29 @@ const GetUserListQuery = (revalidate?: string[]) => {
   const client = FetchClient({ hasAuth: true });
   const { notify } = useToast();
 
-  const handler = async (pageNo: number) => {
+  const handler = async (pageNo: number, username: string, name: string) => {
+    const param: IParam = { pageNo, totalRecordsPerPage: 2 };
+    if (username) {
+      param.username = username;
+    }
+    if (name) {
+      param.name = name;
+    }
+
+    const paramStr = Object.keys(param)
+      .map(
+        (k) => `${k}=${encodeURIComponent(param[k as keyof IParam] as string)}`,
+      )
+      .join("&");
+
     try {
-      const res = await client.request(
-        `/api/v1/user?pageNo=${pageNo}&totalRecordsPerPage=2`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
+      const res = await client.request(`/api/v1/user?${paramStr}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-      );
+      });
 
       const resBody = (await res.json()) as IGetUserListRes;
       return json({ ok: true, data: resBody }, { revalidate });
@@ -55,4 +66,11 @@ export interface IUserModel {
   username: string;
   name: string;
   roleList: string[];
+}
+
+interface IParam {
+  pageNo: number;
+  totalRecordsPerPage: number;
+  username?: string;
+  name?: string;
 }

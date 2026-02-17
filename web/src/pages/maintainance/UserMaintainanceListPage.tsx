@@ -1,9 +1,13 @@
+import Button from "@/components/Button";
+import Card from "@/components/Card";
+import FieldInput from "@/components/FieldInput";
 import Table from "@/components/Table";
 import { usePageContext } from "@/contexts/PageContext";
 import GetUserListQuery, {
   IGetUserListRes,
   IUserModel,
 } from "@/utils/queries/GetUserListQuery";
+import { createForm, FieldValues, reset, submit } from "@modular-forms/solid";
 import { A, createAsync } from "@solidjs/router";
 import {
   createColumnHelper,
@@ -22,8 +26,15 @@ export default function UserMaintainancePage() {
     pageIndex: 0,
     pageSize: 10,
   });
+  const [search, setSearch] = createStore<ISearchForm>({
+    name: "",
+    username: "",
+  });
+  const [form, { Form, Field }] = createForm<ISearchForm>({
+    initialValues: search,
+  });
   const getUserListQuery = createAsync(() =>
-    GetUserListQuery().query(page.pageIndex + 1),
+    GetUserListQuery().query(page.pageIndex + 1, search.username, search.name),
   );
 
   const table = createSolidTable({
@@ -65,11 +76,61 @@ export default function UserMaintainancePage() {
   });
 
   onMount(() => {
-    pageContext.action.setEditMode(false);
+    pageContext.action.setEditMode(true);
     pageContext.action.setBreadcrumbs(["User Maintainance"]);
   });
 
-  return <Table table={table} />;
+  return (
+    <>
+      <Card title="Search User">
+        <Form
+          onSubmit={(v) => {
+            setPage("pageIndex", 0);
+            setSearch(v);
+          }}>
+          <fieldset
+            class="grid lg:grid-cols-3 grid-cols-1 gap-6"
+            disabled={form.submitting}>
+            <Field name="username" type="string">
+              {(field, props) => (
+                <FieldInput
+                  {...field}
+                  {...props}
+                  type="text"
+                  label="Username"
+                  required
+                />
+              )}
+            </Field>
+            <Field name="name" type="string">
+              {(field, props) => (
+                <FieldInput
+                  {...field}
+                  {...props}
+                  type="text"
+                  label="Name"
+                  required
+                />
+              )}
+            </Field>
+          </fieldset>
+          <div class="flex justify-end mt-4 gap-2">
+            <Button
+              label="Reset"
+              type="button"
+              onClick={() => {
+                reset(form);
+                submit(form);
+              }}
+            />
+            <Button label="Search" type="submit" color="primary" />
+          </div>
+        </Form>
+      </Card>
+      <br />
+      <Table table={table} />
+    </>
+  );
 }
 
 const columnHelper = createColumnHelper<IUserModel>();
@@ -102,3 +163,8 @@ const tableColumns = [
     },
   ),
 ];
+
+interface ISearchForm extends FieldValues {
+  username: string;
+  name: string;
+}
