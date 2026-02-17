@@ -69,22 +69,34 @@ export default function Table(props: ITable) {
           </For>
         </thead>
         <tbody>
-          <For each={props.table.getRowModel().rows}>
-            {(row) => (
-              <tr class="hover:bg-base-300">
-                <For each={row.getVisibleCells()}>
-                  {(cell) => (
-                    <td>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </td>
-                  )}
-                </For>
+          <Show
+            when={props.table.getRowModel().rows.length > 0}
+            fallback={
+              <tr>
+                <td
+                  colspan={props.table.getAllFlatColumns().length}
+                  class="text-center">
+                  No Record Found
+                </td>
               </tr>
-            )}
-          </For>
+            }>
+            <For each={props.table.getRowModel().rows}>
+              {(row) => (
+                <tr class="hover:bg-base-300">
+                  <For each={row.getVisibleCells()}>
+                    {(cell) => (
+                      <td>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </td>
+                    )}
+                  </For>
+                </tr>
+              )}
+            </For>
+          </Show>
         </tbody>
         <tfoot>
           <For each={props.table.getFooterGroups()}>
