@@ -154,6 +154,7 @@ export default function UserForm(props: IUserForm) {
               <Show when={!!props.onCancel}>
                 <Button label="Cancel" type="button" onClick={props.onCancel} />
               </Show>
+              <Button label={props.action} type="submit" color="primary" />
             </Show>
           </Match>
           <Match when={isSearch}>
@@ -165,9 +166,9 @@ export default function UserForm(props: IUserForm) {
                 submit(form);
               }}
             />
+            <Button label={props.action} type="submit" color="primary" />
           </Match>
         </Switch>
-        <Button label={props.action} type="submit" color="primary" />
       </div>
     </Form>
   );
