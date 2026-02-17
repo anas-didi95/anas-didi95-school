@@ -27,7 +27,7 @@ export default function Table(props: ITable) {
           <input
             type="search"
             class="grow"
-            placeholder="Search"
+            placeholder="Filter"
             oninput={(e) => debounceGlobalFilter(e.target.value)}
           />
         </label>

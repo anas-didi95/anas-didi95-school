@@ -48,6 +48,7 @@ export default function ProfilePage() {
   return (
     <Card title={`${pageContext.store.isEditMode ? "Edit" : "View"} Profile`}>
       <UserForm
+        action="Update"
         isEditMode={pageContext.store.isEditMode}
         onSubmit={handleSubmit}
         onEdit={() => pageContext.action.setEditMode(true)}
