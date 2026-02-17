@@ -1,6 +1,8 @@
 import { debounce } from "@solid-primitives/scheduled";
 import { flexRender, Table as TSTable } from "@tanstack/solid-table";
 import {
+  FaSolidAnglesLeft,
+  FaSolidAnglesRight,
   FaSolidCaretDown,
   FaSolidCaretUp,
   FaSolidSearch,
@@ -101,6 +103,18 @@ export default function Table(props: ITable) {
           </For>
         </tfoot>
       </table>
+      <div class="flex justify-end">
+        <div class="join">
+          <button class="join-item btn">
+            <FaSolidAnglesLeft class="text-xs" />
+          </button>
+          <input class="join-item input w-16" type="text" maxlength={2} />
+          <span class="join-item btn">Page of 44</span>
+          <button class="join-item btn">
+            <FaSolidAnglesRight class="text-xs" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
