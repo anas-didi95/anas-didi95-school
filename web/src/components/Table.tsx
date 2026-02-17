@@ -10,8 +10,10 @@ import {
   FaSolidSearch,
 } from "solid-icons/fa";
 import { For, Show } from "solid-js";
+import { useToast } from "solid-notifications";
 
 export default function Table(props: ITable) {
+  const { notify } = useToast();
   const debounceGlobalFilter = debounce(
     (s: string) => props.table.setGlobalFilter(s),
     500,
@@ -126,6 +128,22 @@ export default function Table(props: ITable) {
               `${props.table.getState().pagination.pageIndex + 1}`.length
             }
             value={props.table.getState().pagination.pageIndex + 1}
+            onkeyup={(e) => {
+              if (e.key !== "Enter") return;
+
+              const s = e.currentTarget.value;
+              if (Number.isNaN(s)) {
+                notify("Enter valid page number", { type: "warning" });
+                return;
+              }
+
+              const page = Number.parseInt(s);
+              if (1 <= page && page <= props.table.getPageCount()) {
+                props.table.setPageIndex(page - 1);
+              } else {
+                notify("Enter valid page number", { type: "warning" });
+              }
+            }}
           />
           <span class="join-item btn">
             Page of {props.table.getPageCount()}
