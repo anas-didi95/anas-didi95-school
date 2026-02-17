@@ -81,7 +81,7 @@ export default function FieldInput(props: IFieldInput) {
           </Show>
         </Show>
         <TextField.ErrorMessage>
-          <span class="label text-error">{props.error}</span>
+          <span class="label text-error text-sm">{props.error}</span>
         </TextField.ErrorMessage>
       </fieldset>
     </TextField>

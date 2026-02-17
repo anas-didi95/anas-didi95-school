@@ -5,6 +5,7 @@ import { usePageContext } from "@/contexts/PageContext";
 import {
   createForm,
   FieldValues,
+  required,
   reset,
   setValues,
   submit,
@@ -43,7 +44,10 @@ export default function UserForm(props: IUserForm) {
           )}
         </Field>
 
-        <Field name="name" type="string">
+        <Field
+          name="name"
+          type="string"
+          validate={isUpdate ? validator.name : []}>
           {(field, fieldProps) => (
             <FieldInput
               {...field}
@@ -174,6 +178,19 @@ export default function UserForm(props: IUserForm) {
   );
 }
 
+const validator: TValidator = {
+  createBy: [],
+  createDate: [],
+  id: [],
+  isDeleted: [],
+  name: [required("Name is required")],
+  roleList: [],
+  updateBy: [],
+  updateDate: [],
+  username: [required("Username is required")],
+  version: [],
+};
+
 const initialValues: IUserModel = {
   name: "",
   createBy: "",
@@ -185,6 +202,11 @@ const initialValues: IUserModel = {
   updateDate: "",
   username: "",
   version: 0,
+};
+
+type TValidator = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [k in keyof IUserModel]: any[];
 };
 
 interface IUserForm {
