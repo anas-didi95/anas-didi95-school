@@ -1,4 +1,5 @@
 import { IPagination } from "@/components/Table";
+import { IUserModel } from "@/forms/UserForm";
 import FetchClient, { IResponseError } from "@/utils/FetchClient";
 import { json, query } from "@solidjs/router";
 import { useToast } from "solid-notifications";
@@ -53,19 +54,6 @@ export default GetUserListQuery;
 export interface IGetUserListRes {
   resultList: IUserModel[];
   pagination: IPagination;
-}
-
-export interface IUserModel {
-  id: string;
-  isDeleted: boolean;
-  version: number;
-  createBy: string;
-  createDate: string;
-  updateBy: string;
-  updateDate: string;
-  username: string;
-  name: string;
-  roleList: string[];
 }
 
 interface IParam {
