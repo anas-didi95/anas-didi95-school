@@ -4,8 +4,8 @@ import FetchClient, { IResponseError } from "@/utils/FetchClient";
 import { json, query } from "@solidjs/router";
 import { useToast } from "solid-notifications";
 
-const key = "GetUserListQuery";
-const GetUserListQuery = (revalidate?: string[]) => {
+const key = "ListUserQuery";
+const ListUserQuery = (revalidate?: string[]) => {
   const client = FetchClient({ hasAuth: true });
   const { notify } = useToast();
 
@@ -49,7 +49,7 @@ const GetUserListQuery = (revalidate?: string[]) => {
   };
 };
 
-export default GetUserListQuery;
+export default ListUserQuery;
 
 export interface IGetUserListRes {
   resultList: IUserModel[];

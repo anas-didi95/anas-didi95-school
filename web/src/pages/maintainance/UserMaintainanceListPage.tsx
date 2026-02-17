@@ -4,7 +4,7 @@ import { usePageContext } from "@/contexts/PageContext";
 import UserForm, { IUserModel } from "@/forms/UserForm";
 import GetUserListQuery, {
   IGetUserListRes,
-} from "@/utils/queries/GetUserListQuery";
+} from "@/utils/queries/ListUserQuery";
 import { FieldValues } from "@modular-forms/solid";
 import { A, createAsync } from "@solidjs/router";
 import {
