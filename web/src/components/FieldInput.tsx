@@ -3,30 +3,31 @@ import { type JSX, Show, splitProps } from "solid-js";
 
 interface IFieldInput {
   isEditMode: boolean;
-  name?: string;
-  value?: string;
-  error?: string;
-  type?:
+  label: string;
+  type:
     | "text"
     | "email"
     | "tel"
     | "password"
     | "url"
     | "date"
-    | "datetime-local";
-  label?: string;
-  placeholder?: string;
-  multiline?: boolean;
-  required?: boolean;
+    | "datetime-local"
+    | "number";
   disabled?: boolean;
   editable?: boolean;
-  ref?: (element: HTMLInputElement | HTMLTextAreaElement) => void;
+  error?: string;
+  multiline?: boolean;
+  name?: string;
+  placeholder?: string;
+  required?: boolean;
+  value?: string;
+  onBlur?: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, FocusEvent>;
+  onChange?: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, Event>;
   onInput?: JSX.EventHandler<
     HTMLInputElement | HTMLTextAreaElement,
     InputEvent
   >;
-  onChange?: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, Event>;
-  onBlur?: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, FocusEvent>;
+  ref?: (element: HTMLInputElement | HTMLTextAreaElement) => void;
 }
 
 export default function FieldInput(props: IFieldInput) {

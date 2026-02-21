@@ -1,5 +1,4 @@
 import Button from "@/components/Button";
-import FieldCheckbox from "@/components/FieldCheckbox";
 import FieldInput from "@/components/FieldInput";
 import {
   createForm,
@@ -10,24 +9,25 @@ import {
   submit,
   SubmitHandler,
 } from "@modular-forms/solid";
-import { createEffect, createSignal, Match, Show, Switch } from "solid-js";
+import { createEffect, Match, Show, Switch } from "solid-js";
+import { createStore } from "solid-js/store";
+import MetadataForm, { IMetadataModel } from "./MetadataForm";
 
 export default function UserForm(props: IUserForm) {
   const [form, { Form, Field }] = createForm<IUserModel>({ initialValues });
-  const [lastBy, setLastBy] = createSignal("");
-  const [lastDate, setLastDate] = createSignal("");
-  const [ver, setVer] = createSignal(0);
-  const [del, setDel] = createSignal(false);
+  const [metadata, setMetadata] = createStore<IMetadataModel>();
 
   createEffect(() => {
     if (props.isEditMode) return;
     if (!props.data) return;
 
     setValues(form, { ...props.data });
-    setLastBy(props.data.updateBy ?? props.data.updateBy);
-    setLastDate(props.data.updateDate ?? props.data.createDate);
-    setVer(props.data.version);
-    setDel(props.data.isDeleted);
+    setMetadata({
+      isDeleted: props.data.isDeleted,
+      lastModifiedBy: props.data.updateBy ?? props.data.createBy,
+      lastModifiedDate: props.data.updateDate ?? props.data.createDate,
+      version: props.data.version,
+    });
   });
 
   const isSearch = props.action === "Search";
@@ -70,40 +70,7 @@ export default function UserForm(props: IUserForm) {
         <div class="lg:block hidden" />
 
         <Show when={!isSearch}>
-          <FieldInput
-            isEditMode={false}
-            type="text"
-            label="Last Modified By"
-            required
-            editable={false}
-            value={lastBy()}
-          />
-
-          <FieldInput
-            isEditMode={false}
-            type="datetime-local"
-            label="Last Modified Date"
-            required
-            editable={false}
-            value={lastDate()}
-          />
-
-          <FieldInput
-            isEditMode={false}
-            type="text"
-            label="Version"
-            required
-            editable={false}
-            value={ver() + ""}
-          />
-
-          <FieldCheckbox
-            label="Is Deleted?"
-            title="Status"
-            value={del()}
-            editable={false}
-            isEditMode={false}
-          />
+          <MetadataForm metadata={metadata} />
         </Show>
       </fieldset>
 

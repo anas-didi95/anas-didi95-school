@@ -4,19 +4,19 @@ import { type JSX, Show, splitProps } from "solid-js";
 
 interface IFieldCheckbox {
   isEditMode: boolean;
-  name?: string;
-  label?: string;
-  value?: boolean;
-  error?: string;
-  title?: string;
+  label: string;
   checkedValue?: string;
-  required?: boolean;
   disabled?: boolean;
   editable?: boolean;
-  ref?: (element: HTMLInputElement) => void;
-  onInput?: JSX.EventHandler<HTMLInputElement, InputEvent>;
-  onChange?: JSX.EventHandler<HTMLInputElement, Event>;
+  error?: string;
+  name?: string;
+  required?: boolean;
+  title?: string;
+  value?: boolean;
   onBlur?: JSX.EventHandler<HTMLInputElement, FocusEvent>;
+  onChange?: JSX.EventHandler<HTMLInputElement, Event>;
+  onInput?: JSX.EventHandler<HTMLInputElement, InputEvent>;
+  ref?: (element: HTMLInputElement) => void;
 }
 
 export default function FieldCheckbox(props: IFieldCheckbox) {
