@@ -71,9 +71,8 @@ class UserControllerV1 extends UserController {
   @Override
   @Post("/{userId}")
   protected HttpResponse<UpdateUserResDTO> updateUser(
-      HttpRequest<?> request, @Body UserDTO update, UUID userId) {
-    UpdateUserReqDTO body =
-        UpdateUserReqDTO.builder().id(userId).update(request.getBody(UserDTO.class).get()).build();
+      HttpRequest<?> request, @Body UpdateUserReqDTO.Payload payload, UUID userId) {
+    var body = UpdateUserReqDTO.builder().id(userId).payload(payload).build();
     return HttpResponse.ok(
         (UpdateUserResDTO) registry.get(EventEnum.USER_UPDATE_USER).process(body));
   }

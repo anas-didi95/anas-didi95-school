@@ -34,7 +34,7 @@ class UpdateUserService extends UserService<UpdateUserReqDTO, UpdateUserResDTO> 
     log.trace("START...");
 
     UUID id = in.id();
-    int version = in.update().version();
+    int version = in.payload().version();
     Optional<UserEntity> result =
         userRepository.findOne(
             (root, criteriaBuilder) -> {
@@ -49,7 +49,7 @@ class UpdateUserService extends UserService<UpdateUserReqDTO, UpdateUserResDTO> 
     }
 
     UserEntity entity = result.get();
-    entity.setName(in.update().name());
+    entity.setName(in.payload().name());
     userRepository.update(entity);
 
     log.debug("User updated...{}", entity.getUsername());

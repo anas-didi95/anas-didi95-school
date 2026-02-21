@@ -2,11 +2,18 @@
 package com.anasdidi.school.user.dto;
 
 import com.anasdidi.school.common.dto.CommonReqDTO;
-import com.anasdidi.school.user.dto.model.UserDTO;
 import io.micronaut.serde.annotation.Serdeable;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 import lombok.Builder;
 
 @Serdeable
 @Builder
-public record UpdateUserReqDTO(UUID id, UserDTO update) implements CommonReqDTO {}
+public record UpdateUserReqDTO(@NotNull UUID id, @Valid Payload payload) implements CommonReqDTO {
+
+  @Serdeable
+  @Builder
+  public record Payload(@NotBlank String name, @NotNull Integer version) {}
+}

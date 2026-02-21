@@ -10,6 +10,7 @@ import com.anasdidi.school.user.dto.AssignUserRoleResDTO;
 import com.anasdidi.school.user.dto.DeleteUserResDTO;
 import com.anasdidi.school.user.dto.GetUserResDTO;
 import com.anasdidi.school.user.dto.ListUserResDTO;
+import com.anasdidi.school.user.dto.UpdateUserReqDTO;
 import com.anasdidi.school.user.dto.UpdateUserResDTO;
 import com.anasdidi.school.user.dto.model.UserDTO;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -45,7 +46,7 @@ public abstract class UserController extends CommonController {
   @TraceLog
   @Operation(summary = "Update User", tags = OPENAPI_TAG)
   protected abstract HttpResponse<UpdateUserResDTO> updateUser(
-      HttpRequest<?> request, UserDTO update, UUID userId);
+      HttpRequest<?> request, UpdateUserReqDTO.Payload payload, UUID userId);
 
   @TraceLog
   @Operation(summary = "Delete User", tags = OPENAPI_TAG)
