@@ -45,8 +45,9 @@ export default function SignInPage() {
                   <FieldInput
                     {...field}
                     {...props}
-                    type="text"
+                    isEditMode={true}
                     label="Username"
+                    type="text"
                     required
                   />
                 )}
@@ -58,8 +59,9 @@ export default function SignInPage() {
                   <FieldInput
                     {...field}
                     {...props}
-                    type="password"
+                    isEditMode={true}
                     label="Password"
+                    type="password"
                     required
                   />
                 )}
