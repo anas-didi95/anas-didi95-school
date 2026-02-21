@@ -1,3 +1,4 @@
+import FieldHidden from "@/components/FieldHidden";
 import FieldInput from "@/components/FieldInput";
 import {
   createForm,
@@ -67,6 +68,10 @@ export default function UserForm(props: IUserForm & ParentProps) {
               isEditMode={props.isEditMode}
             />
           )}
+        </Field>
+
+        <Field name="version" type="number">
+          {(field, fieldProps) => <FieldHidden {...field} {...fieldProps} />}
         </Field>
 
         <div class="lg:block hidden" />
