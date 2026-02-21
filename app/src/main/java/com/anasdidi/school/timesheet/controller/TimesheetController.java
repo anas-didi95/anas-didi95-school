@@ -14,10 +14,10 @@ public abstract class TimesheetController extends CommonController {
   private static final String OPENAPI_TAG = "Timesheet API";
 
   @TraceLog
-  @Operation(summary = "Check in", tags = OPENAPI_TAG)
+  @Operation(summary = "Check In", tags = OPENAPI_TAG)
   protected abstract HttpResponse<CheckInResDTO> checkIn(HttpRequest<?> request);
 
   @TraceLog
-  @Operation(summary = "Check out", tags = OPENAPI_TAG)
+  @Operation(summary = "Check Out", tags = OPENAPI_TAG)
   protected abstract HttpResponse<CheckOutResDTO> checkOut(HttpRequest<?> request);
 }

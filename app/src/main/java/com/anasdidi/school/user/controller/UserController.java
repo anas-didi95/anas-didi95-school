@@ -23,13 +23,13 @@ public abstract class UserController extends CommonController {
   private static final String OPENAPI_TAG = "User API";
 
   @TraceLog
-  @Operation(summary = "Add user", tags = OPENAPI_TAG)
+  @Operation(summary = "Add User", tags = OPENAPI_TAG)
   protected abstract HttpResponse<AddUserResDTO> addUser(
       HttpRequest<?> request, AddUserReqDTO body);
 
   @TraceLog
   @JsonView(Views.Public.class)
-  @Operation(summary = "List user", tags = OPENAPI_TAG)
+  @Operation(summary = "List User", tags = OPENAPI_TAG)
   protected abstract HttpResponse<ListUserResDTO> listUser(
       HttpRequest<?> request,
       String username,
@@ -39,20 +39,20 @@ public abstract class UserController extends CommonController {
 
   @TraceLog
   @JsonView(Views.Public.class)
-  @Operation(summary = "Get user", tags = OPENAPI_TAG)
+  @Operation(summary = "Get User", tags = OPENAPI_TAG)
   protected abstract HttpResponse<GetUserResDTO> getUser(HttpRequest<?> request, UUID userId);
 
   @TraceLog
-  @Operation(summary = "Update user", tags = OPENAPI_TAG)
+  @Operation(summary = "Update User", tags = OPENAPI_TAG)
   protected abstract HttpResponse<UpdateUserResDTO> updateUser(
       HttpRequest<?> request, UserDTO update, UUID userId);
 
   @TraceLog
-  @Operation(summary = "Delete user", tags = OPENAPI_TAG)
+  @Operation(summary = "Delete User", tags = OPENAPI_TAG)
   protected abstract HttpResponse<DeleteUserResDTO> deleteUser(HttpRequest<?> request, UUID userId);
 
   @TraceLog
-  @Operation(summary = "Assign user role", tags = OPENAPI_TAG)
+  @Operation(summary = "Assign User Role", tags = OPENAPI_TAG)
   protected abstract HttpResponse<AssignUserRoleResDTO> assignUserRole(
       HttpRequest<?> request, UserDTO update, UUID userId);
 }

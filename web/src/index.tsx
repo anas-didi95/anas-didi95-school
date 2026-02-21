@@ -36,6 +36,14 @@ render(
           path="/profile"
           component={lazy(() => import("@/pages/ProfilePage"))}
         />
+        <Route path="/maintenance">
+          <Route
+            path="/user"
+            component={lazy(
+              () => import("@/pages/maintainance/UserMaintainanceListPage"),
+            )}
+          />
+        </Route>
       </Route>
       {/** Error Route */}
       <Route
