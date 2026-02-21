@@ -38,6 +38,12 @@ render(
         />
         <Route path="/maintenance">
           <Route
+            path="/user/:id"
+            component={lazy(
+              () => import("@/pages/maintainance/UserMaintainancePage"),
+            )}
+          />
+          <Route
             path="/user"
             component={lazy(
               () => import("@/pages/maintainance/UserMaintainanceListPage"),
