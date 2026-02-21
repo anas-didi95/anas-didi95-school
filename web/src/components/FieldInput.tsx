@@ -1,11 +1,11 @@
-import { usePageContext } from "@/contexts/PageContext";
 import { TextField } from "@kobalte/core/text-field";
 import { type JSX, Show, splitProps } from "solid-js";
 
 interface IFieldInput {
-  name: string;
+  isEditMode: boolean;
+  name?: string;
   value?: string;
-  error: string;
+  error?: string;
   type?:
     | "text"
     | "email"
@@ -14,16 +14,19 @@ interface IFieldInput {
     | "url"
     | "date"
     | "datetime-local";
-  label?: string | undefined;
-  placeholder?: string | undefined;
-  multiline?: boolean | undefined;
-  required?: boolean | undefined;
-  disabled?: boolean | undefined;
+  label?: string;
+  placeholder?: string;
+  multiline?: boolean;
+  required?: boolean;
+  disabled?: boolean;
   editable?: boolean;
-  ref: (element: HTMLInputElement | HTMLTextAreaElement) => void;
-  onInput: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, InputEvent>;
-  onChange: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, Event>;
-  onBlur: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, FocusEvent>;
+  ref?: (element: HTMLInputElement | HTMLTextAreaElement) => void;
+  onInput?: JSX.EventHandler<
+    HTMLInputElement | HTMLTextAreaElement,
+    InputEvent
+  >;
+  onChange?: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, Event>;
+  onBlur?: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, FocusEvent>;
 }
 
 export default function FieldInput(props: IFieldInput) {
@@ -32,7 +35,6 @@ export default function FieldInput(props: IFieldInput) {
     ["name", "value", "required", "disabled"],
     ["placeholder", "ref", "onInput", "onChange", "onBlur"],
   );
-  const pageContext = usePageContext();
 
   return (
     <TextField
@@ -48,7 +50,7 @@ export default function FieldInput(props: IFieldInput) {
           </TextField.Label>
         </legend>
         <Show
-          when={(props.editable ?? true) && pageContext.store.isEditMode}
+          when={(props.editable ?? true) && props.isEditMode}
           fallback={
             <p>
               {isDateValue(props.type, props.value)

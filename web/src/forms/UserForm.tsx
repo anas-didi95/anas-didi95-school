@@ -10,15 +10,24 @@ import {
   submit,
   SubmitHandler,
 } from "@modular-forms/solid";
-import { createEffect, Match, Show, Switch } from "solid-js";
+import { createEffect, createSignal, Match, Show, Switch } from "solid-js";
 
 export default function UserForm(props: IUserForm) {
   const [form, { Form, Field }] = createForm<IUserModel>({ initialValues });
+  const [lastBy, setLastBy] = createSignal("");
+  const [lastDate, setLastDate] = createSignal("");
+  const [ver, setVer] = createSignal(0);
+  const [del, setDel] = createSignal(false);
 
   createEffect(() => {
     if (props.isEditMode) return;
     if (!props.data) return;
+
     setValues(form, { ...props.data });
+    setLastBy(props.data.updateBy ?? props.data.updateBy);
+    setLastDate(props.data.updateDate ?? props.data.createDate);
+    setVer(props.data.version);
+    setDel(props.data.isDeleted);
   });
 
   const isSearch = props.action === "Search";
@@ -37,6 +46,7 @@ export default function UserForm(props: IUserForm) {
               label="Username"
               required={!isSearch}
               editable={isSearch}
+              isEditMode={props.isEditMode}
             />
           )}
         </Field>
@@ -52,6 +62,7 @@ export default function UserForm(props: IUserForm) {
               type="text"
               label="Name"
               required={!isSearch}
+              isEditMode={props.isEditMode}
             />
           )}
         </Field>
@@ -59,81 +70,40 @@ export default function UserForm(props: IUserForm) {
         <div class="lg:block hidden" />
 
         <Show when={!isSearch}>
-          <Field name="isDeleted" type="boolean">
-            {(field, fieldProps) => (
-              <FieldCheckbox
-                {...field}
-                {...fieldProps}
-                label="Is Deleted?"
-                title="Status"
-              />
-            )}
-          </Field>
+          <FieldInput
+            isEditMode={false}
+            type="text"
+            label="Last Modified By"
+            required
+            editable={false}
+            value={lastBy()}
+          />
 
-          <Field name="updateBy" type="string">
-            {(field, fieldProps) => (
-              <FieldInput
-                {...field}
-                {...fieldProps}
-                type="text"
-                label="Update By"
-                required
-                editable={false}
-              />
-            )}
-          </Field>
+          <FieldInput
+            isEditMode={false}
+            type="datetime-local"
+            label="Last Modified Date"
+            required
+            editable={false}
+            value={lastDate()}
+          />
 
-          <Field name="updateDate" type="string">
-            {(field, fieldProps) => (
-              <FieldInput
-                {...field}
-                {...fieldProps}
-                type="datetime-local"
-                label="Update Date"
-                required
-                editable={false}
-              />
-            )}
-          </Field>
+          <FieldInput
+            isEditMode={false}
+            type="text"
+            label="Version"
+            required
+            editable={false}
+            value={ver() + ""}
+          />
 
-          <Field name="version" type="number">
-            {(field, fieldProps) => (
-              <FieldInput
-                {...field}
-                {...fieldProps}
-                value={"" + field.value}
-                label="Version"
-                required
-                editable={false}
-              />
-            )}
-          </Field>
-
-          <Field name="createBy" type="string">
-            {(field, fieldProps) => (
-              <FieldInput
-                {...field}
-                {...fieldProps}
-                type="text"
-                label="Create By"
-                required
-                editable={false}
-              />
-            )}
-          </Field>
-
-          <Field name="createDate" type="string">
-            {(field, fieldProps) => (
-              <FieldInput
-                {...field}
-                {...fieldProps}
-                type="datetime-local"
-                label="Create Date"
-                required
-                editable={false}
-              />
-            )}
-          </Field>
+          <FieldCheckbox
+            label="Is Deleted?"
+            title="Status"
+            value={del()}
+            editable={false}
+            isEditMode={false}
+          />
         </Show>
       </fieldset>
 
@@ -155,7 +125,7 @@ export default function UserForm(props: IUserForm) {
               <Show when={!!props.onCancel}>
                 <Button label="Cancel" type="button" onClick={props.onCancel} />
               </Show>
-              <Button label="Edit" type="submit" color="primary" />
+              <Button label="Update" type="submit" color="primary" />
             </Show>
           </Match>
           <Match when={isSearch}>
