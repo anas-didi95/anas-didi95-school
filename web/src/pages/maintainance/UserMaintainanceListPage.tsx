@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Table from "@/components/Table";
 import { usePageContext } from "@/contexts/PageContext";
@@ -5,7 +6,7 @@ import UserForm, { IUserModel } from "@/forms/UserForm";
 import GetUserListQuery, {
   IGetUserListRes,
 } from "@/utils/queries/ListUserQuery";
-import { FieldValues } from "@modular-forms/solid";
+import { FieldValues, FormStore, reset, submit } from "@modular-forms/solid";
 import { A, createAsync } from "@solidjs/router";
 import {
   createColumnHelper,
@@ -15,7 +16,7 @@ import {
   getSortedRowModel,
   PaginationState,
 } from "@tanstack/solid-table";
-import { onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 
 export default function UserMaintainancePage() {
@@ -31,6 +32,7 @@ export default function UserMaintainancePage() {
   const getUserListQuery = createAsync(() =>
     GetUserListQuery().query(page.pageIndex + 1, search.username, search.name),
   );
+  const [form, setForm] = createSignal<FormStore<IUserModel>>();
 
   const table = createSolidTable({
     get data() {
@@ -71,13 +73,27 @@ export default function UserMaintainancePage() {
     <>
       <Card title="Search User">
         <UserForm
-          action="Search"
           isEditMode={true}
+          action="Search"
           onSubmit={(v) => {
             setPage("pageIndex", 0);
             setSearch(v);
           }}
-        />
+          initForm={setForm}>
+          <>
+            <Button
+              label="Reset"
+              type="button"
+              onClick={() => {
+                if (form()) {
+                  reset(form()!);
+                  submit(form()!);
+                }
+              }}
+            />
+            <Button label="Search" type="submit" color="primary" />
+          </>
+        </UserForm>
       </Card>
       <br />
       <Table table={table} />

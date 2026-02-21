@@ -1,21 +1,23 @@
-import Button from "@/components/Button";
 import FieldInput from "@/components/FieldInput";
 import {
   createForm,
   FieldValues,
+  FormStore,
   required,
-  reset,
   setValues,
-  submit,
   SubmitHandler,
 } from "@modular-forms/solid";
-import { createEffect, Match, Show, Switch } from "solid-js";
+import { createEffect, onMount, ParentProps, Show } from "solid-js";
 import { createStore } from "solid-js/store";
 import MetadataForm, { IMetadataModel } from "./MetadataForm";
 
-export default function UserForm(props: IUserForm) {
+export default function UserForm(props: IUserForm & ParentProps) {
   const [form, { Form, Field }] = createForm<IUserModel>({ initialValues });
   const [metadata, setMetadata] = createStore<IMetadataModel>();
+
+  onMount(() => {
+    if (props.initForm) props.initForm(form);
+  });
 
   createEffect(() => {
     if (props.isEditMode) return;
@@ -74,42 +76,17 @@ export default function UserForm(props: IUserForm) {
         </Show>
       </fieldset>
 
-      <div class="flex justify-end mt-4 gap-2">
-        <Switch>
-          <Match when={!isSearch}>
-            <Show
-              when={props.isEditMode}
-              fallback={
-                <Show when={!!props.onEdit}>
-                  <Button
-                    label="Edit"
-                    type="button"
-                    color="primary"
-                    onClick={props.onEdit}
-                  />
-                </Show>
-              }>
-              <Show when={!!props.onCancel}>
-                <Button label="Cancel" type="button" onClick={props.onCancel} />
-              </Show>
-              <Button label="Update" type="submit" color="primary" />
-            </Show>
-          </Match>
-          <Match when={isSearch}>
-            <Button
-              label="Reset"
-              type="button"
-              onClick={() => {
-                reset(form);
-                submit(form);
-              }}
-            />
-            <Button label="Search" type="submit" color="primary" />
-          </Match>
-        </Switch>
-      </div>
+      <div class="flex justify-end mt-4 gap-2">{props.children}</div>
     </Form>
   );
+}
+
+interface IUserForm {
+  isEditMode: boolean;
+  action?: "Search";
+  data?: IUserModel;
+  initForm?: (o: FormStore<IUserModel>) => void;
+  onSubmit?: SubmitHandler<IUserModel>;
 }
 
 const validator: TValidator = {
@@ -142,15 +119,6 @@ type TValidator = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [k in keyof IUserModel]: any[];
 };
-
-interface IUserForm {
-  isEditMode: boolean;
-  onSubmit: SubmitHandler<IUserModel>;
-  action?: "Search";
-  onEdit?: () => void;
-  onCancel?: () => void;
-  data?: IUserModel;
-}
 
 export interface IUserModel extends FieldValues {
   id: string;

@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { usePageContext } from "@/contexts/PageContext";
 import UserForm, { IUserModel } from "@/forms/UserForm";
@@ -5,7 +6,7 @@ import UpdateUserAction from "@/utils/actions/UpdateUserAction";
 import GetUserQuery, { IGetUserRes } from "@/utils/queries/GetUserQuery";
 import TokenInfoQuery, { ITokenInfoRes } from "@/utils/queries/TokenInfoQuery";
 import { createAsync, useAction } from "@solidjs/router";
-import { createEffect, createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount, Show } from "solid-js";
 import { useToast } from "solid-notifications";
 
 export default function ProfilePage() {
@@ -49,11 +50,26 @@ export default function ProfilePage() {
     <Card title={`${pageContext.store.isEditMode ? "Edit" : "View"} Profile`}>
       <UserForm
         isEditMode={pageContext.store.isEditMode}
-        onSubmit={handleSubmit}
-        onEdit={() => pageContext.action.setEditMode(true)}
-        onCancel={() => pageContext.action.setEditMode(false)}
         data={(getUserQuery()?.data as IGetUserRes)?.result}
-      />
+        onSubmit={handleSubmit}>
+        <Show
+          when={pageContext.store.isEditMode}
+          fallback={
+            <Button
+              label="Edit"
+              type="button"
+              color="primary"
+              onClick={() => pageContext.action.setEditMode(true)}
+            />
+          }>
+          <Button
+            label="Cancel"
+            type="button"
+            onClick={() => pageContext.action.setEditMode(false)}
+          />
+          <Button label="Update" type="submit" color="primary" />
+        </Show>
+      </UserForm>
     </Card>
   );
 }
