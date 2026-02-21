@@ -1,4 +1,6 @@
+import Card from "@/components/Card";
 import { usePageContext } from "@/contexts/PageContext";
+import UserForm from "@/forms/UserForm";
 import GetUserQuery, { IGetUserRes } from "@/utils/queries/GetUserQuery";
 import { createAsync, useParams } from "@solidjs/router";
 import { createEffect, onMount } from "solid-js";
@@ -19,5 +21,15 @@ export default function UserMaintainancePage() {
     pageContext.action.setBreadcrumbs(["User Maintainance", user.name]);
   });
 
-  return <div>UserMaintainancePage : {params.id}</div>;
+  return (
+    <Card title={`${pageContext.store.isEditMode ? "Edit" : "View"} User`}>
+      <UserForm
+        isEditMode={pageContext.store.isEditMode}
+        data={(getUserQuery()?.data as IGetUserRes)?.result}
+        onSubmit={() => {
+          /* empty */
+        }}
+      />
+    </Card>
+  );
 }

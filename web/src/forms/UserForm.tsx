@@ -1,7 +1,6 @@
 import Button from "@/components/Button";
 import FieldCheckbox from "@/components/FieldCheckbox";
 import FieldInput from "@/components/FieldInput";
-import { usePageContext } from "@/contexts/PageContext";
 import {
   createForm,
   FieldValues,
@@ -14,16 +13,14 @@ import {
 import { createEffect, Match, Show, Switch } from "solid-js";
 
 export default function UserForm(props: IUserForm) {
-  const pageContext = usePageContext();
   const [form, { Form, Field }] = createForm<IUserModel>({ initialValues });
 
   createEffect(() => {
-    if (pageContext.store.isEditMode) return;
+    if (props.isEditMode) return;
     if (!props.data) return;
     setValues(form, { ...props.data });
   });
 
-  const isUpdate = props.action === "Update";
   const isSearch = props.action === "Search";
 
   return (
@@ -38,7 +35,7 @@ export default function UserForm(props: IUserForm) {
               {...fieldProps}
               type="text"
               label="Username"
-              required={isUpdate}
+              required={!isSearch}
               editable={isSearch}
             />
           )}
@@ -47,21 +44,21 @@ export default function UserForm(props: IUserForm) {
         <Field
           name="name"
           type="string"
-          validate={isUpdate ? validator.name : []}>
+          validate={!isSearch ? validator.name : []}>
           {(field, fieldProps) => (
             <FieldInput
               {...field}
               {...fieldProps}
               type="text"
               label="Name"
-              required={isUpdate}
+              required={!isSearch}
             />
           )}
         </Field>
 
         <div class="lg:block hidden" />
 
-        <Show when={isUpdate}>
+        <Show when={!isSearch}>
           <Field name="isDeleted" type="boolean">
             {(field, fieldProps) => (
               <FieldCheckbox
@@ -142,7 +139,7 @@ export default function UserForm(props: IUserForm) {
 
       <div class="flex justify-end mt-4 gap-2">
         <Switch>
-          <Match when={isUpdate}>
+          <Match when={!isSearch}>
             <Show
               when={props.isEditMode}
               fallback={
@@ -158,7 +155,7 @@ export default function UserForm(props: IUserForm) {
               <Show when={!!props.onCancel}>
                 <Button label="Cancel" type="button" onClick={props.onCancel} />
               </Show>
-              <Button label={props.action} type="submit" color="primary" />
+              <Button label="Edit" type="submit" color="primary" />
             </Show>
           </Match>
           <Match when={isSearch}>
@@ -170,7 +167,7 @@ export default function UserForm(props: IUserForm) {
                 submit(form);
               }}
             />
-            <Button label={props.action} type="submit" color="primary" />
+            <Button label="Search" type="submit" color="primary" />
           </Match>
         </Switch>
       </div>
@@ -210,9 +207,9 @@ type TValidator = {
 };
 
 interface IUserForm {
-  action: "Update" | "Search";
   isEditMode: boolean;
   onSubmit: SubmitHandler<IUserModel>;
+  action?: "Search";
   onEdit?: () => void;
   onCancel?: () => void;
   data?: IUserModel;
