@@ -33,7 +33,7 @@ export default function UserMaintenancePage() {
     if (!getUserQuery()?.ok) return;
 
     const user = (getUserQuery()?.data as IGetUserRes).result;
-    pageContext.action.setBreadcrumbs(["User Maintainance", user.name]);
+    pageContext.action.setBreadcrumbs(["User Maintenance", user.name]);
   });
 
   return (

@@ -67,7 +67,7 @@ export default function UserMaintenanceListPage() {
 
   onMount(() => {
     pageContext.action.setEditMode(true);
-    pageContext.action.setBreadcrumbs(["User Maintainance"]);
+    pageContext.action.setBreadcrumbs(["User Maintenance"]);
   });
 
   return (
