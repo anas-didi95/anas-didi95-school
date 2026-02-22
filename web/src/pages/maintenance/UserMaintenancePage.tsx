@@ -8,7 +8,7 @@ import { createAsync, useAction, useParams } from "@solidjs/router";
 import { createEffect, onMount, Show } from "solid-js";
 import { useToast } from "solid-notifications";
 
-export default function UserMaintainancePage() {
+export default function UserMaintenancePage() {
   const params = useParams();
   const pageContext = usePageContext();
   const getUserQuery = createAsync(() => GetUserQuery().query(params.id!));

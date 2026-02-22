@@ -19,7 +19,7 @@ import {
 import { createSignal, onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 
-export default function UserMaintainancePage() {
+export default function UserMaintenanceListPage() {
   const pageContext = usePageContext();
   const [page, setPage] = createStore<PaginationState>({
     pageIndex: 0,
