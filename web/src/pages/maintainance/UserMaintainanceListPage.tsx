@@ -7,7 +7,7 @@ import GetUserListQuery, {
   IGetUserListRes,
 } from "@/utils/queries/ListUserQuery";
 import { FieldValues, FormStore, reset, submit } from "@modular-forms/solid";
-import { A, createAsync } from "@solidjs/router";
+import { A, createAsync, useNavigate } from "@solidjs/router";
 import {
   createColumnHelper,
   createSolidTable,
@@ -33,6 +33,7 @@ export default function UserMaintainancePage() {
     GetUserListQuery().query(page.pageIndex + 1, search.username, search.name),
   );
   const [form, setForm] = createSignal<FormStore<IUserModel>>();
+  const navigate = useNavigate();
 
   const table = createSolidTable({
     get data() {
@@ -90,6 +91,12 @@ export default function UserMaintainancePage() {
                   submit(form()!);
                 }
               }}
+            />
+            <Button
+              label="Create"
+              type="button"
+              color="primary"
+              onClick={() => navigate("/maintenance/user/create")}
             />
             <Button label="Search" type="submit" color="primary" />
           </>
