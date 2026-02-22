@@ -95,7 +95,7 @@ export default function UserMaintenanceListPage() {
             <Button
               label="Create"
               type="button"
-              color="primary"
+              color="secondary"
               onClick={() => navigate("/maintenance/user/create")}
             />
             <Button label="Search" type="submit" color="primary" />

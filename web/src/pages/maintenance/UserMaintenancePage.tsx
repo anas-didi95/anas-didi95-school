@@ -39,6 +39,7 @@ export default function UserMaintenancePage() {
   return (
     <Card title={`${pageContext.store.isEditMode ? "Edit" : "View"} User`}>
       <UserForm
+        action="Update"
         isEditMode={pageContext.store.isEditMode}
         data={(getUserQuery()?.data as IGetUserRes)?.result}
         onSubmit={handleEdit}>
